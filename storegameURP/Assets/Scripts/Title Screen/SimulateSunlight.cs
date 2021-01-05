@@ -17,9 +17,12 @@ public class SimulateSunlight : MonoBehaviour
     [SerializeField] private Light indoorLight;
     [ContextMenuItem("Override Now", "Awake")]
     [SerializeField] private int overrideHour;
+    [SerializeField] private bool enable;
 
     void Awake()
     {
+        if (!enable) return;
+
         var hour = overrideHour == 0 ? DateTime.Now.Hour : overrideHour;
         foreach (var sunPos in lightingSituations)
         {
