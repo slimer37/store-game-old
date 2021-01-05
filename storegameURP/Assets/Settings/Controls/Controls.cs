@@ -237,22 +237,6 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
-                },
-                {
-                    ""name"": ""Open Console"",
-                    ""type"": ""Button"",
-                    ""id"": ""fd97008c-32bc-4f5d-b02e-7a68fa3aa954"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Submit"",
-                    ""type"": ""Button"",
-                    ""id"": ""28c8c4f5-8e42-41d5-8efc-4ec934aade5e"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -277,21 +261,64 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""action"": ""Exit"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Console"",
+            ""id"": ""2d5b931d-9008-49d5-9b46-73e98df31964"",
+            ""actions"": [
+                {
+                    ""name"": ""Open"",
+                    ""type"": ""Button"",
+                    ""id"": ""b8a3e982-2a77-4939-8512-90ea77650eb5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 },
                 {
+                    ""name"": ""Last Command"",
+                    ""type"": ""Button"",
+                    ""id"": ""1658223b-3f3a-4008-bb1c-9d413b8e99b5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Submit"",
+                    ""type"": ""Button"",
+                    ""id"": ""7d2d6364-850b-491e-8c59-9c955806cd6b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
                     ""name"": """",
-                    ""id"": ""c5d09b50-72cf-458c-b576-bd694a80f5a6"",
+                    ""id"": ""b2ca1ce3-d3d1-4a05-b6c0-7d49034a3ee9"",
                     ""path"": ""<Keyboard>/backquote"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard + Mouse"",
-                    ""action"": ""Open Console"",
+                    ""action"": ""Open"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""bd344f8d-4120-4acc-97eb-2f2a8a3e7c03"",
+                    ""id"": ""a3ec3aff-bd1d-44b4-a64d-5d94bc55d102"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard + Mouse"",
+                    ""action"": ""Last Command"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""23a7db31-3ac2-415e-bb99-9ee987789227"",
                     ""path"": ""<Keyboard>/enter"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -341,8 +368,11 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Select = m_Menu.FindAction("Select", throwIfNotFound: true);
         m_Menu_Exit = m_Menu.FindAction("Exit", throwIfNotFound: true);
-        m_Menu_OpenConsole = m_Menu.FindAction("Open Console", throwIfNotFound: true);
-        m_Menu_Submit = m_Menu.FindAction("Submit", throwIfNotFound: true);
+        // Console
+        m_Console = asset.FindActionMap("Console", throwIfNotFound: true);
+        m_Console_Open = m_Console.FindAction("Open", throwIfNotFound: true);
+        m_Console_LastCommand = m_Console.FindAction("Last Command", throwIfNotFound: true);
+        m_Console_Submit = m_Console.FindAction("Submit", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -483,16 +513,12 @@ public class @Controls : IInputActionCollection, IDisposable
     private IMenuActions m_MenuActionsCallbackInterface;
     private readonly InputAction m_Menu_Select;
     private readonly InputAction m_Menu_Exit;
-    private readonly InputAction m_Menu_OpenConsole;
-    private readonly InputAction m_Menu_Submit;
     public struct MenuActions
     {
         private @Controls m_Wrapper;
         public MenuActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Select => m_Wrapper.m_Menu_Select;
         public InputAction @Exit => m_Wrapper.m_Menu_Exit;
-        public InputAction @OpenConsole => m_Wrapper.m_Menu_OpenConsole;
-        public InputAction @Submit => m_Wrapper.m_Menu_Submit;
         public InputActionMap Get() { return m_Wrapper.m_Menu; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -508,12 +534,6 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Exit.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnExit;
                 @Exit.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnExit;
                 @Exit.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnExit;
-                @OpenConsole.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnOpenConsole;
-                @OpenConsole.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnOpenConsole;
-                @OpenConsole.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnOpenConsole;
-                @Submit.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnSubmit;
-                @Submit.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnSubmit;
-                @Submit.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnSubmit;
             }
             m_Wrapper.m_MenuActionsCallbackInterface = instance;
             if (instance != null)
@@ -524,16 +544,59 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Exit.started += instance.OnExit;
                 @Exit.performed += instance.OnExit;
                 @Exit.canceled += instance.OnExit;
-                @OpenConsole.started += instance.OnOpenConsole;
-                @OpenConsole.performed += instance.OnOpenConsole;
-                @OpenConsole.canceled += instance.OnOpenConsole;
+            }
+        }
+    }
+    public MenuActions @Menu => new MenuActions(this);
+
+    // Console
+    private readonly InputActionMap m_Console;
+    private IConsoleActions m_ConsoleActionsCallbackInterface;
+    private readonly InputAction m_Console_Open;
+    private readonly InputAction m_Console_LastCommand;
+    private readonly InputAction m_Console_Submit;
+    public struct ConsoleActions
+    {
+        private @Controls m_Wrapper;
+        public ConsoleActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Open => m_Wrapper.m_Console_Open;
+        public InputAction @LastCommand => m_Wrapper.m_Console_LastCommand;
+        public InputAction @Submit => m_Wrapper.m_Console_Submit;
+        public InputActionMap Get() { return m_Wrapper.m_Console; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ConsoleActions set) { return set.Get(); }
+        public void SetCallbacks(IConsoleActions instance)
+        {
+            if (m_Wrapper.m_ConsoleActionsCallbackInterface != null)
+            {
+                @Open.started -= m_Wrapper.m_ConsoleActionsCallbackInterface.OnOpen;
+                @Open.performed -= m_Wrapper.m_ConsoleActionsCallbackInterface.OnOpen;
+                @Open.canceled -= m_Wrapper.m_ConsoleActionsCallbackInterface.OnOpen;
+                @LastCommand.started -= m_Wrapper.m_ConsoleActionsCallbackInterface.OnLastCommand;
+                @LastCommand.performed -= m_Wrapper.m_ConsoleActionsCallbackInterface.OnLastCommand;
+                @LastCommand.canceled -= m_Wrapper.m_ConsoleActionsCallbackInterface.OnLastCommand;
+                @Submit.started -= m_Wrapper.m_ConsoleActionsCallbackInterface.OnSubmit;
+                @Submit.performed -= m_Wrapper.m_ConsoleActionsCallbackInterface.OnSubmit;
+                @Submit.canceled -= m_Wrapper.m_ConsoleActionsCallbackInterface.OnSubmit;
+            }
+            m_Wrapper.m_ConsoleActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Open.started += instance.OnOpen;
+                @Open.performed += instance.OnOpen;
+                @Open.canceled += instance.OnOpen;
+                @LastCommand.started += instance.OnLastCommand;
+                @LastCommand.performed += instance.OnLastCommand;
+                @LastCommand.canceled += instance.OnLastCommand;
                 @Submit.started += instance.OnSubmit;
                 @Submit.performed += instance.OnSubmit;
                 @Submit.canceled += instance.OnSubmit;
             }
         }
     }
-    public MenuActions @Menu => new MenuActions(this);
+    public ConsoleActions @Console => new ConsoleActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -567,7 +630,11 @@ public class @Controls : IInputActionCollection, IDisposable
     {
         void OnSelect(InputAction.CallbackContext context);
         void OnExit(InputAction.CallbackContext context);
-        void OnOpenConsole(InputAction.CallbackContext context);
+    }
+    public interface IConsoleActions
+    {
+        void OnOpen(InputAction.CallbackContext context);
+        void OnLastCommand(InputAction.CallbackContext context);
         void OnSubmit(InputAction.CallbackContext context);
     }
 }
