@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 9196468331118597866}
   - component: {fileID: 9196468331118597869}
   - component: {fileID: 9196468331118597878}
-  - component: {fileID: 9196468331118597879}
   - component: {fileID: 9196468331118597865}
   m_Layer: 3
   m_Name: Cube
@@ -114,24 +113,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!114 &9196468331118597879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9196468331118597868}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  colors:
-  - {r: 0.97558546, g: 1, b: 0, a: 0}
-  - {r: 1, g: 0, b: 0, a: 0}
-  - {r: 0, g: 1, b: 0.022339106, a: 0}
-  - {r: 0, g: 0.037703037, b: 1, a: 0}
-  - {r: 0, g: 0.9505663, b: 1, a: 0}
 --- !u!114 &9196468331118597865
 MonoBehaviour:
   m_ObjectHideFlags: 0

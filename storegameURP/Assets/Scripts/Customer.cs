@@ -59,6 +59,6 @@ public class Customer : MonoBehaviour
     {
         agent.destination = position;
         yield return new WaitForSeconds(1.0f);
-        yield return new WaitUntil(() => agent.remainingDistance < distanceStopThresh || agent.velocity.magnitude <= velocityStopThresh);
+        yield return new WaitUntil(() => agent.remainingDistance < distanceStopThresh && agent.velocity.magnitude <= velocityStopThresh);
     }
 }
