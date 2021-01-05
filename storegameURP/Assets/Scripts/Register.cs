@@ -22,8 +22,8 @@ public class Register : Interactable
     private List<Product> receipt = new List<Product>();
     private Scanner scanner;
 
-    protected override CursorIcon.Icon HoverIcon => queue.Count > 0 || currentCustomer == null ? CursorIcon.Icon.Access : CursorIcon.Icon.None;
-    public Vector3 dropPosition => itemDrop.position;
+    protected override CursorIcon.Icon HoverIcon => queue.Count > 0 && currentCustomer == null ? CursorIcon.Icon.Access : CursorIcon.Icon.None;
+    public Vector3 DropPosition => itemDrop.position;
 
     public static Register GetClosestRegister(Vector3 origin)
     {

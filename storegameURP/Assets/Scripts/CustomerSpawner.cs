@@ -14,7 +14,7 @@ public class CustomerSpawner : MonoBehaviour
             // If there is at least one product available, take a random chance based on customer density.
             if (Product.ProductsAvailable.Count >= 1 && Random.Range(0, 100) <= (customersPerMinute / 60) * 100)
             {
-                Customer customer = Instantiate(customerPrefab).GetComponent<Customer>();
+                Customer customer = Instantiate(customerPrefab, transform.position, Quaternion.identity).GetComponent<Customer>();
                 customer.Wanted = Product.GetRandomProduct();
                 customer.EndPos = endPositions[Random.Range(0, endPositions.Length)].position;
             }

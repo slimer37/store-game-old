@@ -34,7 +34,7 @@ public class Customer : MonoBehaviour
         yield return MoveTo(reg.OnCustomerQueue(this));
     }
 
-    public void OnReady() => StartCoroutine(Wanted.FadeAndMove(transform.TransformPoint(holdPos), reg.dropPosition, false));
+    public void OnReady() => StartCoroutine(Wanted.FadeAndMove(transform.TransformPoint(holdPos), reg.DropPosition, false));
 
     public void OnQueueMoved(Vector3 nextSpot)
     {
