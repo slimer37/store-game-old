@@ -1,21 +1,26 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public static class DebugCommands
 {
     private static string command;
 
     private static readonly string helpString =
-        Colored("yellow", "help") + " - Lists all commands.\n" +
         Colored("yellow", "allthings") + " - Lists all objects in the scene.\n" +
-        Colored("yellow", "topthings") + " - Lists all top-level objects in the scene.\n" +
         Colored("yellow", "childrenof") + Colored("orange", " [object name]") + " - Lists an object's children.\n" +
+        Colored("yellow", "clear") + " - Clears the console output.\n" +
         Colored("yellow", "destroy") + Colored("orange", " [object name]") + " - Destroys an object.\n" +
+        Colored("yellow", "help") + " - Lists all commands.\n" +
         Colored("yellow", "reload") + " - Reloads the scene.\n" +
-        Colored("yellow", "clear") + " - Clears the console output.";
+        Colored("yellow", "topthings") + " - Lists all top-level objects in the scene.";
 
-    private static Exception NoArgs() => new Exception($"'{command}' requires at least one argument. (Consult the help command.)");
+    private static void ArgCheck(string arg)
+    {
+        if (arg == "")
+        { throw new Exception($"'{command}' requires at least one argument. (Consult the help command.)"); }
+    }
 
     private static string Colored(string color, string text) => $"<color={color}>{text}</color>";
 
@@ -30,12 +35,12 @@ public static class DebugCommands
 
         return command switch
         {
-            "help" => helpString,
             "allthings" => GetObjectList(),
-            "topthings" => GetParents(),
             "childrenof" => ChildrenOf(singleArg),
             "destroy" => DestroyObject(singleArg),
+            "help" => helpString,
             "reload" => ReloadScene(),
+            "topthings" => GetParents(),
             _ => throw new Exception($"The command '{command}' does not exist.")
         };
     }
@@ -61,37 +66,42 @@ public static class DebugCommands
 
     public static string ChildrenOf(string objName)
     {
-        string list = "";
+        ArgCheck(objName);
+
+        if (!GameObject.Find(objName))
+        { throw new Exception($"'{objName}' not found."); }
+
         Transform[] hierarchy = GameObject.Find(objName).transform.GetComponentsInChildren<Transform>();
+
+        if (hierarchy.Length == 1)
+        { return Colored("yellow", $"'{objName}' has no children."); }
+
+        string list = "";
+
         for (int i = 1; i < hierarchy.Length; i++)
         { list += ", " + hierarchy[i].name; }
-        return Colored("yellow", $"Children of '{hierarchy[0].name}': ") + list.Substring(2);
+        return Colored("yellow", $"Children of '{objName}': ") + list.Substring(2);
     }
 
-    public static string DestroyObject(string name)
+    public static string DestroyObject(string objName)
     {
-        if (name == "")
-        { throw NoArgs(); }
+        ArgCheck(objName);
 
-        string result = "";
-
-        if (GameObject.Find(name) == null)
-        { result += "\n" + Colored("red", $"GameObject {name} could not be found."); }
-        else if (name == "Console")
-        { result += "\n" + Colored("yellow", "You can't destroy the console!"); }
+        if (!GameObject.Find(objName))
+        { throw new Exception($"'{objName}' not found."); }
+        else if (objName == "Console")
+        { return Colored("yellow", "You can't destroy the console!"); }
         else
         {
-            UnityEngine.Object.Destroy(GameObject.Find(name));
-            result += $"\nDestroyed {name}.";
+            UnityEngine.Object.Destroy(GameObject.Find(objName));
+            return $"Destroyed '{objName}'.";
         }
-
-        return result.Substring(1);
     }
 
     public static string ReloadScene()
     {
-        int sceneIndex = UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex;
-        UnityEngine.SceneManagement.SceneManager.LoadScene(sceneIndex);
-        return "Success.";
+        Scene activeScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(activeScene.buildIndex);
+        return $"Successfully reloaded scene '{activeScene.name}'.";
     }
 }

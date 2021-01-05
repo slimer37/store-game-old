@@ -22,6 +22,8 @@ public class DebugConsole : MonoBehaviour
     private string output = "Wizards only, fools.";
     private Vector2 scrollPosition;
 
+    private string memory;
+
     void Awake()
     {
         var kb = Keyboard.current;
@@ -29,11 +31,14 @@ public class DebugConsole : MonoBehaviour
 
         controls = new Controls();
         controls.Enable();
-        controls.Menu.OpenConsole.performed += _ => open = debug ? !open : open;
-        controls.Menu.Submit.performed += _ => Submit();
+        controls.Console.Open.performed += _ => open = debug ? !open : open;
+        controls.Console.Submit.performed += _ => Submit();
+        controls.Console.LastCommand.performed += _ => RecallCommand();
 
         DontDestroyOnLoad(gameObject);
     }
+
+    void RecallCommand() => input = memory;
 
     void Submit()
     {
@@ -52,6 +57,7 @@ public class DebugConsole : MonoBehaviour
                 { Append($"<color=red>Error: {e.Message}</color>"); }
             }
 
+            memory = input;
             input = "";
         }
 
