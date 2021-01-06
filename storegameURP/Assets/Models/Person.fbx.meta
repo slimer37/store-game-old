@@ -17,10 +17,10 @@ ModelImporter:
     second: Rig|RigAction.003
   - first:
       74: -7264356326966739861
-    second: Rig|Walk
+    second: Walk
   - first:
       74: -429512112410174799
-    second: Rig|Idle
+    second: Idle
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -50,7 +50,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Rig|Idle
+      name: Idle
       takeName: Rig|Idle
       internalID: 0
       firstFrame: 0
@@ -79,7 +79,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: Rig|Walk
+      name: Walk
       takeName: Rig|Walk
       internalID: 0
       firstFrame: 0
