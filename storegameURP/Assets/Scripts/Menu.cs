@@ -13,5 +13,7 @@ public abstract class Menu : MonoBehaviour
         MenuActions.Exit.performed += _ => Open(false);
     }
 
+    void OnDisable() => controls.Disable();
+
     public virtual void Open(bool value) => gameObject.SetActive(value);
 }
