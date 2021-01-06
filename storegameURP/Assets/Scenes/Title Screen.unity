@@ -564,16 +564,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colors:
-  - {r: 0, g: 0.2905326, b: 1, a: 0}
-  - {r: 0.3820755, g: 0.68385273, b: 1, a: 0}
-  - {r: 0.15686274, g: 1, b: 0.65896446, a: 0}
-  - {r: 1, g: 1, b: 1, a: 0}
-  - {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0}
-  - {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 0}
-  - {r: 1, g: 0.3476852, b: 0.15686274, a: 0}
-  - {r: 1, g: 0.65678144, b: 0.43867922, a: 0}
-  - {r: 1, g: 0.8382137, b: 0.15686274, a: 0}
+  colorRandomizers: []
+  appearanceChance: 100
 --- !u!65 &145338790
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -636,6 +628,140 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 145338787}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &146033566
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 146033567}
+  - component: {fileID: 146033569}
+  - component: {fileID: 146033568}
+  m_Layer: 5
+  m_Name: Copyright
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &146033567
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146033566}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 307184967}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 400, y: 50}
+  m_Pivot: {x: 1, y: 0}
+--- !u!114 &146033568
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146033566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: "\xA9 2021 Alfred RM"
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: 885075c04b6572945b756f1daf6609e3, type: 2}
+  m_sharedMaterial: {fileID: 6784325892005900707, guid: 885075c04b6572945b756f1daf6609e3, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 30
+  m_fontSizeBase: 30
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 4
+  m_VerticalAlignment: 1024
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &146033569
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146033566}
+  m_CullTransparentMesh: 1
 --- !u!1 &159529825
 GameObject:
   m_ObjectHideFlags: 0
@@ -787,7 +913,8 @@ RectTransform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 146033567}
   m_Father: {fileID: 629017605}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1081,16 +1208,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colors:
-  - {r: 0, g: 0.2905326, b: 1, a: 0}
-  - {r: 0.3820755, g: 0.68385273, b: 1, a: 0}
-  - {r: 0.15686274, g: 1, b: 0.65896446, a: 0}
-  - {r: 1, g: 1, b: 1, a: 0}
-  - {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0}
-  - {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 0}
-  - {r: 1, g: 0.3476852, b: 0.15686274, a: 0}
-  - {r: 1, g: 0.65678144, b: 0.43867922, a: 0}
-  - {r: 1, g: 0.8382137, b: 0.15686274, a: 0}
+  colorRandomizers: []
+  appearanceChance: 100
 --- !u!65 &420005877
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1587,16 +1706,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colors:
-  - {r: 0, g: 0.2905326, b: 1, a: 0}
-  - {r: 0.3820755, g: 0.68385273, b: 1, a: 0}
-  - {r: 0.15686274, g: 1, b: 0.65896446, a: 0}
-  - {r: 1, g: 1, b: 1, a: 0}
-  - {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0}
-  - {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 0}
-  - {r: 1, g: 0.3476852, b: 0.15686274, a: 0}
-  - {r: 1, g: 0.65678144, b: 0.43867922, a: 0}
-  - {r: 1, g: 0.8382137, b: 0.15686274, a: 0}
+  colorRandomizers: []
+  appearanceChance: 100
 --- !u!65 &543848877
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1786,16 +1897,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colors:
-  - {r: 0, g: 0.2905326, b: 1, a: 0}
-  - {r: 0.3820755, g: 0.68385273, b: 1, a: 0}
-  - {r: 0.15686274, g: 1, b: 0.65896446, a: 0}
-  - {r: 1, g: 1, b: 1, a: 0}
-  - {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0}
-  - {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 0}
-  - {r: 1, g: 0.3476852, b: 0.15686274, a: 0}
-  - {r: 1, g: 0.65678144, b: 0.43867922, a: 0}
-  - {r: 1, g: 0.8382137, b: 0.15686274, a: 0}
+  colorRandomizers: []
+  appearanceChance: 100
 --- !u!65 &583712092
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1985,16 +2088,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colors:
-  - {r: 0, g: 0.2905326, b: 1, a: 0}
-  - {r: 0.3820755, g: 0.68385273, b: 1, a: 0}
-  - {r: 0.15686274, g: 1, b: 0.65896446, a: 0}
-  - {r: 1, g: 1, b: 1, a: 0}
-  - {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0}
-  - {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 0}
-  - {r: 1, g: 0.3476852, b: 0.15686274, a: 0}
-  - {r: 1, g: 0.65678144, b: 0.43867922, a: 0}
-  - {r: 1, g: 0.8382137, b: 0.15686274, a: 0}
+  colorRandomizers: []
+  appearanceChance: 100
 --- !u!65 &610166875
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2091,7 +2186,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 8.155}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 184, y: 115}
+  m_AnchoredPosition: {x: 216, y: 128}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &614688546
@@ -2342,16 +2437,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colors:
-  - {r: 0, g: 0.2905326, b: 1, a: 0}
-  - {r: 0.3820755, g: 0.68385273, b: 1, a: 0}
-  - {r: 0.15686274, g: 1, b: 0.65896446, a: 0}
-  - {r: 1, g: 1, b: 1, a: 0}
-  - {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0}
-  - {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 0}
-  - {r: 1, g: 0.3476852, b: 0.15686274, a: 0}
-  - {r: 1, g: 0.65678144, b: 0.43867922, a: 0}
-  - {r: 1, g: 0.8382137, b: 0.15686274, a: 0}
+  colorRandomizers: []
+  appearanceChance: 100
 --- !u!65 &644365835
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2471,13 +2558,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<b>Direction</b>.......................Alfred\n\n<b>Programming</b>..................Alfred\n\n<b>Art</b>......................................Alfred\n                              
-    Adrian\n\n<b>Design</b>..............................Alfred\n                              
-    Adrian\n\n<b>Testing</b>............................Julian\n                               
+  m_text: "<b>Direction</b>.........Alfred\n\n<b>Programming</b>.....Alfred\n\n<b>Art</b>......................Alfred\n                             
+    Adrian\n\n<b>Design</b>...............Alfred\n                              Adrian\n\n<b>Testing</b>.............Julian\n                               
     Tatem"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0b1ec1d3d9c5f9b43a0db025fa99af94, type: 2}
-  m_sharedMaterial: {fileID: 914074971337307725, guid: 0b1ec1d3d9c5f9b43a0db025fa99af94, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c121b74fad634f8418a521a4b5b0d752, type: 2}
+  m_sharedMaterial: {fileID: -5717094653309122372, guid: c121b74fad634f8418a521a4b5b0d752, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2993,16 +3079,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colors:
-  - {r: 0, g: 0.2905326, b: 1, a: 0}
-  - {r: 0.3820755, g: 0.68385273, b: 1, a: 0}
-  - {r: 0.15686274, g: 1, b: 0.65896446, a: 0}
-  - {r: 1, g: 1, b: 1, a: 0}
-  - {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0}
-  - {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 0}
-  - {r: 1, g: 0.3476852, b: 0.15686274, a: 0}
-  - {r: 1, g: 0.65678144, b: 0.43867922, a: 0}
-  - {r: 1, g: 0.8382137, b: 0.15686274, a: 0}
+  colorRandomizers: []
+  appearanceChance: 100
 --- !u!65 &812398042
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3451,16 +3529,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colors:
-  - {r: 0, g: 0.2905326, b: 1, a: 0}
-  - {r: 0.3820755, g: 0.68385273, b: 1, a: 0}
-  - {r: 0.15686274, g: 1, b: 0.65896446, a: 0}
-  - {r: 1, g: 1, b: 1, a: 0}
-  - {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0}
-  - {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 0}
-  - {r: 1, g: 0.3476852, b: 0.15686274, a: 0}
-  - {r: 1, g: 0.65678144, b: 0.43867922, a: 0}
-  - {r: 1, g: 0.8382137, b: 0.15686274, a: 0}
+  colorRandomizers: []
+  appearanceChance: 100
 --- !u!65 &1002787496
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3580,18 +3650,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '----------------------------------------
+  m_text: '------------------------------
 
     Total: 1 COUNTER CHAOS
 
-    ----------------------------------------
+    ------------------------------
 
 
     ****
     Brought to you by ****'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0b1ec1d3d9c5f9b43a0db025fa99af94, type: 2}
-  m_sharedMaterial: {fileID: 914074971337307725, guid: 0b1ec1d3d9c5f9b43a0db025fa99af94, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c121b74fad634f8418a521a4b5b0d752, type: 2}
+  m_sharedMaterial: {fileID: -5717094653309122372, guid: c121b74fad634f8418a521a4b5b0d752, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3880,16 +3950,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colors:
-  - {r: 0, g: 0.2905326, b: 1, a: 0}
-  - {r: 0.3820755, g: 0.68385273, b: 1, a: 0}
-  - {r: 0.15686274, g: 1, b: 0.65896446, a: 0}
-  - {r: 1, g: 1, b: 1, a: 0}
-  - {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0}
-  - {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 0}
-  - {r: 1, g: 0.3476852, b: 0.15686274, a: 0}
-  - {r: 1, g: 0.65678144, b: 0.43867922, a: 0}
-  - {r: 1, g: 0.8382137, b: 0.15686274, a: 0}
+  colorRandomizers: []
+  appearanceChance: 100
 --- !u!65 &1128503466
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4912,16 +4974,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colors:
-  - {r: 0, g: 0.2905326, b: 1, a: 0}
-  - {r: 0.3820755, g: 0.68385273, b: 1, a: 0}
-  - {r: 0.15686274, g: 1, b: 0.65896446, a: 0}
-  - {r: 1, g: 1, b: 1, a: 0}
-  - {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0}
-  - {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 0}
-  - {r: 1, g: 0.3476852, b: 0.15686274, a: 0}
-  - {r: 1, g: 0.65678144, b: 0.43867922, a: 0}
-  - {r: 1, g: 0.8382137, b: 0.15686274, a: 0}
+  colorRandomizers: []
+  appearanceChance: 100
 --- !u!65 &1452635900
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5125,13 +5179,13 @@ MonoBehaviour:
       m_Calls: []
   m_text: '(c) 2021 Alfred R. M.
 
-    ----------------------------------------
+    -------------------------------
 
     THANK
     YOU FOR PLAYING'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0b1ec1d3d9c5f9b43a0db025fa99af94, type: 2}
-  m_sharedMaterial: {fileID: 914074971337307725, guid: 0b1ec1d3d9c5f9b43a0db025fa99af94, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: c121b74fad634f8418a521a4b5b0d752, type: 2}
+  m_sharedMaterial: {fileID: -5717094653309122372, guid: c121b74fad634f8418a521a4b5b0d752, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -5326,16 +5380,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colors:
-  - {r: 0, g: 0.2905326, b: 1, a: 0}
-  - {r: 0.3820755, g: 0.68385273, b: 1, a: 0}
-  - {r: 0.15686274, g: 1, b: 0.65896446, a: 0}
-  - {r: 1, g: 1, b: 1, a: 0}
-  - {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0}
-  - {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 0}
-  - {r: 1, g: 0.3476852, b: 0.15686274, a: 0}
-  - {r: 1, g: 0.65678144, b: 0.43867922, a: 0}
-  - {r: 1, g: 0.8382137, b: 0.15686274, a: 0}
+  colorRandomizers: []
+  appearanceChance: 100
 --- !u!65 &1630442824
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6559,16 +6605,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colors:
-  - {r: 0, g: 0.2905326, b: 1, a: 0}
-  - {r: 0.3820755, g: 0.68385273, b: 1, a: 0}
-  - {r: 0.15686274, g: 1, b: 0.65896446, a: 0}
-  - {r: 1, g: 1, b: 1, a: 0}
-  - {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0}
-  - {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 0}
-  - {r: 1, g: 0.3476852, b: 0.15686274, a: 0}
-  - {r: 1, g: 0.65678144, b: 0.43867922, a: 0}
-  - {r: 1, g: 0.8382137, b: 0.15686274, a: 0}
+  colorRandomizers: []
+  appearanceChance: 100
 --- !u!65 &1955993489
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6848,16 +6886,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colors:
-  - {r: 0, g: 0.2905326, b: 1, a: 0}
-  - {r: 0.3820755, g: 0.68385273, b: 1, a: 0}
-  - {r: 0.15686274, g: 1, b: 0.65896446, a: 0}
-  - {r: 1, g: 1, b: 1, a: 0}
-  - {r: 0.5377358, g: 0.5377358, b: 0.5377358, a: 0}
-  - {r: 0.3490566, g: 0.3490566, b: 0.3490566, a: 0}
-  - {r: 1, g: 0.3476852, b: 0.15686274, a: 0}
-  - {r: 1, g: 0.65678144, b: 0.43867922, a: 0}
-  - {r: 1, g: 0.8382137, b: 0.15686274, a: 0}
+  colorRandomizers: []
+  appearanceChance: 100
 --- !u!65 &2034460083
 BoxCollider:
   m_ObjectHideFlags: 0
