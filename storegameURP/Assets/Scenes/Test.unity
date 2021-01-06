@@ -218,9 +218,9 @@ MonoBehaviour:
   m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 36
   m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
@@ -1216,16 +1216,16 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 242173765}
-  m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 0.929, y: 0.712, z: -0.058}
-  m_LocalScale: {x: 0.75000006, y: 1.25, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.758575, y: -1.0790017, z: -10.51}
+  m_LocalScale: {x: 0.7500001, y: 1, z: 1}
   m_Children:
   - {fileID: 1758824914}
   - {fileID: 396047208}
   - {fileID: 28498783}
-  m_Father: {fileID: 543450651821340069}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
+  m_Father: {fileID: 395674116}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &242173770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1240,21 +1240,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 1
   sprite: {fileID: 0}
-  header: Eviction Notice
-  body: 'You''re gonna get evicted. Sorry.
+  header: TO NEWBIE
+  body: 'Hey newbie,
 
 
-    Just kidding!
-
-    But your bills
-    are due soon.
+    I hear you''re in need of a job to fund whatever it is
+    kids fund. A PC? Candy? Anywho, I''m out today. So is everyone else.
 
 
-    -Cool Landlord 37
+    <i>Store''s
+    yours.</i>
 
 
-    P.S. You can''t step outside this
-    door.'
+    No customers are gonna enter the store unless you flip the sign
+    on the door (after you''ve tidied up, of course.)
+
+
+    Don''t waste my small
+    business loan, intern!
+
+    I don''t wanna lose my Ford Siesta.
+
+    -Rupert'
   headerColor: {r: 1, g: 0.15566039, b: 0.15566039, a: 1}
   bodyColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!1 &243077633
@@ -1728,6 +1735,7 @@ Transform:
   - {fileID: 5077664083238197650}
   - {fileID: 341439269}
   - {fileID: 126512493}
+  - {fileID: 242173769}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1788,7 +1796,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: RESPOND IMMEDIATELY
+  m_text: 'READ ME
+
+
+    Hover over this object and press e to inspect it. You freeze
+    while doing this but the game doesn''t.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 29fe261b33011fe44b2b7afd288a7a23, type: 2}
   m_sharedMaterial: {fileID: -396172956957159611, guid: 29fe261b33011fe44b2b7afd288a7a23, type: 2}
@@ -9763,7 +9775,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh62296
+  m_Name: pb_Mesh70684
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -10517,7 +10529,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh62710
+  m_Name: pb_Mesh71106
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -11594,7 +11606,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <align=center>Eviction Notice</align>
+  m_text: <align=center>To Newbie</align>
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 29fe261b33011fe44b2b7afd288a7a23, type: 2}
   m_sharedMaterial: {fileID: -396172956957159611, guid: 29fe261b33011fe44b2b7afd288a7a23, type: 2}
