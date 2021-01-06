@@ -9,6 +9,7 @@ public class Customer : MonoBehaviour
     [SerializeField] private float distanceStopThresh;
     [SerializeField] private int maxWanderAmount;
     [SerializeField] private int maxWanderRange;
+    [SerializeField] private Animator anim;
 
     private NavMeshAgent agent;
     private Register reg;
@@ -61,4 +62,6 @@ public class Customer : MonoBehaviour
         yield return new WaitForSeconds(1.0f);
         yield return new WaitUntil(() => agent.remainingDistance < distanceStopThresh && agent.velocity.magnitude <= velocityStopThresh);
     }
+
+    void Update() => anim.SetFloat("Speed", agent.velocity.sqrMagnitude);
 }
