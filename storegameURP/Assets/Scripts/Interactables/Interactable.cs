@@ -14,7 +14,7 @@ public abstract class Interactable : MonoBehaviour
         }
     }
 
-    public void Hover() => CursorIcon.ShowIcon(HoverIcon);
+    public void Hover() => CursorIcon.ShowIcon(interactable ? HoverIcon : CursorIcon.Icon.Invalid);
 
     public void OnInteract()
     {
