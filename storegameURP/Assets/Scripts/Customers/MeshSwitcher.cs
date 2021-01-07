@@ -7,6 +7,13 @@ public class MeshSwitcher : MonoBehaviour
     void Awake()
     {
         if (meshOptions.Length > 0)
-        { GetComponent<MeshFilter>().mesh = meshOptions[Random.Range(0, meshOptions.Length)]; }
+        {
+            Mesh randomMesh = meshOptions[Random.Range(0, meshOptions.Length)];
+
+            if (GetComponent<MeshFilter>())
+            { GetComponent<MeshFilter>().mesh = randomMesh; }
+            else
+            { GetComponent<SkinnedMeshRenderer>().sharedMesh = randomMesh; }
+        }
     }
 }
