@@ -20,7 +20,7 @@ public class Surveil : MonoBehaviour
 
         IEnumerator Turn(Vector3 endEuler)
         {
-            Tweens.LerpRotationEuler(transform, endEuler, turnTime, true);
+            yield return Tweens.LerpRotationEuler(transform, endEuler, turnTime, true);
             yield return new WaitForSeconds(turnInterval);
         }
     }
