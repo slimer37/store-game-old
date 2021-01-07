@@ -5,10 +5,14 @@ public class CustomerSpawner : MonoBehaviour
 {
     [SerializeField] private Transform[] endPositions;
     [SerializeField] private GameObject customerPrefab;
+    [SerializeField] private float startDelay;
     [SerializeField, Range(0, 60)] private int customersPerMinute;
     
     IEnumerator Start()
     {
+        yield return new WaitUntil(() => LevelProgression.CurrentLevel.StoreOpen);
+        yield return new WaitForSeconds(startDelay);
+
         while (true)
         {
             // If there is at least one product available, take a random chance based on customer density.
