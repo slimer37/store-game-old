@@ -68,11 +68,8 @@ public class Movement : MonoBehaviour
     IEnumerator AnimateFOV()
     {
         float finalFOV = sprinting ? sprintFOV : originalFOV;
-        while (cam.fieldOfView != finalFOV)
-        {
-            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, finalFOV, FOVChangeRate * Time.deltaTime);
-            yield return null;
-        }
+        yield return Tweens.LerpValue(1 / FOVChangeRate, t =>
+            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, finalFOV, FOVChangeRate * Time.deltaTime));
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)

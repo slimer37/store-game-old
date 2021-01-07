@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -26,7 +25,7 @@ public class CustomInspect : MonoBehaviour
         headerText.color = headerColor;
         bodyText.text = body;
         bodyText.color = bodyColor;
-        StartCoroutine(FadeText(true));
+        StartCoroutine(Tweens.CrossFadeGroup(textGroup, 1, inspectFadeDuration));
     }
 
     public void ShowSprite(Sprite sprite, Vector2? preferredDimensions)
@@ -34,7 +33,7 @@ public class CustomInspect : MonoBehaviour
         if (preferredDimensions != null)
         { image.rectTransform.sizeDelta = (Vector2)preferredDimensions; }
         image.sprite = sprite;
-        StartCoroutine(FadeImage(true));
+        StartCoroutine(Tweens.CrossFadeImage(image, 1, inspectFadeDuration));
     }
 
     public bool Hide()
@@ -42,29 +41,10 @@ public class CustomInspect : MonoBehaviour
         if (textGroup.alpha == 1 || image.color.a == 1)
         {
             StopAllCoroutines();
-            StartCoroutine(FadeText(false));
-            StartCoroutine(FadeImage(false));
+            StartCoroutine(Tweens.CrossFadeGroup(textGroup, 0, inspectFadeDuration));
+            StartCoroutine(Tweens.CrossFadeImage(image, 0, inspectFadeDuration));
             return true;
         }
         return false;
-    }
-
-    IEnumerator FadeText(bool value)
-    {
-        float from = textGroup.alpha;
-        float to = value ? 1 : 0;
-        for (float t = 0; t < 1; t += Time.deltaTime / inspectFadeDuration)
-        {
-            textGroup.alpha = Mathf.Lerp(from, to, t);
-            yield return null;
-        }
-        textGroup.alpha = to;
-    }
-
-    IEnumerator FadeImage(bool value)
-    {
-        float to = value ? 1 : 0;
-        image.CrossFadeAlpha(to, inspectFadeDuration, false);
-        yield return new WaitForSeconds(inspectFadeDuration);
     }
 }

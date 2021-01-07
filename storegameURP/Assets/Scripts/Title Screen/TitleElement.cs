@@ -66,14 +66,8 @@ public class TitleElement : MonoBehaviour
     {
         if (force || !Focused && !animating)
         {
-            Vector3 start = transform.position;
             Vector3 end = firstPos + Vector3.up * hoverHeight * (raise ? 1 : 0);
-
-            for (float t = 0; t < 1; t += TitleScreen.AnimSpeed * Time.deltaTime)
-            {
-                transform.position = Vector3.Lerp(start, end, t);
-                yield return null;
-            }
+            yield return Tweens.LerpLocation(transform, end, 1 / TitleScreen.AnimSpeed);
         }
     }
 
@@ -83,7 +77,8 @@ public class TitleElement : MonoBehaviour
         animating = true;
         Focused = true;
 
-        yield return AnimateTransform(TitleScreen.Front, TitleScreen.ElementRot);
+        yield return Tweens.LerpTransform(transform, TitleScreen.Front, TitleScreen.ElementRot, 1 / TitleScreen.AnimSpeed);
+
         if (anim)
         { anim.Play(openState); }
         animating = false;
@@ -102,23 +97,9 @@ public class TitleElement : MonoBehaviour
             yield return new WaitForSeconds(stateInfo.length);
         }
 
-        yield return AnimateTransform(firstPos + (anim ? Vector3.up * hoverHeight : Vector3.zero), firstRot);
+        yield return Tweens.LerpTransform(transform, firstPos + (anim ? Vector3.up * hoverHeight : Vector3.zero), firstRot, 1 / TitleScreen.AnimSpeed);
         yield return Raise(false, anim);
 
         animating = false;
-    }
-
-    IEnumerator AnimateTransform(Vector3 end, Quaternion endRot)
-    {
-        Vector3 start = transform.position;
-        Quaternion startRot = transform.rotation;
-        for (float t = 0; t < 1; t += TitleScreen.AnimSpeed * Time.deltaTime)
-        {
-            transform.position = Vector3.Lerp(start, end, t);
-            transform.rotation = Quaternion.Lerp(startRot, endRot, t);
-            yield return null;
-        }
-        transform.position = end;
-        transform.rotation = endRot;
     }
 }

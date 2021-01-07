@@ -20,14 +20,7 @@ public class Surveil : MonoBehaviour
 
         IEnumerator Turn(Vector3 endEuler)
         {
-            Quaternion startRot = transform.localRotation;
-            Quaternion endRot = Quaternion.Euler(endEuler);
-            for (float t = 0; t < 1; t += Time.deltaTime / turnTime)
-            {
-                transform.localRotation = Quaternion.Lerp(startRot, endRot, t);
-                yield return null;
-            }
-            transform.localRotation = endRot;
+            Tweens.LerpRotationEuler(transform, endEuler, turnTime, true);
             yield return new WaitForSeconds(turnInterval);
         }
     }

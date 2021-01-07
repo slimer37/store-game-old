@@ -61,15 +61,11 @@ public class Product : Pickuppable
         if (value)
         { to.y = transform.position.y; }
 
-        for (float t = 0; t < 1; t += Time.deltaTime)
+        yield return Tweens.LerpValue(1, t =>
         {
             rend.material.color = new Color(originalColor.r, originalColor.g, originalColor.b, Mathf.Lerp(originalColor.a, finalAlpha, t));
             transform.position = Vector3.Lerp(from, to, t);
-            yield return null;
-        }
-
-        rend.material.color = new Color(originalColor.r, originalColor.g, originalColor.b, finalAlpha);
-        transform.position = to;
+        });
 
         ResetRb();
         SetInteractable(true);

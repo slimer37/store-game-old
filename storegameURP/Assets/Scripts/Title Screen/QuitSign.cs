@@ -23,10 +23,8 @@ public class QuitSign : MonoBehaviour
         AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
         yield return new WaitForSeconds(stateInfo.length);
 
-        fadePanel.CrossFadeAlpha(0, 0, true);
         fadePanel.gameObject.SetActive(true);
-        fadePanel.CrossFadeAlpha(1, fadeDuration, true);
-        yield return new WaitForSeconds(fadeDuration);
+        yield return Tweens.CrossFadeImage(fadePanel, 1, fadeDuration);
 
         Application.Quit();
 

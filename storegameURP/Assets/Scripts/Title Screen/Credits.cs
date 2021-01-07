@@ -37,7 +37,7 @@ public class Credits : Menu
         TitleScreen.Enable(false);
 
         transform.GetChild(0).GetComponent<RectTransform>().pivot = originalPivot;
-        yield return Fade(0, 1);
+        yield return Tweens.CrossFadeGroup(group, 1, 1);
 
         AnimatorStateInfo stateInfo = creditsAnim.GetCurrentAnimatorStateInfo(0);
         creditsAnim.Play(stateInfo.fullPathHash, 0, 0);
@@ -50,18 +50,8 @@ public class Credits : Menu
     IEnumerator StopCredits()
     {
         TitleScreen.Enable(true);
-        yield return Fade(1, 0);
+        yield return Tweens.CrossFadeGroup(group, 0, 1);
         creditsAnim.StopPlayback();
         creditsAnim.enabled = false;
-    }
-
-    IEnumerator Fade(float start, float end)
-    {
-        for (float i = 0; i < 1; i += Time.deltaTime)
-        {
-            group.alpha = Mathf.Lerp(start, end, i);
-            yield return null;
-        }
-        group.alpha = end;
     }
 }
