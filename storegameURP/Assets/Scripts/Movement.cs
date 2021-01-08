@@ -7,6 +7,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private float walkSpeed;
     [SerializeField] private float jumpForce;
     [SerializeField] private Animator anim;
+    [SerializeField] private float sprintAnimSpeed;
 
     [Header("Sprinting")]
     [SerializeField] private float sprintSpeed;
@@ -54,6 +55,7 @@ public class Movement : MonoBehaviour
         { moveDirection = Vector3.zero + Vector3.up * inputDirection.y; }
 
         anim.SetFloat("Speed", controller.velocity.sqrMagnitude);
+        anim.speed = sprinting ? sprintAnimSpeed : 1;
         controller.Move(moveDirection * Time.deltaTime);
     }
 
