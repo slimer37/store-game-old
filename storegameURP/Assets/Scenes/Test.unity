@@ -15495,7 +15495,7 @@ MonoBehaviour:
   pendingText: Customer pending!
   screenSideText: {fileID: 976173184}
   itemDrop: {fileID: 1781547752}
-  lineStartOffset: 2
+  lineStartOffset: 1.4
   lineCustomerOffset: 2
 --- !u!65 &5565512597527872298
 BoxCollider:
