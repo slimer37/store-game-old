@@ -23,7 +23,7 @@ public class Register : Interactable
 
     private bool CustomerPending => queue.Count > 0 && !currentCustomer && queue[0].ReachedRegister;
 
-    protected override CursorIcon.Icon HoverIcon => queue.Count > 0 && currentCustomer == null ? CursorIcon.Icon.Access : CursorIcon.Icon.None;
+    protected override CursorIcon.Icon HoverIcon => CustomerPending ? CursorIcon.Icon.Access : CursorIcon.Icon.None;
     public Vector3 DropPosition => itemDrop.position;
 
     public static Register GetClosestRegister(Vector3 origin)
@@ -84,10 +84,12 @@ public class Register : Interactable
 
     void EndOrder()
     {
+        Level.Current.Money += receipt[0].Info.Price;
+        receipt.Clear();
+
         currentCustomer.End();
         currentCustomer = null;
         queue.RemoveAt(0);
-        receipt.Clear();
         for (int i = 0; i < queue.Count; i++)
         { queue[i].OnQueueMoved(queuePositions[i]); }
     }
