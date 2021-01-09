@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
-    public bool interactable = true;
+    protected bool interactable = true;
     protected virtual CursorIcon.Icon HoverIcon { get; set; }
 
     protected virtual void OnValidate()
