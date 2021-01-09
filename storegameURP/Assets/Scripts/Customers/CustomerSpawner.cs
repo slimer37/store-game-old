@@ -10,10 +10,10 @@ public class CustomerSpawner : MonoBehaviour
     
     IEnumerator Start()
     {
-        yield return new WaitUntil(() => LevelProgression.CurrentLevel.StoreOpen);
+        yield return new WaitUntil(() => Level.CurrentLevel.StoreOpen);
         yield return new WaitForSeconds(startDelay);
 
-        while (LevelProgression.CurrentLevel.StoreOpen)
+        while (Level.CurrentLevel.StoreOpen)
         {
             // If there is at least one product available, take a random chance based on customer density.
             if (Product.ProductsAvailable.Count >= 1 && Random.Range(0, 100) <= (customersPerMinute / 60) * 100)

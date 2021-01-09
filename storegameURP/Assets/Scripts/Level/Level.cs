@@ -1,11 +1,11 @@
 using System;
 using UnityEngine;
 
-public class LevelProgression : MonoBehaviour
+public class Level : MonoBehaviour
 {
     public Action OnStoreOpen;
 
-    public static LevelProgression CurrentLevel { get; private set; }
+    public static Level CurrentLevel { get; private set; }
     public bool StoreOpen { get; private set; }
 
     private float money;
