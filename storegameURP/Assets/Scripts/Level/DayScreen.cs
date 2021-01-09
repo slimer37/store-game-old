@@ -10,8 +10,8 @@ public class DayScreen : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dayNum;
     [SerializeField] private TextMeshProUGUI levelName;
 
-    void Start() => LevelProgression.CurrentLevel.OnStoreOpen += () => StartCoroutine(ShowDayScreen());
-    void OnDisable() => LevelProgression.CurrentLevel.OnStoreOpen -= () => StartCoroutine(ShowDayScreen());
+    void Start() => Level.Current.OnStoreOpen += () => StartCoroutine(ShowDayScreen());
+    void OnDisable() => Level.Current.OnStoreOpen -= () => StartCoroutine(ShowDayScreen());
 
     IEnumerator ShowDayScreen()
     {

@@ -17,7 +17,7 @@ public class OpenSign : Interactable
         {
             anim.Play(openState);
             interactable = false;
-            LevelProgression.CurrentLevel.OpenStore();
+            Level.Current.OpenStore();
             open = true;
         }
     }
