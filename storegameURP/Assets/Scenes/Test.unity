@@ -8471,6 +8471,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e7505d4aceaf8439426486028c9f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  capacity: 1
   endPositions:
   - {fileID: 590409875}
   customerPrefab: {fileID: 4224331126714648981, guid: ad09a7bd55fcbe344bd04edada56ba54, type: 3}
@@ -10223,8 +10224,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b4386119aab2b54484714b2a47e7cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayPanel: {fileID: 0}
-  levelText: {fileID: 0}
 --- !u!4 &1053979634
 Transform:
   m_ObjectHideFlags: 0
@@ -10340,7 +10339,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh21862
+  m_Name: pb_Mesh19372
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -11230,7 +11229,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh22314
+  m_Name: pb_Mesh19814
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

@@ -5,8 +5,6 @@ using UnityEngine.AI;
 public class Customer : MonoBehaviour
 {
     [SerializeField] private Vector3 holdPos;
-    [SerializeField] private float velocityStopThresh;
-    [SerializeField] private float distanceStopThresh;
     [SerializeField] private int maxWanderAmount;
     [SerializeField] private int maxWanderRange;
     [SerializeField] private Animator anim;
@@ -53,15 +51,20 @@ public class Customer : MonoBehaviour
     {
         Wanted.gameObject.SetActive(false);
         yield return MoveTo(EndPos);
+        CustomerSpawner.OnCustomerDestroyed();
         Destroy(gameObject);
     }
 
     IEnumerator MoveTo(Vector3 position)
     {
         agent.destination = position;
-        yield return new WaitForSeconds(1.0f);
-        yield return new WaitUntil(() => agent.remainingDistance < distanceStopThresh && agent.velocity.magnitude <= velocityStopThresh);
+        yield return new WaitUntil(() => agent.hasPath && agent.remainingDistance <= agent.stoppingDistance);
     }
 
     void Update() => anim.SetFloat("Speed", agent.velocity.sqrMagnitude);
+
+    void FixedUpdate()
+    {
+        print(agent.remainingDistance + " - Stopping: " + agent.stoppingDistance);
+    }
 }
