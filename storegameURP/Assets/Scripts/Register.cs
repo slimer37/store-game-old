@@ -11,16 +11,18 @@ public class Register : Interactable
 
     [Header("Other")]
     [SerializeField] private Transform itemDrop;
-    [SerializeField] private float lineStartOffset;
-    [SerializeField] private float lineCustomerOffset;
+    [SerializeField, Range(1, 100)] private int lineLength;
 
     private static List<Register> allRegisters = new List<Register>();
 
     private List<Customer> queue = new List<Customer>();
+    private Vector3[] queuePositions;
 
     private Customer currentCustomer = null;
     private List<Product> receipt = new List<Product>();
     private Scanner scanner;
+
+    private bool CustomerPending => queue.Count > 0 && !currentCustomer && queue[0].ReachedRegister;
 
     protected override CursorIcon.Icon HoverIcon => queue.Count > 0 && currentCustomer == null ? CursorIcon.Icon.Access : CursorIcon.Icon.None;
     public Vector3 DropPosition => itemDrop.position;
@@ -46,30 +48,25 @@ public class Register : Interactable
         allRegisters.Add(this);
         if (scanner = GetComponentInChildren<Scanner>())
         { scanner.onScan += EnterItem; }
+        queuePositions = QueuePositioning.GenerateQueue(this, lineLength);
     }
 
     public Vector3 OnCustomerQueue(Customer customer)
     {
         queue.Add(customer);
-        return GetQueueSpot(queue.Count - 1);
-    }
-
-    Vector3 GetQueueSpot(int index)
-    {
-        Vector3 start = transform.position - transform.forward * lineStartOffset;
-        return start - transform.forward * index * lineCustomerOffset;
+        return queuePositions[queue.Count - 1];
     }
 
     void Update()
     {
-        if (queue.Count > 0 && !currentCustomer)
+        if (CustomerPending)
         { screenMainText.text = pendingText; }
     }
 
     // Process next customer
     public override void Interact()
     {
-        if (queue.Count > 0 && !currentCustomer)
+        if (CustomerPending)
         {
             currentCustomer = queue[0];
             currentCustomer.OnReady();
@@ -93,7 +90,7 @@ public class Register : Interactable
         queue.RemoveAt(0);
         receipt.Clear();
         for (int i = 0; i < queue.Count; i++)
-        { queue[i].OnQueueMoved(GetQueueSpot(i)); }
+        { queue[i].OnQueueMoved(queuePositions[i]); }
     }
 
     void UpdateReceipt(Product item)

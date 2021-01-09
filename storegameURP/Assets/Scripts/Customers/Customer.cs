@@ -14,6 +14,7 @@ public class Customer : MonoBehaviour
 
     public Vector3 EndPos { get; set; }
     public Product Wanted { get; set; }
+    public bool ReachedRegister { get; private set; } = false;
 
     void Awake() => agent = GetComponent<NavMeshAgent>();
 
@@ -31,6 +32,7 @@ public class Customer : MonoBehaviour
         reg = Register.GetClosestRegister(transform.position);
 
         yield return MoveTo(reg.OnCustomerQueue(this));
+        ReachedRegister = true;
     }
 
     public void OnReady() => StartCoroutine(Wanted.FadeAndMove(transform.TransformPoint(holdPos), reg.DropPosition, false));

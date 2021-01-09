@@ -1384,7 +1384,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa0c0dda40ee284fbe37841cc990315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactable: 1
   sprite: {fileID: 0}
   header: TO NEWBIE
   body: 'Hey newbie,
@@ -8471,7 +8470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94e7505d4aceaf8439426486028c9f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  capacity: 1
+  capacity: 15
   endPositions:
   - {fileID: 590409875}
   customerPrefab: {fileID: 4224331126714648981, guid: ad09a7bd55fcbe344bd04edada56ba54, type: 3}
@@ -9950,6 +9949,36 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &988614217
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 988614218}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &988614218
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 988614217}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -2.4, y: 1.5, z: -3.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1009288893
 GameObject:
   m_ObjectHideFlags: 0
@@ -13468,7 +13497,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57e330ab7bdb520409cf05774dedbe25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactable: 1
   openState: TurnClosed
 --- !u!65 &2054568302
 BoxCollider:
@@ -15232,7 +15260,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 612acd2383f43384d8a2ccd0d5370d43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactable: 1
   openState: OpenDoor
   closeState: CloseDoor
 --- !u!114 &919132147819982626
@@ -15310,7 +15337,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 612acd2383f43384d8a2ccd0d5370d43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactable: 1
   openState: OpenDrawer
   closeState: CloseDrawer
 --- !u!95 &2483105314638690517
@@ -15489,13 +15515,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d61459287ffeb498b191b6c2c490d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactable: 1
   screenMainText: {fileID: 926675757}
   pendingText: Customer pending!
   screenSideText: {fileID: 976173184}
   itemDrop: {fileID: 1781547752}
-  lineStartOffset: 1.4
-  lineCustomerOffset: 2
+  lineLength: 15
 --- !u!65 &5565512597527872298
 BoxCollider:
   m_ObjectHideFlags: 0
