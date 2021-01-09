@@ -15,7 +15,7 @@ public class CustomerSpawner : MonoBehaviour
     IEnumerator Start()
     {
         yield return new WaitUntil(() => Level.Current.StoreOpen);
-        yield return new WaitForSeconds(startDelay);
+        yield return new WaitForSeconds(DayScreen.Duration + startDelay);
 
         while (Level.Current.StoreOpen)
         {
