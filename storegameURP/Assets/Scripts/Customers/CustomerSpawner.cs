@@ -3,24 +3,23 @@ using UnityEngine;
 
 public class CustomerSpawner : MonoBehaviour
 {
-    [SerializeField] private int capacity;
     [SerializeField] private Transform[] endPositions;
     [SerializeField] private GameObject customerPrefab;
     [SerializeField] private float startDelay;
     [SerializeField, Range(0, 60)] private int customersPerMinute;
 
-    private static int customers = 0;
+    private static int customers;
+
+    void Awake() => customers = 0;
 
     IEnumerator Start()
     {
-        customers = 0;
-
         yield return new WaitUntil(() => Level.Current.StoreOpen);
         yield return new WaitForSeconds(startDelay);
 
         while (Level.Current.StoreOpen)
         {
-            if (customers >= capacity)
+            if (customers >= Level.Current.Capacity)
             {
                 yield return new WaitForSeconds(1.0f);
                 continue;

@@ -11,9 +11,13 @@ public class RegisterEditor : Editor
     {
         base.OnInspectorGUI();
 
+        int lineLength = 15;
+        Level level;
+        if (level = FindObjectOfType<Level>())
+        { lineLength = level.Capacity; }
+
         preview = EditorGUILayout.Toggle("Preview", preview);
-        int previewLineLength = serializedObject.FindProperty("lineLength").intValue;
-        positions = QueuePositioning.GenerateQueue((Register)target, previewLineLength);
+        positions = QueuePositioning.GenerateQueue((Register)target, lineLength);
     }
 
     [DrawGizmo(GizmoType.Selected | GizmoType.Active)]

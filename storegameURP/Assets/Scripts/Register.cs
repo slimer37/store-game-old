@@ -11,7 +11,6 @@ public class Register : Interactable
 
     [Header("Other")]
     [SerializeField] private Transform itemDrop;
-    [SerializeField, Range(1, 100)] private int lineLength;
 
     private static List<Register> allRegisters = new List<Register>();
 
@@ -48,7 +47,7 @@ public class Register : Interactable
         allRegisters.Add(this);
         if (scanner = GetComponentInChildren<Scanner>())
         { scanner.onScan += EnterItem; }
-        queuePositions = QueuePositioning.GenerateQueue(this, lineLength);
+        queuePositions = QueuePositioning.GenerateQueue(this, Level.Current.Capacity);
     }
 
     public Vector3 OnCustomerQueue(Customer customer)

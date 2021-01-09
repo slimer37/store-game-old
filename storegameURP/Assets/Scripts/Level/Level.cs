@@ -7,6 +7,7 @@ public class Level : MonoBehaviour
 
     public static Level Current { get; private set; }
     public bool StoreOpen { get; private set; }
+    [field: SerializeField, Range(1, 100)] public int Capacity { get; private set; }
 
     private float money;
 
