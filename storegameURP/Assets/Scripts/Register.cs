@@ -8,6 +8,7 @@ public class Register : Interactable
     [SerializeField] private TextMeshPro screenMainText;
     [SerializeField] private string pendingText;
     [SerializeField] private TextMeshPro screenSideText;
+    [SerializeField] private ParticleSystem particles;
 
     [Header("Other")]
     [SerializeField] private Transform itemDrop;
@@ -25,6 +26,7 @@ public class Register : Interactable
 
     protected override CursorIcon.Icon HoverIcon => CustomerPending ? CursorIcon.Icon.Access : CursorIcon.Icon.None;
     public Vector3 DropPosition => itemDrop.position;
+    public Vector3[] QueuePositions => queuePositions;
 
     public static Register GetClosestRegister(Vector3 origin)
     {
@@ -33,7 +35,7 @@ public class Register : Interactable
         for (int i = 0; i < allRegisters.Count; i++)
         {
             var registerDist = Vector3.Distance(origin, allRegisters[i].transform.position);
-            if (closestDist == 0 || registerDist > closestDist)
+            if (closestDist == 0 || registerDist < closestDist)
             {
                 closestDist = registerDist;
                 closestReg = i;
@@ -86,6 +88,8 @@ public class Register : Interactable
     {
         Level.Current.Money += receipt[0].Info.Price;
         receipt.Clear();
+
+        particles.Play();
 
         currentCustomer.End();
         currentCustomer = null;

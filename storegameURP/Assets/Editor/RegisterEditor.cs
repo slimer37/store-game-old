@@ -5,25 +5,46 @@ using UnityEditor;
 public class RegisterEditor : Editor
 {
     private static bool preview = true;
-    private static Vector3[] positions;
+    private static Vector3[] positions = new Vector3[] { };
+    private static int lineLength;
 
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
-        int lineLength = 15;
+        lineLength = 10;
         Level level;
         if (level = FindObjectOfType<Level>())
         { lineLength = level.Capacity; }
 
-        preview = EditorGUILayout.Toggle("Preview", preview);
-        positions = QueuePositioning.GenerateQueue((Register)target, lineLength);
+        if (preview = EditorGUILayout.BeginFoldoutHeaderGroup(preview, "Preview"))
+        {
+            Register reg = (Register)target;
+
+            if (EditorApplication.isPlaying)
+            {
+                positions = reg.QueuePositions;
+                EditorGUILayout.HelpBox("Currently displaying the generated queue positions.", MessageType.None);
+            }
+            else
+            {
+                if (GUILayout.Button("Cycle Positions") || positions.Length == 0)
+                {
+                    positions = QueuePositioning.GenerateQueue(reg, lineLength);
+                    EditorUtility.SetDirty(reg);
+                }
+            }
+
+            EditorGUILayout.EndFoldoutHeaderGroup();
+        }
     }
 
     [DrawGizmo(GizmoType.Selected | GizmoType.Active)]
     static void DrawGizmos(Register reg, GizmoType type)
     {
-        if (preview && positions.Length > 0)
+        if (!preview) return;
+
+        if (positions.Length > 0)
         {
             foreach (var pos in positions)
             { Gizmos.DrawSphere(pos, 0.5f); }
