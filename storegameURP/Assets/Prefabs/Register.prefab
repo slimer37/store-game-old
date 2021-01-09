@@ -55,7 +55,7 @@ MonoBehaviour:
   screenMainText: {fileID: 4968799215978756028}
   pendingText: Customer pending!
   screenSideText: {fileID: 4968799216063478801}
-  particles: {fileID: 0}
+  particles: {fileID: 6434127089009973185}
   itemDrop: {fileID: 4968799217405167225}
 --- !u!65 &704836121300862907
 BoxCollider:
@@ -1089,7 +1089,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   useRigidbodyForVelocity: 1
