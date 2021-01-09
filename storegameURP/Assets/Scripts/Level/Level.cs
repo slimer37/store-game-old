@@ -5,12 +5,12 @@ public class Level : MonoBehaviour
 {
     public Action OnStoreOpen;
 
-    public static Level CurrentLevel { get; private set; }
+    public static Level Current { get; private set; }
     public bool StoreOpen { get; private set; }
 
     private float money;
 
-    void Awake() => CurrentLevel = this;
+    void Awake() => Current = this;
 
     public void OpenStore()
     {
