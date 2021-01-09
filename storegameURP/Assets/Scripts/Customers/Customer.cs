@@ -62,9 +62,4 @@ public class Customer : MonoBehaviour
     }
 
     void Update() => anim.SetFloat("Speed", agent.velocity.sqrMagnitude);
-
-    void FixedUpdate()
-    {
-        print(agent.remainingDistance + " - Stopping: " + agent.stoppingDistance);
-    }
 }
