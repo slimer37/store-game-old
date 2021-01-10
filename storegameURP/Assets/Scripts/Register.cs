@@ -48,8 +48,9 @@ public class Register : Interactable
         allRegisters.Add(this);
         if (scanner = GetComponentInChildren<Scanner>())
         { scanner.onScan += EnterItem; }
-        QueuePositions = QueuePositioning.GenerateQueue(this, Level.Current.Capacity);
     }
+
+    void Start() => QueuePositions = QueuePositioning.GenerateQueue(this, Level.Current.Capacity);
 
     public int OnCustomerQueue(Customer customer)
     {
