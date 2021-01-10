@@ -4,70 +4,50 @@ using UnityEditor;
 [CustomEditor(typeof(Register)), CanEditMultipleObjects]
 public class RegisterEditor : Editor
 {
-    private SerializedObject register;
-    private Transform registerTransform;
-    private bool foldout;
-
-    private int visualizedLineLength;
-    private float startOffset;
-    private float lineOffset;
+    private static bool preview = true;
+    private static Vector3[] positions = new Vector3[] { };
+    private static int lineLength;
 
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
-        if (foldout = EditorGUILayout.BeginFoldoutHeaderGroup(foldout, "Visualize"))
-        {
-            registerTransform = ((Register)target).transform;
-            register = serializedObject;
-            startOffset = register.FindProperty("lineStartOffset").floatValue;
-            lineOffset = register.FindProperty("lineCustomerOffset").floatValue;
+        lineLength = 10;
+        Level level;
+        if (level = FindObjectOfType<Level>())
+        { lineLength = level.Capacity; }
 
-            visualizedLineLength = EditorGUILayout.IntSlider("Visualized Line Length", visualizedLineLength, 0, 10);
+        if (preview = EditorGUILayout.BeginFoldoutHeaderGroup(preview, "Preview"))
+        {
+            Register reg = (Register)target;
+
+            if (EditorApplication.isPlaying)
+            {
+                positions = reg.QueuePositions;
+                EditorGUILayout.HelpBox("Currently displaying the generated queue positions.", MessageType.None);
+            }
+            else
+            {
+                if (GUILayout.Button("Cycle Positions") || positions.Length == 0)
+                {
+                    positions = QueuePositioning.GenerateQueue(reg, lineLength);
+                    EditorUtility.SetDirty(reg);
+                }
+            }
 
             EditorGUILayout.EndFoldoutHeaderGroup();
         }
     }
 
-    void OnSceneGUI()
+    [DrawGizmo(GizmoType.Selected | GizmoType.Active)]
+    static void DrawGizmos(Register reg, GizmoType type)
     {
-        if (foldout)
+        if (!preview) return;
+
+        if (positions.Length > 0)
         {
-            Vector3 start = registerTransform.position - registerTransform.forward * startOffset;
-            for (int i = 0; i < visualizedLineLength; i++)
-            {
-                Vector3 pos = start - registerTransform.forward * i * lineOffset;
-                Vector3 camForward = SceneView.currentDrawingSceneView.camera.transform.forward;
-
-                if (i > 0)
-                {
-                    Vector3 p1 = pos + registerTransform.forward * 0.5f;
-                    Vector3 p2 = p1 + registerTransform.forward * (lineOffset - 1);
-                    Handles.color = Color.green;
-                    Handles.DrawDottedLine(p1, p2, 2);
-                }
-
-                // Body
-                Handles.color = Color.white;
-                Handles.DrawWireCube(pos - Vector3.up * 0.5f, Vector3.one);
-
-                // Head
-                DrawWireSphere(pos + Vector3.up * 0.5f, camForward, 0.5f);
-
-                // Eyes
-                Vector3 faceCenter = pos + Vector3.up * 0.6f + registerTransform.forward * 0.25f;
-                Vector3 offset = registerTransform.right * 0.2f;
-                DrawWireSphere(faceCenter + offset, camForward, 0.1f);
-                DrawWireSphere(faceCenter - offset, camForward, 0.1f);
-            }
-
-        }
-
-        void DrawWireSphere(Vector3 pos, Vector3 camForward, float radius)
-        {
-            Handles.DrawWireDisc(pos, camForward, radius);
-            Handles.DrawWireDisc(pos, Vector3.up, radius);
-            Handles.DrawWireDisc(pos, Vector3.right, radius);
+            foreach (var pos in positions)
+            { Gizmos.DrawSphere(pos, 0.5f); }
         }
     }
 }

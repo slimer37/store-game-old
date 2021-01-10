@@ -6,6 +6,9 @@ public class Movement : MonoBehaviour
 {
     [SerializeField] private float walkSpeed;
     [SerializeField] private float jumpForce;
+    [SerializeField] private float gravity;
+    [SerializeField] private Animator anim;
+    [SerializeField] private float sprintAnimSpeed;
 
     [Header("Sprinting")]
     [SerializeField] private float sprintSpeed;
@@ -41,7 +44,7 @@ public class Movement : MonoBehaviour
     void Update()
     {
         if (!controller.isGrounded)
-        { inputDirection.y -= 9.8f * Time.deltaTime; }
+        { inputDirection.y -= gravity * Time.deltaTime; }
 
         if (!MenuManager.MenuOpen)
         {
@@ -52,6 +55,8 @@ public class Movement : MonoBehaviour
         else
         { moveDirection = Vector3.zero + Vector3.up * inputDirection.y; }
 
+        anim.SetFloat("Speed", controller.velocity.sqrMagnitude);
+        anim.speed = sprinting ? sprintAnimSpeed : 1;
         controller.Move(moveDirection * Time.deltaTime);
     }
 
@@ -66,11 +71,8 @@ public class Movement : MonoBehaviour
     IEnumerator AnimateFOV()
     {
         float finalFOV = sprinting ? sprintFOV : originalFOV;
-        while (cam.fieldOfView != finalFOV)
-        {
-            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, finalFOV, FOVChangeRate * Time.deltaTime);
-            yield return null;
-        }
+        yield return Tweens.LerpValue(1 / FOVChangeRate, t =>
+            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, finalFOV, FOVChangeRate * Time.deltaTime));
     }
 
     void OnControllerColliderHit(ControllerColliderHit hit)

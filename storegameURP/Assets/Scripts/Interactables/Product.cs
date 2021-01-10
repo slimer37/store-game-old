@@ -10,6 +10,8 @@ public class Product : Pickuppable
 
     public static List<Product> AllProducts { get; private set; } = new List<Product>();
 
+    public static System.Action OnInventoryEmpty;
+
     private Renderer rend;
     private bool marked;
 
@@ -50,6 +52,13 @@ public class Product : Pickuppable
         AllProducts.Add(this);
     }
 
+    void OnDestroy()
+    {
+        AllProducts.Remove(this);
+        if (AllProducts.Count == 0)
+        { OnInventoryEmpty?.Invoke(); }
+    }
+
     public IEnumerator FadeAndMove(Vector3 from, Vector3 to, bool value)
     {
         ResetRb();
@@ -61,15 +70,11 @@ public class Product : Pickuppable
         if (value)
         { to.y = transform.position.y; }
 
-        for (float t = 0; t < 1; t += Time.deltaTime)
+        yield return Tweens.LerpValue(1, t =>
         {
             rend.material.color = new Color(originalColor.r, originalColor.g, originalColor.b, Mathf.Lerp(originalColor.a, finalAlpha, t));
             transform.position = Vector3.Lerp(from, to, t);
-            yield return null;
-        }
-
-        rend.material.color = new Color(originalColor.r, originalColor.g, originalColor.b, finalAlpha);
-        transform.position = to;
+        });
 
         ResetRb();
         SetInteractable(true);

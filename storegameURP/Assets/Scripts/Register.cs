@@ -8,11 +8,10 @@ public class Register : Interactable
     [SerializeField] private TextMeshPro screenMainText;
     [SerializeField] private string pendingText;
     [SerializeField] private TextMeshPro screenSideText;
+    [SerializeField] private ParticleSystem particles;
 
     [Header("Other")]
     [SerializeField] private Transform itemDrop;
-    [SerializeField] private float lineStartOffset;
-    [SerializeField] private float lineCustomerOffset;
 
     private static List<Register> allRegisters = new List<Register>();
 
@@ -22,8 +21,11 @@ public class Register : Interactable
     private List<Product> receipt = new List<Product>();
     private Scanner scanner;
 
-    protected override CursorIcon.Icon HoverIcon => queue.Count > 0 && currentCustomer == null ? CursorIcon.Icon.Access : CursorIcon.Icon.None;
+    private bool CustomerPending => queue.Count > 0 && !currentCustomer && queue[0].ReachedRegister;
+
+    protected override CursorIcon.Icon HoverIcon => CustomerPending ? CursorIcon.Icon.Access : CursorIcon.Icon.None;
     public Vector3 DropPosition => itemDrop.position;
+    public Vector3[] QueuePositions { get; private set; }
 
     public static Register GetClosestRegister(Vector3 origin)
     {
@@ -32,7 +34,7 @@ public class Register : Interactable
         for (int i = 0; i < allRegisters.Count; i++)
         {
             var registerDist = Vector3.Distance(origin, allRegisters[i].transform.position);
-            if (closestDist == 0 || registerDist > closestDist)
+            if (closestDist == 0 || registerDist < closestDist)
             {
                 closestDist = registerDist;
                 closestReg = i;
@@ -48,28 +50,24 @@ public class Register : Interactable
         { scanner.onScan += EnterItem; }
     }
 
-    public Vector3 OnCustomerQueue(Customer customer)
+    void Start() => QueuePositions = QueuePositioning.GenerateQueue(this, Level.Current.Capacity);
+
+    public int OnCustomerQueue(Customer customer)
     {
         queue.Add(customer);
-        return GetQueueSpot(queue.Count - 1);
-    }
-
-    Vector3 GetQueueSpot(int index)
-    {
-        Vector3 start = transform.position - transform.forward * lineStartOffset;
-        return start - transform.forward * index * lineCustomerOffset;
+        return queue.Count - 1;
     }
 
     void Update()
     {
-        if (queue.Count > 0 && !currentCustomer)
+        if (CustomerPending)
         { screenMainText.text = pendingText; }
     }
 
     // Process next customer
     public override void Interact()
     {
-        if (queue.Count > 0 && !currentCustomer)
+        if (CustomerPending)
         {
             currentCustomer = queue[0];
             currentCustomer.OnReady();
@@ -88,12 +86,16 @@ public class Register : Interactable
 
     void EndOrder()
     {
+        Level.Current.Money += receipt[0].Info.Price;
+        receipt.Clear();
+
+        particles.Play();
+
         currentCustomer.End();
         currentCustomer = null;
         queue.RemoveAt(0);
-        receipt.Clear();
         for (int i = 0; i < queue.Count; i++)
-        { queue[i].OnQueueMoved(GetQueueSpot(i)); }
+        { queue[i].OnQueueMoved(i); }
     }
 
     void UpdateReceipt(Product item)
