@@ -14,8 +14,8 @@ public class DayScreen : MonoBehaviour
     public static float Duration => current.fadeDuration * 2 + current.onScreenDuration;
     void Awake() => current = this;
 
-    void Start() => Level.Current.OnStoreOpen += () => StartCoroutine(ShowDayScreen());
-    void OnDisable() => Level.Current.OnStoreOpen -= () => StartCoroutine(ShowDayScreen());
+    void Start() => Level.Current.OnStoreOpen.AddListener(() => StartCoroutine(ShowDayScreen()));
+    void OnDisable() => Level.Current.OnStoreOpen.RemoveListener(() => StartCoroutine(ShowDayScreen()));
 
     IEnumerator ShowDayScreen()
     {

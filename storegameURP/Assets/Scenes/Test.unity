@@ -10255,6 +10255,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b4386119aab2b54484714b2a47e7cf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnStoreOpen:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1193757437}
+        m_TargetAssemblyTypeName: UnityEngine.AudioSource, UnityEngine
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnProfit:
+    m_PersistentCalls:
+      m_Calls: []
   <Capacity>k__BackingField: 15
 --- !u!4 &1053979634
 Transform:
@@ -10758,7 +10776,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: df13fa83ab651194597298d9a880479d, type: 2}
   m_audioClip: {fileID: 8300000, guid: ab5693af61f127749a54881e4af17796, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 0.1
   m_Pitch: 1
   Loop: 1

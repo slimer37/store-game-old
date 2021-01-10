@@ -1,10 +1,10 @@
-using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Level : MonoBehaviour
 {
-    public Action OnStoreOpen;
-    public Action OnProfit;
+    public UnityEvent OnStoreOpen;
+    public UnityEvent OnProfit;
 
     public static Level Current { get; private set; }
     public bool StoreOpen { get; private set; }

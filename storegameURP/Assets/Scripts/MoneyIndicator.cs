@@ -16,17 +16,21 @@ public class MoneyIndicator : MonoBehaviour
     void Start()
     {
         rectTransform = GetComponent<RectTransform>();
-        Level.Current.OnProfit += () =>
-        {
-            amountText.text = Level.Current.Money.ToString("c");
-            differenceText.text = $"+{Level.Current.Money - moneyRecorded:c}";
-            moneyRecorded = Level.Current.Money;
-            StopAllCoroutines();
-            if (lowered)
-            { StartCoroutine(DelayedRaise()); }
-            else
-            { StartCoroutine(Lower(true)); }
-        };
+        Level.Current.OnProfit.AddListener(OnProfit);
+    }
+
+    void OnDisable() => Level.Current.OnProfit.RemoveListener(OnProfit);
+
+    void OnProfit()
+    {
+        amountText.text = Level.Current.Money.ToString("c");
+        differenceText.text = $"+{Level.Current.Money - moneyRecorded:c}";
+        moneyRecorded = Level.Current.Money;
+        StopAllCoroutines();
+        if (lowered)
+        { StartCoroutine(DelayedRaise()); }
+        else
+        { StartCoroutine(Lower(true)); }
     }
 
     IEnumerator Lower(bool value)
