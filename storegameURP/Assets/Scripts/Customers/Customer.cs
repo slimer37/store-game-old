@@ -40,10 +40,11 @@ public class Customer : MonoBehaviour
 
     IEnumerator MoveTo(Vector3 position)
     {
+        position.y = transform.position.y;
         agent.destination = position;
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => agent.hasPath &&
-            Vector3.Distance(transform.position, Wanted.transform.position) <= agent.stoppingDistance + stopMargin);
+            Vector3.Distance(transform.position, position) <= agent.stoppingDistance + stopMargin);
     }
 
     IEnumerator MoveInQueue(int index)
