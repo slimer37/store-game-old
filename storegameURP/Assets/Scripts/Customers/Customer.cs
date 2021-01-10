@@ -5,8 +5,7 @@ using UnityEngine.AI;
 public class Customer : MonoBehaviour
 {
     [SerializeField] private Vector3 holdPos;
-    [SerializeField] private int maxWanderAmount;
-    [SerializeField] private int maxWanderRange;
+    [SerializeField] private float stopMargin;
     [SerializeField] private Animator anim;
 
     private NavMeshAgent agent;
@@ -20,39 +19,16 @@ public class Customer : MonoBehaviour
 
     IEnumerator Start()
     {
-        for (var i = 0; i < Random.Range(0, maxWanderAmount); i++)
-        {
-            var wanderPos = Random.onUnitSphere * Random.Range(0, maxWanderRange);
-            yield return MoveTo(wanderPos);
-        }
-
         yield return MoveTo(Wanted.transform.position);
         yield return Wanted.FadeAndMove(Wanted.transform.position, transform.TransformPoint(holdPos), true);
 
         reg = Register.GetClosestRegister(transform.position);
-
-        int index = reg.OnCustomerQueue(this);
-        yield return MoveTo(reg.QueuePositions[index]);
-
-        if (index == 0)
-        {ReachedRegister = true;}
+        yield return MoveInQueue(reg.OnCustomerQueue(this));
     }
 
     public void OnReady() => StartCoroutine(Wanted.FadeAndMove(transform.TransformPoint(holdPos), reg.DropPosition, false));
-
-    public void OnQueueMoved(int index)
-    {
-        StopAllCoroutines();
-        StartCoroutine(MoveTo(reg.QueuePositions[index]));
-        if (index == 0)
-        { ReachedRegister = true; }
-    }
-
-    public void End()
-    {
-        StopAllCoroutines();
-        StartCoroutine(Leave());
-    }
+    public void OnQueueMoved(int index) => StartCoroutine(MoveInQueue(index));
+    public void End() => StartCoroutine(Leave());
 
     IEnumerator Leave()
     {
@@ -66,7 +42,15 @@ public class Customer : MonoBehaviour
     {
         agent.destination = position;
         yield return new WaitForSeconds(0.5f);
-        yield return new WaitUntil(() => agent.hasPath && Vector3.Distance(transform.position, Wanted.transform.position) <= agent.stoppingDistance);
+        yield return new WaitUntil(() => agent.hasPath &&
+            Vector3.Distance(transform.position, Wanted.transform.position) <= agent.stoppingDistance + stopMargin);
+    }
+
+    IEnumerator MoveInQueue(int index)
+    {
+        yield return MoveTo(reg.QueuePositions[index]);
+        if (index == 0)
+        { ReachedRegister = true; }
     }
 
     void Update() => anim.SetFloat("Speed", agent.velocity.sqrMagnitude);
