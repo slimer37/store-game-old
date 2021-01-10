@@ -14,6 +14,8 @@ public class DebugConsole : MonoBehaviour
     [SerializeField] private int outputFontSize;
     [SerializeField] private int inputFontSize;
 
+    private static DebugConsole current;
+
     private bool debug = false;
     private int codeProgress = 0;
     private Controls controls;
@@ -26,6 +28,11 @@ public class DebugConsole : MonoBehaviour
 
     void Awake()
     {
+        if (current)
+        { Destroy(gameObject); }
+        else
+        { current = this; }
+
         var kb = Keyboard.current;
         kb.onTextInput += EnterCheatCode;
 
@@ -97,7 +104,9 @@ public class DebugConsole : MonoBehaviour
             if (codeProgress == cheatCode.Length)
             {
                 debug = true;
-                notifObject.SetActive(true);
+
+                if (notifObject)
+                { notifObject.SetActive(true); }
             }
         }
     }
