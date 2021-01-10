@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class CustomerSpawner : MonoBehaviour
 {
-    [SerializeField] private Transform[] spawnPositions;
-    [SerializeField] private Transform[] endPositions;
+    [SerializeField] private Vector3[] spawnPositions;
+    [SerializeField] private Vector3[] endPositions;
     [SerializeField] private GameObject customerPrefab;
     [SerializeField] private float startDelay;
     [SerializeField, Range(1, 60)] private int customersPerMinute;
@@ -29,10 +29,10 @@ public class CustomerSpawner : MonoBehaviour
             // If there is at least one product available, take a random chance based on customer density.
             if (Product.ProductsAvailable.Count >= 1 && Random.Range(0, 101) <= (float)customersPerMinute / 60 * 100)
             {
-                Vector3 spawnPoint = spawnPositions[Random.Range(0, spawnPositions.Length)].position;
+                Vector3 spawnPoint = spawnPositions[Random.Range(0, spawnPositions.Length)];
                 Customer customer = Instantiate(customerPrefab, spawnPoint, Quaternion.identity).GetComponent<Customer>();
                 customer.Wanted = Product.GetRandomProduct();
-                customer.EndPos = endPositions[Random.Range(0, endPositions.Length)].position;
+                customer.EndPos = endPositions[Random.Range(0, endPositions.Length)];
                 customers++;
             }
 
