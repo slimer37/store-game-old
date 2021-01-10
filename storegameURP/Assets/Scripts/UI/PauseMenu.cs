@@ -5,7 +5,7 @@ public class PauseMenu : Menu
     protected override void Awake()
     {
         base.Awake();
-        MenuActions.Pause.performed += _ => Open(true);
+        MenuActions.Pause.performed += _ => Open(!transform.GetChild(0).gameObject.activeSelf);
     }
 
     public override void Open(bool value)
