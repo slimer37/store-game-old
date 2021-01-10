@@ -66,7 +66,7 @@ public class Customer : MonoBehaviour
     {
         agent.destination = position;
         yield return new WaitForSeconds(0.5f);
-        yield return new WaitUntil(() => agent.hasPath && agent.remainingDistance <= agent.stoppingDistance);
+        yield return new WaitUntil(() => agent.hasPath && Vector3.Distance(transform.position, Wanted.transform.position) <= agent.stoppingDistance);
     }
 
     void Update() => anim.SetFloat("Speed", agent.velocity.sqrMagnitude);
