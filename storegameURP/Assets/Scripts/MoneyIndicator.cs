@@ -6,9 +6,12 @@ public class MoneyIndicator : MonoBehaviour
 {
     [SerializeField] private float downForDuration;
     [SerializeField] private TextMeshProUGUI amountText;
+    [SerializeField] private TextMeshProUGUI differenceText;
 
     private RectTransform rectTransform;
     private bool lowered = false;
+
+    private float moneyRecorded = 0;
 
     void Start()
     {
@@ -16,11 +19,11 @@ public class MoneyIndicator : MonoBehaviour
         Level.Current.OnProfit += () =>
         {
             amountText.text = Level.Current.Money.ToString("c");
+            differenceText.text = $"+{Level.Current.Money - moneyRecorded:c}";
+            moneyRecorded = Level.Current.Money;
+            StopAllCoroutines();
             if (lowered)
-            {
-                StopAllCoroutines();
-                StartCoroutine(DelayedRaise());
-            }
+            { StartCoroutine(DelayedRaise()); }
             else
             { StartCoroutine(Lower(true)); }
         };
@@ -29,6 +32,7 @@ public class MoneyIndicator : MonoBehaviour
     IEnumerator Lower(bool value)
     {
         lowered = value;
+
         Vector2 newPivot = new Vector2(rectTransform.pivot.x, value ? 1 : 0);
         yield return Tweens.LerpValue(1.0f, t =>
         {
