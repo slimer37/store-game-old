@@ -16,7 +16,6 @@ public class Register : Interactable
     private static List<Register> allRegisters = new List<Register>();
 
     private List<Customer> queue = new List<Customer>();
-    private Vector3[] queuePositions;
 
     private Customer currentCustomer = null;
     private List<Product> receipt = new List<Product>();
@@ -26,7 +25,7 @@ public class Register : Interactable
 
     protected override CursorIcon.Icon HoverIcon => CustomerPending ? CursorIcon.Icon.Access : CursorIcon.Icon.None;
     public Vector3 DropPosition => itemDrop.position;
-    public Vector3[] QueuePositions => queuePositions;
+    public Vector3[] QueuePositions { get; private set; }
 
     public static Register GetClosestRegister(Vector3 origin)
     {
@@ -49,13 +48,13 @@ public class Register : Interactable
         allRegisters.Add(this);
         if (scanner = GetComponentInChildren<Scanner>())
         { scanner.onScan += EnterItem; }
-        queuePositions = QueuePositioning.GenerateQueue(this, Level.Current.Capacity);
+        QueuePositions = QueuePositioning.GenerateQueue(this, Level.Current.Capacity);
     }
 
-    public Vector3 OnCustomerQueue(Customer customer)
+    public int OnCustomerQueue(Customer customer)
     {
         queue.Add(customer);
-        return queuePositions[queue.Count - 1];
+        return queue.Count - 1;
     }
 
     void Update()
@@ -95,7 +94,7 @@ public class Register : Interactable
         currentCustomer = null;
         queue.RemoveAt(0);
         for (int i = 0; i < queue.Count; i++)
-        { queue[i].OnQueueMoved(queuePositions[i]); }
+        { queue[i].OnQueueMoved(i); }
     }
 
     void UpdateReceipt(Product item)

@@ -31,16 +31,21 @@ public class Customer : MonoBehaviour
 
         reg = Register.GetClosestRegister(transform.position);
 
-        yield return MoveTo(reg.OnCustomerQueue(this));
-        ReachedRegister = true;
+        int index = reg.OnCustomerQueue(this);
+        yield return MoveTo(reg.QueuePositions[index]);
+
+        if (index == 0)
+        {ReachedRegister = true;}
     }
 
     public void OnReady() => StartCoroutine(Wanted.FadeAndMove(transform.TransformPoint(holdPos), reg.DropPosition, false));
 
-    public void OnQueueMoved(Vector3 nextSpot)
+    public void OnQueueMoved(int index)
     {
         StopAllCoroutines();
-        StartCoroutine(MoveTo(nextSpot));
+        StartCoroutine(MoveTo(reg.QueuePositions[index]));
+        if (index == 0)
+        { ReachedRegister = true; }
     }
 
     public void End()
@@ -60,6 +65,7 @@ public class Customer : MonoBehaviour
     IEnumerator MoveTo(Vector3 position)
     {
         agent.destination = position;
+        yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => agent.hasPath && agent.remainingDistance <= agent.stoppingDistance);
     }
 
