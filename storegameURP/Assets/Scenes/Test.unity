@@ -10741,7 +10741,7 @@ MonoBehaviour:
   OnProfit:
     m_PersistentCalls:
       m_Calls: []
-  <Capacity>k__BackingField: 15
+  <Capacity>k__BackingField: 10
 --- !u!4 &1053979634
 Transform:
   m_ObjectHideFlags: 0
