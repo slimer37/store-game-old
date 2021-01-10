@@ -5,21 +5,42 @@ using UnityEngine.SceneManagement;
 
 public static class DebugCommands
 {
-    private static string command;
+    private delegate string CommandFunction(string input);
 
-    private static readonly string helpString =
-        Colored("yellow", "allthings") + " - Lists all objects in the scene.\n" +
-        Colored("yellow", "childrenof") + Colored("orange", " [object name]") + " - Lists an object's children.\n" +
-        Colored("yellow", "clear") + " - Clears the console output.\n" +
-        Colored("yellow", "destroy") + Colored("orange", " [object name]") + " - Destroys an object.\n" +
-        Colored("yellow", "help") + " - Lists all commands.\n" +
-        Colored("yellow", "reload") + " - Reloads the scene.\n" +
-        Colored("yellow", "topthings") + " - Lists all top-level objects in the scene.";
+    private struct Command
+    {
+        public string keyword;
+        public string param;
+        public string desc;
+        public CommandFunction function;
+        public readonly string HelpString => Colored("yellow", keyword) + (param != "" ? Colored("orange", $" [{param}]") : "") + " - " + desc;
+
+        public Command(string keyword, string desc, CommandFunction function, string param = "")
+        {
+            this.keyword = keyword;
+            this.param = param;
+            this.desc = desc;
+            this.function = function;
+        }
+    }
+
+    private static string keyword;
+
+    private static readonly Command[] commands =
+    {
+        new Command("allthings", "Lists all objects in the scene.", _ => GetObjectList()),
+        new Command("childrenof", "Lists an object's children.", ChildrenOf, "object name"),
+        new Command("clear", "Clears the console output.", _ => ""),
+        new Command("destroy", "Destroys an object.", DestroyObject, "object name"),
+        new Command("help", "Lists all commands.", _ => GetHelpString()),
+        new Command("reload", "Reloads the scene.", _ => ReloadScene()),
+        new Command("topthings", "Lists all top-level objects in the scene.", _ => GetParents()),
+    };
 
     private static void ArgCheck(string arg)
     {
         if (arg == "")
-        { throw new Exception($"'{command}' requires at least one argument. (Consult the help command.)"); }
+        { throw new Exception($"'{keyword}' requires at least one argument. (Consult the help command.)"); }
     }
 
     private static string Colored(string color, string text) => $"<color={color}>{text}</color>";
@@ -28,21 +49,27 @@ public static class DebugCommands
     {
         List<string> words = new List<string>();
         words.AddRange(input.Split(' '));
-        command = words[0];
+        keyword = words[0];
         words.RemoveAt(0);
         string[] args = words.ToArray();
         string singleArg = string.Join(" ", args);
 
-        return command switch
+        foreach (var command in commands)
         {
-            "allthings" => GetObjectList(),
-            "childrenof" => ChildrenOf(singleArg),
-            "destroy" => DestroyObject(singleArg),
-            "help" => helpString,
-            "reload" => ReloadScene(),
-            "topthings" => GetParents(),
-            _ => throw new Exception($"The command '{command}' does not exist.")
-        };
+            if (keyword == command.keyword)
+            { return command.function(singleArg); }
+        }
+        throw new Exception($"The command '{keyword}' does not exist.");
+    }
+
+    public static string GetHelpString()
+    {
+        string fullHelpString = "";
+        foreach (var command in commands)
+        { fullHelpString += command.HelpString + "\n"; }
+
+        // Ditch the final newline.
+        return fullHelpString.Substring(0, fullHelpString.Length - 1);
     }
 
     public static string GetObjectList()

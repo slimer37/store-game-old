@@ -865,8 +865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holdPos: {x: 0, y: 0, z: 1}
-  maxWanderAmount: 1
-  maxWanderRange: 1
+  stopMargin: 0.5
   anim: {fileID: 8075222632633956001}
 --- !u!1 &4522576389351705719
 GameObject:

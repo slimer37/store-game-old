@@ -34,7 +34,7 @@ public class Register : Interactable
         for (int i = 0; i < allRegisters.Count; i++)
         {
             var registerDist = Vector3.Distance(origin, allRegisters[i].transform.position);
-            if (closestDist == 0 || registerDist < closestDist)
+            if (registerDist < closestDist)
             {
                 closestDist = registerDist;
                 closestReg = i;
