@@ -6,6 +6,7 @@ public class Movement : MonoBehaviour
 {
     [SerializeField] private float walkSpeed;
     [SerializeField] private float jumpForce;
+    [SerializeField] private float gravity;
     [SerializeField] private Animator anim;
     [SerializeField] private float sprintAnimSpeed;
 
@@ -43,7 +44,7 @@ public class Movement : MonoBehaviour
     void Update()
     {
         if (!controller.isGrounded)
-        { inputDirection.y -= 9.8f * Time.deltaTime; }
+        { inputDirection.y -= gravity * Time.deltaTime; }
 
         if (!MenuManager.MenuOpen)
         {
