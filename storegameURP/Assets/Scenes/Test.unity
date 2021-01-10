@@ -8713,7 +8713,7 @@ MonoBehaviour:
   - {fileID: 590409875}
   customerPrefab: {fileID: 4224331126714648981, guid: ad09a7bd55fcbe344bd04edada56ba54, type: 3}
   startDelay: 3
-  customersPerMinute: 60
+  customersPerMinute: 15
 --- !u!4 &704966169
 Transform:
   m_ObjectHideFlags: 0
@@ -12660,7 +12660,7 @@ MonoBehaviour:
   - {fileID: 2145071740}
   customerPrefab: {fileID: 4224331126714648981, guid: ad09a7bd55fcbe344bd04edada56ba54, type: 3}
   startDelay: 3
-  customersPerMinute: 60
+  customersPerMinute: 15
 --- !u!4 &1527043806
 Transform:
   m_ObjectHideFlags: 0
