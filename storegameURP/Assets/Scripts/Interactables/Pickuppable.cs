@@ -15,7 +15,7 @@ public class Pickuppable : Interactable
         if (gameObject.layer != 3)
         {
             gameObject.layer = 3;
-            Debug.LogWarning($"Set layer of pickuppable {name} to 'Pickuppables' layer.");
+            Debug.LogWarning($"Set layer of pickuppable {name} to '{LayerMask.LayerToName(3)}' layer.");
         }
     }
 
