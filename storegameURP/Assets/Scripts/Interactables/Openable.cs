@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Openable : Interactable
 {
@@ -13,6 +14,7 @@ public class Openable : Interactable
     [SerializeField] private string openState;
     [SerializeField] private string closeState;
 
+    private NavMeshObstacle obstacle;
     private Animator anim;
     private bool open = false;
     private bool animating = false;
@@ -20,6 +22,9 @@ public class Openable : Interactable
     void Awake()
     {
         anim = GetComponent<Animator>();
+
+        if (GetComponent<NavMeshObstacle>())
+        { obstacle = GetComponent<NavMeshObstacle>(); }
 
         if (trigger)
         {
@@ -44,6 +49,9 @@ public class Openable : Interactable
 
     IEnumerator Animate()
     {
+        if (obstacle && open)
+        { obstacle.enabled = false; }
+
         animating = true;
 
         anim.Play(open ? closeState : openState);
@@ -54,5 +62,8 @@ public class Openable : Interactable
 
         open = !open;
         animating = false;
+
+        if (obstacle && open)
+        { obstacle.enabled = true; }
     }
 }
