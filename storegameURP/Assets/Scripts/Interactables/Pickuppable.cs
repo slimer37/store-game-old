@@ -8,6 +8,7 @@ public class Pickuppable : Interactable
     public Collider Col { get; private set; }
 
     protected bool isHeld = false;
+    public bool IsHeld => isHeld;
 
     protected override void OnValidate()
     {
