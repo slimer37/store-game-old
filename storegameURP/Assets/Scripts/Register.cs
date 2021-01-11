@@ -45,10 +45,12 @@ public class Register : Interactable
 
     void Awake()
     {
-        allRegisters.Add(this);
         if (scanner = GetComponentInChildren<Scanner>())
         { scanner.onScan += EnterItem; }
     }
+
+    void OnEnable() => allRegisters.Add(this);
+    void OnDisable() => allRegisters.Remove(this);
 
     void Start() => QueuePositions = QueuePositioning.GenerateQueue(this, Level.Current.Capacity);
 

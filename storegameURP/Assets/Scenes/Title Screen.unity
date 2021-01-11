@@ -702,7 +702,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorRandomizers: []
+  colorRandomizers:
+  - matIndex: 0
+    colorSet:
+    - {r: 1, g: 1, b: 1, a: 0}
+    - {r: 0.3254717, g: 0.76615006, b: 1, a: 0}
+    - {r: 1, g: 0.3353047, b: 0.11792451, a: 0}
+    - {r: 1, g: 0.64371717, b: 0.1273585, a: 0}
+    - {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0}
+    - {r: 0.1792453, g: 0.1792453, b: 0.1792453, a: 0}
+    - {r: 1, g: 0.4481132, b: 0.8674239, a: 0}
+    - {r: 0.2980392, g: 1, b: 0.2996005, a: 0}
+    extraRenderers: []
   appearanceChance: 100
 --- !u!65 &145338790
 BoxCollider:
@@ -1095,7 +1106,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: This doesn't do anything yet! Press E to exit.
+  m_text: This doesn't do anything yet! Press E or escape to exit.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 885075c04b6572945b756f1daf6609e3, type: 2}
   m_sharedMaterial: {fileID: 6784325892005900707, guid: 885075c04b6572945b756f1daf6609e3, type: 2}
@@ -1305,7 +1316,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: v0.0.2-alpha
+  m_text: v0.1.0-alpha
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 885075c04b6572945b756f1daf6609e3, type: 2}
   m_sharedMaterial: {fileID: 6784325892005900707, guid: 885075c04b6572945b756f1daf6609e3, type: 2}
@@ -1667,7 +1678,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorRandomizers: []
+  colorRandomizers:
+  - matIndex: 0
+    colorSet:
+    - {r: 1, g: 1, b: 1, a: 0}
+    - {r: 0.3254717, g: 0.76615006, b: 1, a: 0}
+    - {r: 1, g: 0.3353047, b: 0.11792451, a: 0}
+    - {r: 1, g: 0.64371717, b: 0.1273585, a: 0}
+    - {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0}
+    - {r: 0.1792453, g: 0.1792453, b: 0.1792453, a: 0}
+    - {r: 1, g: 0.4481132, b: 0.8674239, a: 0}
+    - {r: 0.2980392, g: 1, b: 0.2996005, a: 0}
+    extraRenderers: []
   appearanceChance: 100
 --- !u!65 &420005877
 BoxCollider:
@@ -2167,7 +2189,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorRandomizers: []
+  colorRandomizers:
+  - matIndex: 0
+    colorSet:
+    - {r: 1, g: 1, b: 1, a: 0}
+    - {r: 0.3254717, g: 0.76615006, b: 1, a: 0}
+    - {r: 1, g: 0.3353047, b: 0.11792451, a: 0}
+    - {r: 1, g: 0.64371717, b: 0.1273585, a: 0}
+    - {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0}
+    - {r: 0.1792453, g: 0.1792453, b: 0.1792453, a: 0}
+    - {r: 1, g: 0.4481132, b: 0.8674239, a: 0}
+    - {r: 0.2980392, g: 1, b: 0.2996005, a: 0}
+    extraRenderers: []
   appearanceChance: 100
 --- !u!65 &543848877
 BoxCollider:
@@ -2358,7 +2391,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorRandomizers: []
+  colorRandomizers:
+  - matIndex: 0
+    colorSet:
+    - {r: 1, g: 1, b: 1, a: 0}
+    - {r: 0.3254717, g: 0.76615006, b: 1, a: 0}
+    - {r: 1, g: 0.3353047, b: 0.11792451, a: 0}
+    - {r: 1, g: 0.64371717, b: 0.1273585, a: 0}
+    - {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0}
+    - {r: 0.1792453, g: 0.1792453, b: 0.1792453, a: 0}
+    - {r: 1, g: 0.4481132, b: 0.8674239, a: 0}
+    - {r: 0.2980392, g: 1, b: 0.2996005, a: 0}
+    extraRenderers: []
   appearanceChance: 100
 --- !u!65 &583712092
 BoxCollider:
@@ -2549,7 +2593,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorRandomizers: []
+  colorRandomizers:
+  - matIndex: 0
+    colorSet:
+    - {r: 1, g: 1, b: 1, a: 0}
+    - {r: 0.3254717, g: 0.76615006, b: 1, a: 0}
+    - {r: 1, g: 0.3353047, b: 0.11792451, a: 0}
+    - {r: 1, g: 0.64371717, b: 0.1273585, a: 0}
+    - {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0}
+    - {r: 0.1792453, g: 0.1792453, b: 0.1792453, a: 0}
+    - {r: 1, g: 0.4481132, b: 0.8674239, a: 0}
+    - {r: 0.2980392, g: 1, b: 0.2996005, a: 0}
+    extraRenderers: []
   appearanceChance: 100
 --- !u!65 &610166875
 BoxCollider:
@@ -2899,7 +2954,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorRandomizers: []
+  colorRandomizers:
+  - matIndex: 0
+    colorSet:
+    - {r: 1, g: 1, b: 1, a: 0}
+    - {r: 0.3254717, g: 0.76615006, b: 1, a: 0}
+    - {r: 1, g: 0.3353047, b: 0.11792451, a: 0}
+    - {r: 1, g: 0.64371717, b: 0.1273585, a: 0}
+    - {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0}
+    - {r: 0.1792453, g: 0.1792453, b: 0.1792453, a: 0}
+    - {r: 1, g: 0.4481132, b: 0.8674239, a: 0}
+    - {r: 0.2980392, g: 1, b: 0.2996005, a: 0}
+    extraRenderers: []
   appearanceChance: 100
 --- !u!65 &644365835
 BoxCollider:
@@ -3541,7 +3607,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorRandomizers: []
+  colorRandomizers:
+  - matIndex: 0
+    colorSet:
+    - {r: 1, g: 1, b: 1, a: 0}
+    - {r: 0.3254717, g: 0.76615006, b: 1, a: 0}
+    - {r: 1, g: 0.3353047, b: 0.11792451, a: 0}
+    - {r: 1, g: 0.64371717, b: 0.1273585, a: 0}
+    - {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0}
+    - {r: 0.1792453, g: 0.1792453, b: 0.1792453, a: 0}
+    - {r: 1, g: 0.4481132, b: 0.8674239, a: 0}
+    - {r: 0.2980392, g: 1, b: 0.2996005, a: 0}
+    extraRenderers: []
   appearanceChance: 100
 --- !u!65 &812398042
 BoxCollider:
@@ -3991,7 +4068,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorRandomizers: []
+  colorRandomizers:
+  - matIndex: 0
+    colorSet:
+    - {r: 1, g: 1, b: 1, a: 0}
+    - {r: 0.3254717, g: 0.76615006, b: 1, a: 0}
+    - {r: 1, g: 0.3353047, b: 0.11792451, a: 0}
+    - {r: 1, g: 0.64371717, b: 0.1273585, a: 0}
+    - {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0}
+    - {r: 0.1792453, g: 0.1792453, b: 0.1792453, a: 0}
+    - {r: 1, g: 0.4481132, b: 0.8674239, a: 0}
+    - {r: 0.2980392, g: 1, b: 0.2996005, a: 0}
+    extraRenderers: []
   appearanceChance: 100
 --- !u!65 &1002787496
 BoxCollider:
@@ -4412,7 +4500,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorRandomizers: []
+  colorRandomizers:
+  - matIndex: 0
+    colorSet:
+    - {r: 1, g: 1, b: 1, a: 0}
+    - {r: 0.3254717, g: 0.76615006, b: 1, a: 0}
+    - {r: 1, g: 0.3353047, b: 0.11792451, a: 0}
+    - {r: 1, g: 0.64371717, b: 0.1273585, a: 0}
+    - {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0}
+    - {r: 0.1792453, g: 0.1792453, b: 0.1792453, a: 0}
+    - {r: 1, g: 0.4481132, b: 0.8674239, a: 0}
+    - {r: 0.2980392, g: 1, b: 0.2996005, a: 0}
+    extraRenderers: []
   appearanceChance: 100
 --- !u!65 &1128503466
 BoxCollider:
@@ -5473,7 +5572,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorRandomizers: []
+  colorRandomizers:
+  - matIndex: 0
+    colorSet:
+    - {r: 1, g: 1, b: 1, a: 0}
+    - {r: 0.3254717, g: 0.76615006, b: 1, a: 0}
+    - {r: 1, g: 0.3353047, b: 0.11792451, a: 0}
+    - {r: 1, g: 0.64371717, b: 0.1273585, a: 0}
+    - {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0}
+    - {r: 0.1792453, g: 0.1792453, b: 0.1792453, a: 0}
+    - {r: 1, g: 0.4481132, b: 0.8674239, a: 0}
+    - {r: 0.2980392, g: 1, b: 0.2996005, a: 0}
+    extraRenderers: []
   appearanceChance: 100
 --- !u!65 &1452635900
 BoxCollider:
@@ -5879,7 +5989,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorRandomizers: []
+  colorRandomizers:
+  - matIndex: 0
+    colorSet:
+    - {r: 1, g: 1, b: 1, a: 0}
+    - {r: 0.3254717, g: 0.76615006, b: 1, a: 0}
+    - {r: 1, g: 0.3353047, b: 0.11792451, a: 0}
+    - {r: 1, g: 0.64371717, b: 0.1273585, a: 0}
+    - {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0}
+    - {r: 0.1792453, g: 0.1792453, b: 0.1792453, a: 0}
+    - {r: 1, g: 0.4481132, b: 0.8674239, a: 0}
+    - {r: 0.2980392, g: 1, b: 0.2996005, a: 0}
+    extraRenderers: []
   appearanceChance: 100
 --- !u!65 &1630442824
 BoxCollider:
@@ -7571,7 +7692,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorRandomizers: []
+  colorRandomizers:
+  - matIndex: 0
+    colorSet:
+    - {r: 1, g: 1, b: 1, a: 0}
+    - {r: 0.3254717, g: 0.76615006, b: 1, a: 0}
+    - {r: 1, g: 0.3353047, b: 0.11792451, a: 0}
+    - {r: 1, g: 0.64371717, b: 0.1273585, a: 0}
+    - {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0}
+    - {r: 0.1792453, g: 0.1792453, b: 0.1792453, a: 0}
+    - {r: 1, g: 0.4481132, b: 0.8674239, a: 0}
+    - {r: 0.2980392, g: 1, b: 0.2996005, a: 0}
+    extraRenderers: []
   appearanceChance: 100
 --- !u!65 &1955993489
 BoxCollider:
@@ -7852,7 +7984,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea30a49b43ef2b24fa12aff4e8204bad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorRandomizers: []
+  colorRandomizers:
+  - matIndex: 0
+    colorSet:
+    - {r: 1, g: 1, b: 1, a: 0}
+    - {r: 0.3254717, g: 0.76615006, b: 1, a: 0}
+    - {r: 1, g: 0.3353047, b: 0.11792451, a: 0}
+    - {r: 1, g: 0.64371717, b: 0.1273585, a: 0}
+    - {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 0}
+    - {r: 0.1792453, g: 0.1792453, b: 0.1792453, a: 0}
+    - {r: 1, g: 0.4481132, b: 0.8674239, a: 0}
+    - {r: 0.2980392, g: 1, b: 0.2996005, a: 0}
+    extraRenderers: []
   appearanceChance: 100
 --- !u!65 &2034460083
 BoxCollider:

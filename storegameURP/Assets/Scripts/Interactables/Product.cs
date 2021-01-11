@@ -13,7 +13,7 @@ public class Product : Pickuppable
     public static System.Action OnInventoryEmpty;
 
     private Renderer rend;
-    private bool marked;
+    public bool Marked;
 
     public static List<Product> ProductsAvailable
     {
@@ -22,7 +22,7 @@ public class Product : Pickuppable
             List<Product> available = new List<Product>();
             foreach (var product in AllProducts)
             {
-                if (!product.marked)
+                if (!product.Marked && !product.isHeld)
                 { available.Add(product); }
             }
             return available;
@@ -32,12 +32,12 @@ public class Product : Pickuppable
     public static Product GetRandomProduct()
     {
         if (ProductsAvailable.Count == 0)
-        { throw new System.InvalidOperationException("Cannot select random product when none are available. Try checking for ProductsAvailable first."); }
+        { return null; }
 
         List<Product> available = ProductsAvailable;
 
         int choice = Random.Range(0, available.Count);
-        available[choice].marked = true;
+        available[choice].Marked = true;
         return available[choice];
     }
 

@@ -8,6 +8,7 @@ public class Pickuppable : Interactable
     public Collider Col { get; private set; }
 
     protected bool isHeld = false;
+    public bool IsHeld => isHeld;
 
     protected override void OnValidate()
     {
@@ -15,7 +16,7 @@ public class Pickuppable : Interactable
         if (gameObject.layer != 3)
         {
             gameObject.layer = 3;
-            Debug.LogWarning($"Set layer of pickuppable {name} to 'Pickuppables' layer.");
+            Debug.LogWarning($"Set layer of pickuppable {name} to '{LayerMask.LayerToName(3)}' layer.");
         }
     }
 

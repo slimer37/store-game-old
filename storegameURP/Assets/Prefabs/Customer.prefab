@@ -796,7 +796,7 @@ GameObject:
   - component: {fileID: 4224331126714648979}
   m_Layer: 0
   m_Name: Customer
-  m_TagString: Untagged
+  m_TagString: Customer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -865,7 +865,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   holdPos: {x: 0, y: 0, z: 1}
-  stopMargin: 0.5
+  stopMargin: 1
   anim: {fileID: 8075222632633956001}
 --- !u!1 &4522576389351705719
 GameObject:

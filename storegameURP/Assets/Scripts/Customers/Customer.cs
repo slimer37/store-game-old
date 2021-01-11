@@ -19,7 +19,25 @@ public class Customer : MonoBehaviour
 
     IEnumerator Start()
     {
-        yield return MoveTo(Wanted.transform.position);
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() =>
+        {
+            // Reselect product if player picks up the target.
+            if (Wanted.IsHeld)
+            {
+                Wanted.Marked = false;
+                if (!(Wanted = Product.GetRandomProduct()))
+                {
+                    End();
+                    return true;
+                }
+            }
+
+            Vector3 position = new Vector3(Wanted.transform.position.x, transform.position.y, Wanted.transform.position.z);
+            if (agent.destination != position)
+            { agent.destination = position; }
+            return agent.hasPath && Vector3.Distance(transform.position, position) <= agent.stoppingDistance + stopMargin;
+        });
         yield return Wanted.FadeAndMove(Wanted.transform.position, transform.TransformPoint(holdPos), true);
 
         reg = Register.GetClosestRegister(transform.position);
@@ -28,11 +46,16 @@ public class Customer : MonoBehaviour
 
     public void OnReady() => StartCoroutine(Wanted.FadeAndMove(transform.TransformPoint(holdPos), reg.DropPosition, false));
     public void OnQueueMoved(int index) => StartCoroutine(MoveInQueue(index));
-    public void End() => StartCoroutine(Leave());
+    public void End()
+    {
+        StopAllCoroutines();
+        StartCoroutine(Leave());
+    }
 
     IEnumerator Leave()
     {
-        Wanted.gameObject.SetActive(false);
+        if (Wanted)
+        { Wanted.gameObject.SetActive(false); }
         yield return MoveTo(EndPos);
         CustomerSpawner.OnCustomerDestroyed();
         Destroy(gameObject);
