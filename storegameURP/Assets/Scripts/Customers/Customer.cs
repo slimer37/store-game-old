@@ -19,7 +19,7 @@ public class Customer : MonoBehaviour
 
     IEnumerator Start()
     {
-        yield return MoveTo(Wanted.transform.position);
+        yield return LiveMoveTo(Wanted.transform);
         yield return Wanted.FadeAndMove(Wanted.transform.position, transform.TransformPoint(holdPos), true);
 
         reg = Register.GetClosestRegister(transform.position);
@@ -45,6 +45,18 @@ public class Customer : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         yield return new WaitUntil(() => agent.hasPath &&
             Vector3.Distance(transform.position, position) <= agent.stoppingDistance + stopMargin);
+    }
+
+    IEnumerator LiveMoveTo(Transform target)
+    {
+        yield return new WaitForSeconds(0.5f);
+        yield return new WaitUntil(() =>
+        {
+            Vector3 position = new Vector3(target.position.x, transform.position.y, target.position.z);
+            if (agent.destination != position)
+            { agent.destination = position; }
+            return agent.hasPath && Vector3.Distance(transform.position, position) <= agent.stoppingDistance + stopMargin;
+        });
     }
 
     IEnumerator MoveInQueue(int index)
