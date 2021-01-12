@@ -54,6 +54,8 @@ public class Interaction : MonoBehaviour
 
             if (!Held || hit.transform != Held.transform)
             { hit.transform.SendMessage("Hover", SendMessageOptions.DontRequireReceiver); }
+            else if (hit.transform == Held.transform)
+            { CursorIcon.Reset(); }
 
             if (hoveredTransform && hit.transform != hoveredTransform)
             { hoveredTransform.SendMessage("HoverExit", SendMessageOptions.DontRequireReceiver); }
