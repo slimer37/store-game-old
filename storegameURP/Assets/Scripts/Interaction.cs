@@ -33,7 +33,8 @@ public class Interaction : MonoBehaviour
             current.held = value;
         }
     }
-    public static Transform HoveredTransform => current.hoveredTransform;
+    public static Transform PlayerTransform => current.transform;
+    public static Transform CamTransform => current.cam.transform;
 
     void Awake()
     {
@@ -70,7 +71,7 @@ public class Interaction : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (held)
+        if (held && !(held is Container))
         {
             Vector3 targetPoint = cam.transform.position + cam.transform.forward * heldDistance;
             Vector3 force = targetPoint - held.transform.position;
@@ -84,8 +85,8 @@ public class Interaction : MonoBehaviour
             held.Rb.velocity *= Mathf.Min(1.0f, force.magnitude / 2);
 
             Vector3 direction = held.transform.position - cam.transform.position;
-            if (Vector3.Distance(held.transform.position, targetPoint) > dropDist ||
-                Physics.Raycast(new Ray(cam.transform.position, direction), out RaycastHit hit) && hit.transform != held.transform)
+            if (Vector3.Distance(held.transform.position, targetPoint) > dropDist
+                || Physics.Raycast(new Ray(cam.transform.position, direction), out RaycastHit hit) && hit.transform != held.transform)
             { held.Drop(); }
         }
     }
