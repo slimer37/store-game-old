@@ -32,7 +32,7 @@ public class Pickuppable : Interactable
         { Pickup(true); }
     }
 
-    void Pickup(bool value, bool customer = false)
+    void Pickup(bool value)
     {
         if (!Interaction.Held && !value) return;
         Interaction.Held = value ? this : null;
