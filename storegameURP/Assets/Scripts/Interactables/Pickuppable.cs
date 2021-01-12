@@ -32,13 +32,12 @@ public class Pickuppable : Interactable
         { Pickup(true); }
     }
 
-    void Pickup(bool value)
+    protected virtual void Pickup(bool pickup)
     {
-        if (!Interaction.Held && !value) return;
-        Interaction.Held = value ? this : null;
+        Interaction.Held = pickup ? this : null;
 
-        Rb.useGravity = !value;
-        isHeld = value;
+        Rb.useGravity = !pickup;
+        isHeld = pickup;
 
         Rb.velocity = Vector3.zero;
         Rb.angularVelocity = Vector3.zero;
