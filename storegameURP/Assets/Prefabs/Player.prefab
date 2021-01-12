@@ -1254,7 +1254,7 @@ GameObject:
   - component: {fileID: 1526394991339667926}
   - component: {fileID: 8532353506574255320}
   - component: {fileID: 3667805060827266302}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: Capsule Shadow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
