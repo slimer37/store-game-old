@@ -3,7 +3,8 @@ using UnityEngine;
 public abstract class Interactable : MonoBehaviour
 {
     protected bool interactable = true;
-    protected virtual CursorIcon.Icon HoverIcon { get; set; }
+    protected virtual CursorIcon.Icon HoverIcon { get; set; } = CursorIcon.Icon.Invalid;
+    protected virtual string Tooltip { get; set; } = "";
 
     protected virtual void OnValidate()
     {
@@ -14,7 +15,7 @@ public abstract class Interactable : MonoBehaviour
         }
     }
 
-    public void Hover() => CursorIcon.ShowIcon(interactable ? HoverIcon : CursorIcon.Icon.Invalid);
+    public void Hover() => CursorIcon.ShowIcon(interactable ? HoverIcon : CursorIcon.Icon.Invalid, Tooltip);
 
     public void OnInteract()
     {

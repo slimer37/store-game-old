@@ -30,6 +30,7 @@ public class Interaction : MonoBehaviour
             }
             Physics.IgnoreCollision(current.col, value ? value.Col : Held.Col, value);
 
+            CursorIcon.Reset();
             current.held = value;
         }
     }
@@ -51,7 +52,8 @@ public class Interaction : MonoBehaviour
             if (!hit.transform.CompareTag("Interactable"))
             { CursorIcon.Reset(); }
 
-            hit.transform.SendMessage("Hover", SendMessageOptions.DontRequireReceiver);
+            if (!Held || hit.transform != Held.transform)
+            { hit.transform.SendMessage("Hover", SendMessageOptions.DontRequireReceiver); }
 
             if (hoveredTransform && hit.transform != hoveredTransform)
             { hoveredTransform.SendMessage("HoverExit", SendMessageOptions.DontRequireReceiver); }
