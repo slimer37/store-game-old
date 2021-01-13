@@ -3086,9 +3086,34 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<b>Direction</b>.........Alfred\n\n<b>Programming</b>.....Alfred\n\n<b>Art</b>......................Alfred\n                             
-    Adrian\n\n<b>Design</b>...............Alfred\n                              Adrian\n\n<b>Testing</b>.............Julian\n                               
-    Tatem"
+  m_text: 'Made by Alfred and Adrian
+
+
+
+    <size=80%>Programming and Models</size>
+
+
+    Alfred
+
+
+    -
+
+
+    <size=80%>Creative
+    Direction</size>
+
+
+    Adrian
+
+
+    -
+
+
+    <size=80%>Testing</size>
+
+
+    Julian
+    & Tatem'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c121b74fad634f8418a521a4b5b0d752, type: 2}
   m_sharedMaterial: {fileID: -5717094653309122372, guid: c121b74fad634f8418a521a4b5b0d752, type: 2}
@@ -3115,14 +3140,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 45
-  m_fontSizeBase: 45
+  m_fontSize: 40
+  m_fontSizeBase: 40
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
