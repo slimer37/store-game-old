@@ -473,9 +473,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   col: {fileID: 2894438026993527474}
   reach: 3
-  minHoldDist: 1.5
+  minHoldDist: 1
   throwForce: 8
-  correctionForce: 150
+  correctionForce: 300
+  correctionDist: 0.02
   dropDist: 2
 --- !u!114 &2894438026993527475
 MonoBehaviour:

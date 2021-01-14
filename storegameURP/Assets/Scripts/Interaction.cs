@@ -10,6 +10,7 @@ public class Interaction : MonoBehaviour
     [SerializeField] private float minHoldDist;
     [SerializeField] private float throwForce;
     [SerializeField] private float correctionForce;
+    [SerializeField] private float correctionDist;
     [SerializeField] private float dropDist;
 
     private static Interaction current;
@@ -75,24 +76,30 @@ public class Interaction : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (held && !(held is Container))
+        if (!held || held is Container) return;
+
+        Vector3 targetPoint = cam.transform.position + cam.transform.forward * heldDistance;
+
+        if (Vector3.Distance(held.transform.position, targetPoint) < correctionDist)
         {
-            Vector3 targetPoint = cam.transform.position + cam.transform.forward * heldDistance;
-            Vector3 force = targetPoint - held.transform.position;
-
-            // Thx myx - https://forum.unity.com/threads/half-life-2-object-grabber.79352/
-            force = force.normalized * Mathf.Sqrt(force.magnitude);
-
-            held.Rb.velocity = force.normalized * held.Rb.velocity.magnitude;
-            held.Rb.AddForce(force * correctionForce);
-
-            held.Rb.velocity *= Mathf.Min(1.0f, force.magnitude / 2);
-
-            Vector3 direction = held.transform.position - cam.transform.position;
-            if (Vector3.Distance(held.transform.position, targetPoint) > dropDist
-                || Physics.Raycast(new Ray(cam.transform.position, direction), out RaycastHit hit) && hit.transform != held.transform)
-            { held.Drop(); }
+            held.Rb.velocity = held.Rb.velocity / 2;
+            return;
         }
+
+        Vector3 force = targetPoint - held.transform.position;
+
+        // Thx myx - https://forum.unity.com/threads/half-life-2-object-grabber.79352/
+        force = force.normalized * Mathf.Sqrt(force.magnitude);
+
+        held.Rb.velocity = force.normalized * held.Rb.velocity.magnitude;
+        held.Rb.AddForce(force * correctionForce);
+
+        held.Rb.velocity *= Mathf.Min(1.0f, force.magnitude / 2);
+
+        Vector3 direction = held.transform.position - cam.transform.position;
+        if (Vector3.Distance(held.transform.position, targetPoint) > dropDist
+            || Physics.Raycast(new Ray(cam.transform.position, direction), out RaycastHit hit) && hit.transform != held.transform)
+        { held.Drop(); }
     }
 
     void OnShiftItem(InputValue value)
