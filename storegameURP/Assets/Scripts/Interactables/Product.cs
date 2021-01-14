@@ -10,8 +10,6 @@ public class Product : Pickuppable
 
     public static List<Product> AllProducts { get; private set; } = new List<Product>();
 
-    public static System.Action OnInventoryEmpty;
-
     private Renderer rend;
     public bool Marked;
 
@@ -52,12 +50,7 @@ public class Product : Pickuppable
         AllProducts.Add(this);
     }
 
-    void OnDestroy()
-    {
-        AllProducts.Remove(this);
-        if (AllProducts.Count == 0)
-        { OnInventoryEmpty?.Invoke(); }
-    }
+    void OnDestroy() => AllProducts.Remove(this);
 
     public IEnumerator FadeAndMove(Vector3 from, Vector3 to, bool value)
     {

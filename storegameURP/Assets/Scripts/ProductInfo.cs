@@ -7,7 +7,7 @@ public class ProductInfo : ScriptableObject
     [field: SerializeField, TextArea(8, 100)] public string Description { get; private set; }
     [field: SerializeField] public float Price { get; private set; }
 
-    public string DisplayString => $"<size=150%>{DisplayName}</size>\n{Description}";
+    public string DisplayString => $"<size=150%>{DisplayName}</size> - {Price:c}\n{Description}";
     public string ReceiptPhrase => $"{DisplayName} - {Price:c}";
     public string DisplayPrice => Price.ToString("c");
 }
