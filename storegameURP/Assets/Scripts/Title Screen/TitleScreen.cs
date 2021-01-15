@@ -3,7 +3,6 @@ using UnityEngine.InputSystem;
 
 public class TitleScreen : MonoBehaviour
 {
-    [SerializeField] private Animator dvdAnimator;
     [SerializeField] private float front;
     [SerializeField] private float animSpeed;
     [SerializeField] private float hoverHeight;
