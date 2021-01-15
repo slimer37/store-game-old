@@ -1571,7 +1571,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa0c0dda40ee284fbe37841cc990315, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
   header: TO NEWBIE
   body: 'Hey newbie,
 
@@ -1914,8 +1913,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1734975407}
-        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
-        m_MethodName: Open
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: OnAttemptOpen
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -13618,7 +13617,6 @@ MonoBehaviour:
   textGroup: {fileID: 1521079174}
   headerText: {fileID: 2085063020}
   bodyText: {fileID: 28496092}
-  image: {fileID: 366908826}
 --- !u!1 &1439571178
 GameObject:
   m_ObjectHideFlags: 0
@@ -18098,7 +18096,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f245ac611755d4c4a9d77bf44dc88bea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  customInspect: {fileID: 1406242964}
+  <CustomInspect>k__BackingField: {fileID: 1406242964}
 --- !u!1 &2126409637 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 94adf276b05c47346aef591170dae13e, type: 3}

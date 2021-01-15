@@ -37,7 +37,7 @@ public class Movement : MonoBehaviour
 
     void OnJump()
     {
-        if (!MenuManager.MenuOpen && controller.isGrounded)
+        if (!MenuManager.Current.MenuOpen && controller.isGrounded)
         { inputDirection.y = jumpForce; }
     }
 
@@ -46,7 +46,7 @@ public class Movement : MonoBehaviour
         if (!controller.isGrounded)
         { inputDirection.y -= gravity * Time.deltaTime; }
 
-        if (!MenuManager.MenuOpen)
+        if (!MenuManager.Current.MenuOpen)
         {
             moveDirection = transform.TransformDirection(inputDirection);
             moveDirection.x *= sprinting ? sprintSpeed : walkSpeed;

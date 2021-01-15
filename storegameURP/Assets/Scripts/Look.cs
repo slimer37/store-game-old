@@ -23,7 +23,7 @@ public class Look : MonoBehaviour
 
     void Update()
     {
-        if (!MenuManager.MenuOpen)
+        if (!MenuManager.Current.MenuOpen)
         {
             transform.eulerAngles += inputRot.x * Vector3.up;
 

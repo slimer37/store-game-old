@@ -10,19 +10,15 @@ public class PauseMenu : Menu
     {
         base.Awake();
         MenuActions.Exit.performed -= Exit;
-        MenuActions.Pause.performed += _ => Open(!open);
+        MenuActions.Pause.performed += _ => OnAttemptOpen(!Open);
     }
 
-    public override void Open(bool value)
+    protected override void OnOpen(bool value)
     {
-        if (!MenuManager.MenuOpen)
-        {
-            open = value;
-            (value ? OnPause : OnResume).Invoke();
-            transform.GetChild(0).gameObject.SetActive(value);
-            Time.timeScale = value ? 0 : 1;
-            Cursor.visible = value;
-            Cursor.lockState = value ? CursorLockMode.None : CursorLockMode.Locked;
-        }
+        (value ? OnPause : OnResume).Invoke();
+        transform.GetChild(0).gameObject.SetActive(value);
+        Time.timeScale = value ? 0 : 1;
+        Cursor.visible = value;
+        Cursor.lockState = value ? CursorLockMode.None : CursorLockMode.Locked;
     }
 }

@@ -2,46 +2,18 @@ using UnityEngine;
 
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField] private CustomInspect customInspect;
+    [field: SerializeField] public CustomInspect CustomInspect { get; private set; }
 
-    private Controls controls;
     public static MenuManager Current { get; private set; }
-    public static bool MenuOpen { get; private set; } = false;
+    public bool MenuOpen { get; private set; } = false;
 
-    void Awake()
+    void Awake() => Current = this;
+
+    public void OpenMenu(bool value)
     {
-        Current = this;
-        controls = new Controls();
-        controls.Menu.Exit.performed += _ => Close();
-    }
-
-    void OnEnable() => controls.Enable();
-    void OnDisable() => controls.Disable();
-
-    public void Inspect(Sprite sprite, Vector2? preferredDimensions = null)
-    {
-        if (!MenuOpen)
-        {
-            customInspect.ShowSprite(sprite, preferredDimensions);
-            MenuOpen = true;
-        }
-    }
-
-    public void InspectCustomText(string header, string body,
-        Color headerColor, Color bodyColor)
-    {
-        if (!MenuOpen)
-        {
-            customInspect.ShowCustomText(header, body, headerColor, bodyColor);
-            MenuOpen = true;
-        }
-    }
-
-    void Close()
-    {
-        if (customInspect.Hide())
-        {
-            MenuOpen = false;
-        }
+        Debug.Log("Menu manager call. (" + value + ")");
+        if (MenuOpen == value)
+        { throw new System.InvalidOperationException("Menu cannot open when another is already open or hasn't explicitly closed."); }
+        MenuOpen = value;
     }
 }
