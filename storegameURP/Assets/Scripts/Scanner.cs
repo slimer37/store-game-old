@@ -13,6 +13,15 @@ public class Scanner : MonoBehaviour
         { onScan?.Invoke(scannedProduct); }
     }
 
-    void OnTriggerStay(Collider other) => scannerLight.enabled = true;
-    void OnTriggerExit(Collider other) => scannerLight.enabled = false;
+    void OnTriggerStay(Collider other)
+    {
+        if (other.GetComponent<Product>())
+        { scannerLight.enabled = true; }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.GetComponent<Product>())
+        { scannerLight.enabled = false; }
+    }
 }
