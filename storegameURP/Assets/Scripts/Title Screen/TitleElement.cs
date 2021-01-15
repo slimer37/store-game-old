@@ -50,6 +50,8 @@ public class TitleElement : MonoBehaviour
     {
         if (!animating)
         {
+            StopCoroutine(hoverRoutine);
+
             if (value && !Focused)
             {
                 if (callbackOnSelect)
