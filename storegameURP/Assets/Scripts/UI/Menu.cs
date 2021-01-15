@@ -20,9 +20,10 @@ public abstract class Menu : MonoBehaviour
 
     public virtual void OnAttemptOpen(bool value)
     {
-        if (Open != value && MenuManager.Current.MenuOpen != value)
+        if (Open != value && (!MenuManager.Current || MenuManager.Current.MenuOpen != value))
         {
-            MenuManager.Current.OpenMenu(value);
+            if (MenuManager.Current)
+            { MenuManager.Current.OpenMenu(value); }
             Open = value;
             OnOpen(value);
         }
