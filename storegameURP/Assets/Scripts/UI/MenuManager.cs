@@ -11,9 +11,9 @@ public class MenuManager : MonoBehaviour
 
     public void OpenMenu(bool value)
     {
-        Debug.Log("Menu manager call. (" + value + ")");
         if (MenuOpen == value)
-        { throw new System.InvalidOperationException("Menu cannot open when another is already open or hasn't explicitly closed."); }
+        { throw new System.InvalidOperationException(value ? "Menu cannot open when another is already open or hasn't explicitly closed."
+            : "Menu cannot close when none are open and the menu hasn't explicitly opened."); }
         MenuOpen = value;
     }
 }
