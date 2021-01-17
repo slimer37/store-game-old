@@ -2,34 +2,38 @@ using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(Container))]
-public class ToolEditor : Editor
+public class ContainerEditor : Editor
 {
-    private static Vector3 selectedHoldPosition;
-    private static Quaternion selectedHoldRotation;
-    private static Mesh mesh;
-    private static bool preview;
+    private static float anchorHeight;
+    private static float triggerHeight;
 
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
 
-        mesh = ((Container)target).GetComponent<MeshFilter>().sharedMesh;
-
-        if (selectedHoldRotation != (selectedHoldRotation = Quaternion.Euler(serializedObject.FindProperty("holdRotation").vector3Value))
-            || selectedHoldPosition != (selectedHoldPosition = serializedObject.FindProperty("holdPosition").vector3Value)
-            || preview != (preview = EditorGUILayout.Toggle("Preview", preview, "Button")))
-        { EditorUtility.SetDirty(target); }
+        var selected = (Container)target;
+        anchorHeight = serializedObject.FindProperty("scaleAnchor").floatValue;
+        triggerHeight = serializedObject.FindProperty("triggerHeight").floatValue;
+        if (triggerHeight > selected.GetComponent<Collider>().bounds.max.y - selected.transform.position.y)
+        { EditorGUILayout.HelpBox("Trigger height is above collider bounds.", MessageType.Warning); }
     }
 
     [DrawGizmo(GizmoType.Selected | GizmoType.Active)]
     static void DrawGizmos(Container container, GizmoType type)
     {
-        if (preview)
-        {
-            Gizmos.color = Color.white;
-            Transform parent = Camera.main.transform.parent;
-            Quaternion adjustedRotation = Quaternion.Inverse(parent.rotation * selectedHoldRotation);
-            Gizmos.DrawMesh(mesh, parent.TransformPoint(selectedHoldPosition), adjustedRotation);
-        }
+        var offset = new Vector3(0.5f, 0, 0.5f);
+        var secondOffset = new Vector3(0.5f, 0, -0.5f);
+
+        Gizmos.color = Color.yellow;
+        var triggerPos = container.transform.position + Vector3.up * triggerHeight;
+        Gizmos.DrawWireCube(triggerPos, new Vector3(1, 0.01f, 1));
+        Gizmos.DrawLine(triggerPos + offset, triggerPos - offset);
+        Gizmos.DrawLine(triggerPos + secondOffset, triggerPos - secondOffset);
+
+        Gizmos.color = Color.red;
+        var anchorPos = container.transform.position + Vector3.up * anchorHeight;
+        Gizmos.DrawWireCube(anchorPos, new Vector3(1, 0.01f, 1));
+        Gizmos.DrawLine(anchorPos + offset, anchorPos - offset);
+        Gizmos.DrawLine(anchorPos + secondOffset, anchorPos - secondOffset);
     }
 }

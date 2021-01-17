@@ -1,87 +1,70 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Container : Pickuppable
+[RequireComponent(typeof(Collider))]
+public class Container : MonoBehaviour
 {
-    protected override CursorIcon.Icon HoverIcon => Interaction.Held
-            ? contents.Count < capacity ? CursorIcon.Icon.Access : CursorIcon.Icon.Invalid
-            : isHeld ? CursorIcon.Icon.None : CursorIcon.Icon.Pickup;
-
-    protected override string Tooltip => $"{contents.Count}/{capacity} items\n"
-        + (contents.Count > 0 ? $"including {contents[0].Info.DisplayName}" : "");
-
-    [SerializeField] private Vector3 holdPosition;
-    [SerializeField] private Vector3 holdRotation;
     [SerializeField] private int capacity;
-    [Tooltip("If checked, the list is a whitelist. Otherwise, it is a blacklist.")]
-    [SerializeField] private bool exclusive;
-    [SerializeField] private ProductInfo[] list;
+    [SerializeField] private float scaleFactor;
+    [SerializeField] private float scaleAnchor;
+    [SerializeField] private float triggerHeight;
+    
+    private List<Product> Contents = new List<Product>();
 
-    private List<Product> contents = new List<Product>();
-    private const float cameraAngleMultiplier = 0.005f;
+    public bool Active { get; set; } = true;
+    public string Info => $"{Contents.Count}/{capacity} items";
 
-    void Update()
+    void OnTriggerEnter(Collider other)
     {
-        if (isHeld)
+        if (Active && other.TryGetComponent(out Product item))
+        { AddItem(item, true); }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (Active && other.TryGetComponent(out Product item))
+        { AddItem(item, false); }
+    }
+
+    void AddItem(Product item, bool add)
+    {
+        Debug.Log((add ? "Gained " : "Lost ") + item.gameObject.name);
+        if (add)
+        { Contents.Add(item); }
+        else
         {
-            float angle = Interaction.CamTransform.eulerAngles.x;
-            if (angle > 180)
-            { angle -= 360; }
-            float delta = -angle * cameraAngleMultiplier;
-            transform.localPosition = holdPosition + Vector3.up * delta;
+            Contents.Remove(item);
+            item.transform.localScale = item.OriginalScale;
+        }
+        item.transform.parent = add ? transform : null;
+    }
+
+    void FixedUpdate()
+    {
+        if (!Active || Contents.Count == 0) return;
+
+        foreach (var item in Contents)
+        {
+            float height = Mathf.Max(0, item.transform.localPosition.y - scaleAnchor);
+            item.transform.localScale = item.OriginalScale * Mathf.Lerp(scaleFactor, 1, height / triggerHeight);
         }
     }
 
-    protected override void Pickup(bool pickup)
+    public void FreezeItems(bool freeze)
     {
-        base.Pickup(pickup);
+        foreach (var item in Contents)
+        { SetRigidbody(item.Rb); }
 
-        if (pickup)
-        { Rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative; }
-        Rb.isKinematic = pickup;
-        if (!pickup)
-        { Rb.collisionDetectionMode = CollisionDetectionMode.Continuous; }
+        if (!freeze)
+        { Contents.Clear(); }
 
-        if (!pickup)
+        void SetRigidbody(Rigidbody rb)
         {
-            transform.localPosition = Vector3.forward;
-            transform.LookAt(Interaction.PlayerTransform);
+            if (freeze)
+            { rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative; }
+            rb.isKinematic = freeze;
+            if (!freeze)
+            { rb.collisionDetectionMode = CollisionDetectionMode.Continuous; }
         }
-
-        transform.parent = pickup ? Interaction.PlayerTransform : null;
-
-        if (pickup)
-        { transform.localRotation = Quaternion.Euler(holdRotation); }
-    }
-
-    public override void SecondaryInteract()
-    {
-        Product item;
-        if (Interaction.Held is Product && contents.Count < capacity)
-        {
-            item = Interaction.Held as Product;
-
-            if (CheckAgainstList(item.Info))
-            {
-                item.Drop();
-                contents.Add(item);
-                item.gameObject.SetActive(false);
-            }
-        }
-        else if (!Interaction.Held && contents.Count > 0)
-        {
-            item = contents[contents.Count - 1];
-            contents.Remove(item);
-            item.gameObject.SetActive(true);
-            item.transform.position = transform.position + Vector3.up * 0.5f - Interaction.CamTransform.forward * 0.5f;
-            item.Interact();
-        }
-    }
-
-    private bool CheckAgainstList(ProductInfo check)
-    {
-        foreach (var product in list)
-        { if (check == product) return exclusive; }
-        return !exclusive;
     }
 }
