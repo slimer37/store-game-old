@@ -17,7 +17,7 @@ public class ToolEditor : Editor
 
         var rot = Quaternion.Euler(serializedObject.FindProperty("holdRotation").vector3Value);
         var pos = serializedObject.FindProperty("holdPosition").vector3Value;
-        var prev = EditorGUILayout.Toggle("Preview", preview, "Button");
+        var prev = GUILayout.Toggle(preview, "Preview", "Button");
 
         // Update gizmos when pos/rot values or preview bool updates.
         if (selectedHoldRotation != (selectedHoldRotation = rot)
