@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
-    protected bool interactable = true;
+    [SerializeField] protected bool interactable = true;
     protected virtual CursorIcon.Icon HoverIcon { get; set; } = CursorIcon.Icon.Invalid;
     protected virtual string Tooltip { get; set; } = "";
 
