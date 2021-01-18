@@ -35,7 +35,7 @@ public class Look : MonoBehaviour
     {
         if (!MenuManager.Current.MenuOpen)
         {
-            transform.eulerAngles += inputRot.x * Vector3.up;
+            transform.localEulerAngles += inputRot.x * Vector3.up;
 
             camRot.x -= inputRot.y;
             camRot.x = Mathf.Clamp(camRot.x, -verticalClamp, verticalClamp);
