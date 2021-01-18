@@ -441,10 +441,8 @@ MonoBehaviour:
   jumpForce: 6
   gravity: 20
   anim: {fileID: 818744725118147189}
-  sprintAnimSpeed: 4
   sprintSpeed: 6
-  sprintFOV: 70
-  FOVChangeRate: 10
+  sprintAnimSpeed: 4
 --- !u!114 &2894438026993527473
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -459,6 +457,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   verticalClamp: 90
   sensitivity: 10
+  sprintFOV: 70
+  FOVChangeRate: 10
 --- !u!114 &2894438026993527477
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,25 +7,26 @@ public class Movement : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float gravity;
     [SerializeField] private Animator anim;
-    [SerializeField] private float sprintAnimSpeed;
 
     [Header("Sprinting")]
     [SerializeField] private float sprintSpeed;
-    [SerializeField] private float sprintFOV;
-    [SerializeField] private float FOVChangeRate;
+    [SerializeField] private float sprintAnimSpeed;
 
     private CharacterController controller;
     private Vector3 inputDirection;
     private Vector3 moveDirection;
     private bool sprinting = false;
-    private float originalFOV;
     private Camera cam;
+
+    private static Movement current;
+
+    public static void Enable(bool value) => current.enabled = value;
 
     void Awake()
     {
+        current = this;
         controller = GetComponent<CharacterController>();
         cam = GetComponent<PlayerInput>().camera;
-        originalFOV = cam.fieldOfView;
     }
 
     void OnMovement(InputValue value)
@@ -60,20 +60,8 @@ public class Movement : MonoBehaviour
         controller.Move(moveDirection * Time.deltaTime);
     }
 
-    void OnSprint(InputValue value)
-    {
-        // Sprinting is true when shift is down and reset when up.
-        sprinting = value.isPressed;
-        StopAllCoroutines();
-        StartCoroutine(AnimateFOV());
-    }
-
-    IEnumerator AnimateFOV()
-    {
-        float finalFOV = sprinting ? sprintFOV : originalFOV;
-        yield return Tweens.LerpValue(1 / FOVChangeRate, t =>
-            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, finalFOV, FOVChangeRate * Time.deltaTime));
-    }
+    // Sprinting is true when shift is down and reset when up.
+    void OnSprint(InputValue value) => sprinting = value.isPressed;
 
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
