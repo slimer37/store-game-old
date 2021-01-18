@@ -51,6 +51,8 @@ public class TitleScreen : MonoBehaviour
         {
             if (!hoveredObj || hoveredObj.transform != hit.transform)
             {
+                if (hoveredObj)
+                { hoveredObj.Hover(false); }
                 hoveredObj = hit.transform.GetComponent<TitleElement>();
                 hoveredObj.Hover(true);
             }
