@@ -16,7 +16,6 @@ public class Movement : MonoBehaviour
     private Vector3 inputDirection;
     private Vector3 moveDirection;
     private bool sprinting = false;
-    private Camera cam;
 
     private static Movement current;
 
@@ -26,7 +25,6 @@ public class Movement : MonoBehaviour
     {
         current = this;
         controller = GetComponent<CharacterController>();
-        cam = GetComponent<PlayerInput>().camera;
     }
 
     void OnMovement(InputValue value)
@@ -60,7 +58,6 @@ public class Movement : MonoBehaviour
         controller.Move(moveDirection * Time.deltaTime);
     }
 
-    // Sprinting is true when shift is down and reset when up.
     void OnSprint(InputValue value) => sprinting = value.isPressed;
 
     void OnControllerColliderHit(ControllerColliderHit hit)
