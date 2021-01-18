@@ -2794,7 +2794,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactable: 1
-  trigger: {fileID: 1444579623}
   openState: OpenDoor
   closeState: CloseDoor
 --- !u!95 &401371082
@@ -9892,6 +9891,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTriggers: 0
+  autoClose: 0
+  entrance: {fileID: 919132147819982625}
 --- !u!65 &788979822
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10098,7 +10099,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh50524
+  m_Name: pb_Mesh89644
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -13192,7 +13193,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh51302
+  m_Name: pb_Mesh90288
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -13853,6 +13854,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTriggers: 0
+  autoClose: 0
+  entrance: {fileID: 401371081}
 --- !u!54 &1444579624
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -17913,10 +17916,10 @@ HingeJoint:
   m_GameObject: {fileID: 2112834057}
   m_ConnectedBody: {fileID: 0}
   m_ConnectedArticulationBody: {fileID: 0}
-  m_Anchor: {x: 0, y: 1, z: 0}
+  m_Anchor: {x: 0, y: 1.1, z: 0}
   m_Axis: {x: 1, y: 0, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0, y: 6.413, z: 0}
+  m_ConnectedAnchor: {x: 0, y: 6.513, z: 0}
   m_UseSpring: 0
   m_Spring:
     spring: 0
@@ -18444,6 +18447,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 385564807}
+    - target: {fileID: 843492637924997221, guid: 96ac5a9536f1bc146913167f13a77be2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6747896219706846095, guid: 96ac5a9536f1bc146913167f13a77be2, type: 3}
       propertyPath: m_Name
       value: Essential UI
@@ -18576,7 +18583,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactable: 1
-  trigger: {fileID: 788979821}
   openState: OpenDoor
   closeState: CloseDoor
 --- !u!114 &919132147819982626
