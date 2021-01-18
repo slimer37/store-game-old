@@ -56,7 +56,12 @@ public class Interaction : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, reach))
         {
             if (!hit.transform.CompareTag("Interactable"))
-            { CursorIcon.Reset(); }
+            {
+                CursorIcon.Reset();
+                hoveredTransform = null;
+            }
+            else
+            { hoveredTransform = hit.transform; }
 
             if (!Held || hit.transform != Held.transform)
             { hit.transform.SendMessage("Hover", SendMessageOptions.DontRequireReceiver); }
@@ -65,8 +70,6 @@ public class Interaction : MonoBehaviour
 
             if (hoveredTransform && hit.transform != hoveredTransform)
             { hoveredTransform.SendMessage("HoverExit", SendMessageOptions.DontRequireReceiver); }
-
-            hoveredTransform = hit.transform;
         }
         else
         {
