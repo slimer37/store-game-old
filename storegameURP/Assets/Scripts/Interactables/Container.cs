@@ -8,7 +8,7 @@ public class Container : MonoBehaviour
     [SerializeField] private float scaleFactor;
     [SerializeField] private float scaleAnchor;
     [SerializeField] private float triggerHeight;
-    
+
     private List<Product> Contents = new List<Product>();
 
     public bool Active { get; set; } = true;
@@ -16,19 +16,20 @@ public class Container : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (Active && other.TryGetComponent(out Product item))
+        if (other.TryGetComponent(out Product item))
         { AddItem(item, true); }
     }
 
     void OnTriggerExit(Collider other)
     {
-        if (Active && other.TryGetComponent(out Product item))
+        if (other.TryGetComponent(out Product item))
         { AddItem(item, false); }
     }
 
     void AddItem(Product item, bool add)
     {
-        Debug.Log((add ? "Gained " : "Lost ") + item.gameObject.name);
+        if (!Active || add && Contents.Count == capacity) return;
+
         if (add)
         { Contents.Add(item); }
         else
@@ -53,18 +54,12 @@ public class Container : MonoBehaviour
     public void FreezeItems(bool freeze)
     {
         foreach (var item in Contents)
-        { SetRigidbody(item.Rb); }
+        {
+            item.Rb.constraints = freeze ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.None;
+            item.Rb.detectCollisions = !freeze;
+        }
 
         if (!freeze)
         { Contents.Clear(); }
-
-        void SetRigidbody(Rigidbody rb)
-        {
-            if (freeze)
-            { rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative; }
-            rb.isKinematic = freeze;
-            if (!freeze)
-            { rb.collisionDetectionMode = CollisionDetectionMode.Continuous; }
-        }
     }
 }

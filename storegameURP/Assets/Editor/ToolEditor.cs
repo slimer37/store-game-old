@@ -33,8 +33,7 @@ public class ToolEditor : Editor
         {
             Gizmos.color = Color.white;
             Transform parent = Camera.main.transform.parent;
-            Quaternion adjustedRotation = Quaternion.Inverse(parent.rotation * selectedHoldRotation);
-            Gizmos.DrawMesh(mesh, parent.TransformPoint(selectedHoldPosition), adjustedRotation);
+            Gizmos.DrawMesh(mesh, parent.TransformPoint(selectedHoldPosition), parent.rotation * selectedHoldRotation);
         }
     }
 }

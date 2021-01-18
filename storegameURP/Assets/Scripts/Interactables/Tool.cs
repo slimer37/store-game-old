@@ -28,19 +28,17 @@ public class Tool : Pickuppable
         base.Pickup(pickup);
 
         if (pickup)
-        { transform.localRotation = Quaternion.Euler(holdRotation); }
+        {
+            transform.parent = Interaction.PlayerTransform;
+            transform.localRotation = Quaternion.Euler(holdRotation);
+        }
         else
         {
             transform.localPosition = Vector3.forward;
             transform.LookAt(Interaction.PlayerTransform);
+            transform.parent = null;
         }
 
-        transform.parent = pickup ? Interaction.PlayerTransform : null;
-
-        if (pickup)
-        { Rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative; }
-        Rb.isKinematic = pickup;
-        if (!pickup)
-        { Rb.collisionDetectionMode = CollisionDetectionMode.Continuous; }
+        Rb.constraints = pickup ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.None;
     }
 }

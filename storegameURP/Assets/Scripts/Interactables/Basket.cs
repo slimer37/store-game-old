@@ -10,6 +10,7 @@ public class Basket : Tool
     protected override void Awake()
     {
         base.Awake();
+        verifyWithRay = false;
         TryGetComponent(out container);
     }
 

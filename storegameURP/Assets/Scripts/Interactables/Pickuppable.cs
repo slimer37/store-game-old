@@ -7,6 +7,7 @@ public class Pickuppable : Interactable
     public Rigidbody Rb { get; private set; }
     public Collider Col { get; private set; }
 
+    protected bool verifyWithRay = true;
     protected bool isHeld = false;
     public bool IsHeld => isHeld;
     public Vector3 OriginalScale { get; private set; }
@@ -65,10 +66,13 @@ public class Pickuppable : Interactable
 
         Rb.velocity *= Mathf.Min(1.0f, force.magnitude / 2);
 
-        Vector3 direction = transform.position - Interaction.CamTransform.position;
-        if (Vector3.Distance(transform.position, targetPoint) > Interaction.DropDist
-            || Physics.Raycast(new Ray(Interaction.CamTransform.position, direction), out RaycastHit hit) && hit.transform != transform)
-        { Drop(); }
+        if (verifyWithRay)
+        {
+            Vector3 direction = transform.position - Interaction.CamTransform.position;
+            if (Vector3.Distance(transform.position, targetPoint) > Interaction.DropDist
+                || Physics.Raycast(new Ray(Interaction.CamTransform.position, direction), out RaycastHit hit) && hit.transform != transform)
+            { Drop(); }
+        }
     }
 
     public void Drop() => Pickup(false);
