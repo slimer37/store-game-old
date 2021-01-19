@@ -33,14 +33,13 @@ public class Look : MonoBehaviour
 
     void Update()
     {
-        if (!MenuManager.Current.MenuOpen)
-        {
-            transform.localEulerAngles += inputRot.x * Vector3.up;
+        if (MenuManager.Current.MenuOpen) return;
 
-            camRot.x -= inputRot.y;
-            camRot.x = Mathf.Clamp(camRot.x, -verticalClamp, verticalClamp);
-            cam.transform.localRotation = Quaternion.Euler(camRot);
-        }
+        transform.localEulerAngles += inputRot.x * Vector3.up;
+
+        camRot.x -= inputRot.y;
+        camRot.x = Mathf.Clamp(camRot.x, -verticalClamp, verticalClamp);
+        cam.transform.localRotation = Quaternion.Euler(camRot);
     }
 
     void OnSprint(InputValue value)
