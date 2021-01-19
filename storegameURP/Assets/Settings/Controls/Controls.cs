@@ -81,6 +81,14 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Exit Vehicle"",
+                    ""type"": ""Button"",
+                    ""id"": ""0e9beee2-e385-4bf8-9cb7-11d31cea28fd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -213,6 +221,17 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard + Mouse"",
                     ""action"": ""Throw"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""045a2e3c-be82-4f05-939c-e0bc4b009c77"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard + Mouse"",
+                    ""action"": ""Exit Vehicle"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -394,6 +413,7 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_ShiftItem = m_Player.FindAction("Shift Item", throwIfNotFound: true);
         m_Player_Throw = m_Player.FindAction("Throw", throwIfNotFound: true);
+        m_Player_ExitVehicle = m_Player.FindAction("Exit Vehicle", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Select = m_Menu.FindAction("Select", throwIfNotFound: true);
@@ -461,6 +481,7 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_ShiftItem;
     private readonly InputAction m_Player_Throw;
+    private readonly InputAction m_Player_ExitVehicle;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -473,6 +494,7 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @ShiftItem => m_Wrapper.m_Player_ShiftItem;
         public InputAction @Throw => m_Wrapper.m_Player_Throw;
+        public InputAction @ExitVehicle => m_Wrapper.m_Player_ExitVehicle;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -506,6 +528,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Throw.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrow;
                 @Throw.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrow;
                 @Throw.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnThrow;
+                @ExitVehicle.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitVehicle;
+                @ExitVehicle.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitVehicle;
+                @ExitVehicle.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitVehicle;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -534,6 +559,9 @@ public class @Controls : IInputActionCollection, IDisposable
                 @Throw.started += instance.OnThrow;
                 @Throw.performed += instance.OnThrow;
                 @Throw.canceled += instance.OnThrow;
+                @ExitVehicle.started += instance.OnExitVehicle;
+                @ExitVehicle.performed += instance.OnExitVehicle;
+                @ExitVehicle.canceled += instance.OnExitVehicle;
             }
         }
     }
@@ -664,6 +692,7 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnShiftItem(InputAction.CallbackContext context);
         void OnThrow(InputAction.CallbackContext context);
+        void OnExitVehicle(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {
