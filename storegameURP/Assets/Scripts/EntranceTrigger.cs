@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class EntranceTrigger : MonoBehaviour
 {
-    [SerializeField] private bool playerTriggers;
+    [SerializeField] private bool nonRestrictive;
     [SerializeField] private bool autoClose;
     [SerializeField] private Openable entrance;
 
@@ -11,7 +11,7 @@ public class EntranceTrigger : MonoBehaviour
 
     void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Customer") || playerTriggers && other.CompareTag("Player"))
+        if (nonRestrictive && (other.attachedRigidbody || other.CompareTag("Player")) || other.CompareTag("Customer"))
         {
             entrance.SetInteractable(false);
 
@@ -25,9 +25,9 @@ public class EntranceTrigger : MonoBehaviour
 
     void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Customer") || playerTriggers && other.CompareTag("Player"))
+        if (nonRestrictive && (other.attachedRigidbody || other.CompareTag("Player")) || other.CompareTag("Customer"))
         {
-            entrance.SetInteractable(!playerTriggers);
+            entrance.SetInteractable(!nonRestrictive);
 
             if (autoClose)
             { queueClose = true; }
