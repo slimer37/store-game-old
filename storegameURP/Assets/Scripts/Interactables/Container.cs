@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider))]
 public class Container : MonoBehaviour
 {
     [SerializeField] private int capacity;
