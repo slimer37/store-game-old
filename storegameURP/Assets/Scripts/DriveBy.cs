@@ -15,6 +15,7 @@ public class DriveBy : MonoBehaviour
 
     IEnumerator Start()
     {
+        SetChildrenActive(false);
         yield return new WaitForSeconds(startDelay);
 
         while (true)
@@ -32,10 +33,11 @@ public class DriveBy : MonoBehaviour
         yield return new WaitForSeconds(Random.Range(minInterval, maxInterval));
         transform.eulerAngles = transform.eulerAngles + Vector3.up * 180 * turnMultiplier;
 
-        void SetChildrenActive(bool value)
-        {
-            for (int i = 0; i < transform.childCount; i++)
-            { transform.GetChild(i).gameObject.SetActive(value); }
-        }
+    }
+
+    void SetChildrenActive(bool value)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        { transform.GetChild(i).gameObject.SetActive(value); }
     }
 }

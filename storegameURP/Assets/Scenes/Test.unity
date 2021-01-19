@@ -10061,7 +10061,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6f3703cd5f93de49b2e82b0e5931f0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTriggers: 0
+  nonRestrictive: 0
   autoClose: 0
   entrance: {fileID: 919132147819982625}
 --- !u!65 &788979822
@@ -10270,7 +10270,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23074
+  m_Name: pb_Mesh113696
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -13535,7 +13535,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh23740
+  m_Name: pb_Mesh114362
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -14195,7 +14195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6f3703cd5f93de49b2e82b0e5931f0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerTriggers: 0
+  nonRestrictive: 0
   autoClose: 0
   entrance: {fileID: 401371081}
 --- !u!54 &1444579624
@@ -19709,7 +19709,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!33 &6727820581255259972
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -19958,7 +19958,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!33 &8838225566419568341
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -20030,7 +20030,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1001 &9196468330349184902
 PrefabInstance:
   m_ObjectHideFlags: 0
