@@ -36,7 +36,7 @@ public class SceneLoader : MonoBehaviour
             progressText.text = Mathf.RoundToInt(progress * 100f) + "%";
 
             var captionIndex = Mathf.RoundToInt(progress * progressCaptions.Length);
-            progressCaption.text = progressCaptions[Mathf.Clamp(captionIndex, 0, progressCaptions.Length)];
+            progressCaption.text = progressCaptions[Mathf.Clamp(captionIndex, 0, progressCaptions.Length - 1)];
 
             yield return null;
         }
