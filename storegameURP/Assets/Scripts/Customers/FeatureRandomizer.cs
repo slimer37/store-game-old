@@ -23,7 +23,7 @@ public class FeatureRandomizer : MonoBehaviour
     private struct TextRandomizer
     {
         public TextMeshPro[] textObjects;
-        public string[] textSet;
+        [TextArea(0, 4)] public string[] textSet;
         public string prefix;
         public string suffix;
     }
