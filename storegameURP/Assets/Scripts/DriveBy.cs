@@ -18,7 +18,6 @@ public class DriveBy : MonoBehaviour
     IEnumerator Start()
     {
         transform.localScale = Vector3.zero;
-        SetChildrenActive(false);
         yield return new WaitForSeconds(startDelay);
 
         while (true)
@@ -35,8 +34,6 @@ public class DriveBy : MonoBehaviour
 
     IEnumerator DriveRoute(Vector3[] nodes)
     {
-        SetChildrenActive(true);
-
         float duration = Random.Range(minDuration, maxDuration);
         transform.position = new Vector3(nodes[0].x, transform.position.y, nodes[0].z);
         transform.LookAt(new Vector3(nodes[1].x, transform.position.y, nodes[1].z));
@@ -49,7 +46,6 @@ public class DriveBy : MonoBehaviour
         { yield return DriveNodes(nodes[i - 1], nodes[i], nodes[i + 1], i == 1 ? 1 : -1); }
         yield return DriveNodes(nodes[nodes.Length - 2], nodes[nodes.Length - 1], nodes[nodes.Length - 1], 0);
 
-        SetChildrenActive(false);
         yield return new WaitForSeconds(Random.Range(minInterval, maxInterval));
 
         IEnumerator DriveNodes(Vector3 node1, Vector3 node2, Vector3 face, int size = -1)
@@ -71,11 +67,5 @@ public class DriveBy : MonoBehaviour
                 { transform.localScale = Vector3.Lerp(transform.localScale, Vector3.one * size, t); }
             });
         }
-    }
-
-    void SetChildrenActive(bool value)
-    {
-        for (int i = 0; i < transform.childCount; i++)
-        { transform.GetChild(i).gameObject.SetActive(value); }
     }
 }
