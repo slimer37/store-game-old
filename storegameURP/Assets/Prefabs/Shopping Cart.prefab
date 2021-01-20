@@ -480,6 +480,7 @@ MonoBehaviour:
   - {fileID: 7902805696661918956}
   - {fileID: 4057590360042485878}
   wheelTurnAmount: 90
+  exitInstructions: {fileID: 0}
 --- !u!54 &840603370939378075
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -587,7 +588,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2365977285441333193}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: cfb3aa59316041d4fbea217921bd1061, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -982,7 +983,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5150367435681178540}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: cfb3aa59316041d4fbea217921bd1061, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1081,6 +1082,7 @@ GameObject:
   - component: {fileID: 7180836687445871220}
   - component: {fileID: 5185375172772296319}
   - component: {fileID: 5731766000492522732}
+  - component: {fileID: 3744566529764164536}
   m_Layer: 0
   m_Name: Wheel FR
   m_TagString: Untagged
@@ -1153,6 +1155,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!135 &3744566529764164536
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6075488726235876623}
+  m_Material: {fileID: 13400000, guid: cfb3aa59316041d4fbea217921bd1061, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.06400001
+  m_Center: {x: -0.00000043492764, y: 0, z: 0}
 --- !u!1 &6298212907100202622
 GameObject:
   m_ObjectHideFlags: 0
@@ -1558,6 +1573,7 @@ GameObject:
   - component: {fileID: 444650900544396959}
   - component: {fileID: 8045781284225506495}
   - component: {fileID: 6623605985944660097}
+  - component: {fileID: 7090552403895741276}
   m_Layer: 0
   m_Name: Wheel FL
   m_TagString: Untagged
@@ -1630,3 +1646,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!135 &7090552403895741276
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8594839815112163505}
+  m_Material: {fileID: 13400000, guid: cfb3aa59316041d4fbea217921bd1061, type: 2}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.06400001
+  m_Center: {x: 0.0000005187467, y: 0, z: 0}
