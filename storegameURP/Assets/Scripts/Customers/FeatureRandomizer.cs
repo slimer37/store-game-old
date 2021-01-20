@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 [RequireComponent(typeof(Renderer))]
 public class FeatureRandomizer : MonoBehaviour
@@ -18,15 +19,32 @@ public class FeatureRandomizer : MonoBehaviour
         public int matIndex;
     }
 
+    [System.Serializable]
+    private struct TextRandomizer
+    {
+        public TextMeshPro[] textObjects;
+        public string[] textSet;
+        public string prefix;
+        public string suffix;
+    }
+
     [SerializeField] private ColorRandomizer[] colorRandomizers = new ColorRandomizer[] { };
+    [SerializeField] private TextRandomizer[] textRandomizers = new TextRandomizer[] { };
     [SerializeField, Range(0, 100)] private int appearanceChance = 100;
+
+    private Renderer rend;
 
     void Awake()
     {
         if (Random.Range(0, 101) > appearanceChance)
         { Destroy(gameObject); }
 
-        var rend = GetComponent<Renderer>();
+        TryGetComponent(out rend);
+        Randomize();
+    }
+
+    public void Randomize()
+    {
         foreach (var colorRand in colorRandomizers)
         {
             Color color = colorRand.colorSet[Random.Range(0, colorRand.colorSet.Length)];
@@ -34,6 +52,13 @@ public class FeatureRandomizer : MonoBehaviour
 
             foreach (var extraRend in colorRand.extraRenderers)
             { extraRend.renderer.materials[extraRend.matIndex].color = color; }
+        }
+
+        foreach (var textRand in textRandomizers)
+        {
+            var chosenText = textRand.textSet[Random.Range(0, textRand.textSet.Length)];
+            foreach (var text in textRand.textObjects)
+            { text.text = textRand.prefix + chosenText + textRand.suffix; }
         }
     }
 }
