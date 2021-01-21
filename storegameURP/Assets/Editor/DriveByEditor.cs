@@ -17,19 +17,20 @@ public class DriveByEditor : Editor
         if (targets.Length > 1)
         {
             EditorGUILayout.HelpBox("Can only edit nodes of one vehicle at a time.", MessageType.Warning);
+            base.OnInspectorGUI();
             return;
         }
 
         GUILayout.Space(10);
         EditorGUILayout.BeginHorizontal();
 
-        GUILayout.FlexibleSpace();
-        if (editing != GUILayout.Toggle(editing, "Edit Nodes", "Button", GUILayout.Width(Screen.width / 2)))
+        if (!editing) GUILayout.FlexibleSpace();
+        if (editing != GUILayout.Toggle(editing, "Edit Nodes", "Button"))
         {
             EditorUtility.SetDirty(target);
             editing = !editing;
         }
-        GUILayout.FlexibleSpace();
+        if (!editing) GUILayout.FlexibleSpace();
 
         if (editing)
         {
@@ -67,6 +68,18 @@ public class DriveByEditor : Editor
         }
         else
         { EditorGUILayout.EndHorizontal(); }
+
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
+        if (GUILayout.Button("Place Transform at first node"))
+        {
+            var transform = ((DriveBy)target).transform;
+            transform.position = nodes.GetArrayElementAtIndex(0).vector3Value;
+            var secondNode = nodes.GetArrayElementAtIndex(1).vector3Value;
+            transform.LookAt(new Vector3(secondNode.x, transform.position.y, secondNode.z));
+        }
+        GUILayout.FlexibleSpace();
+        EditorGUILayout.EndHorizontal();
 
         GUILayout.Space(10);
 
