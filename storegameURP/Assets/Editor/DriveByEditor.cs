@@ -69,9 +69,11 @@ public class DriveByEditor : Editor
         else
         { EditorGUILayout.EndHorizontal(); }
 
+        nodes = serializedObject.FindProperty("nodes");
+
         EditorGUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
-        if (GUILayout.Button("Place Transform at first node"))
+        if (nodes.arraySize > 1 && GUILayout.Button("Place Transform at first node"))
         {
             var transform = ((DriveBy)target).transform;
             transform.position = nodes.GetArrayElementAtIndex(0).vector3Value;
@@ -84,7 +86,6 @@ public class DriveByEditor : Editor
         GUILayout.Space(10);
 
         base.OnInspectorGUI();
-        nodes = serializedObject.FindProperty("nodes");
     }
 
     void OnSceneGUI()
