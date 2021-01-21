@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DriveBy : MonoBehaviour
 {
-    [SerializeField] public Vector3[] nodes;
+    [SerializeField] private Vector3[] nodes;
     [SerializeField] private float startDelay;
     [Header("Duration")]
     [SerializeField] private float minDuration;
@@ -13,8 +13,10 @@ public class DriveBy : MonoBehaviour
     [SerializeField] private float maxInterval;
 
     [Header("Appearance")]
-    [SerializeField] private FeatureRandomizer[] randomizers;
+    [SerializeField] private bool isCustomer;
 
+    private FeatureRandomizer[] randomizers;
+    private Animator anim;
     private GameObject[] children;
 
     void Awake()
@@ -27,6 +29,11 @@ public class DriveBy : MonoBehaviour
             if (transforms[i] != transform)
             { children[used++] = transforms[i].gameObject; }
         }
+
+        if (isCustomer)
+        { TryGetComponent(out anim); }
+
+        randomizers = GetComponentsInChildren<FeatureRandomizer>();
     }
 
     IEnumerator Start()
@@ -37,12 +44,10 @@ public class DriveBy : MonoBehaviour
 
         while (true)
         {
-            if (randomizers.Length > 0)
-            {
-                foreach (var randomizer in randomizers)
-                { randomizer.Randomize(); }
-            }
-
+            foreach (var randomizer in randomizers)
+            { randomizer.Randomize(); }
+            if (isCustomer)
+            { anim.SetFloat("Speed", 1); }
             yield return DriveRoute(nodes);
         }
     }
