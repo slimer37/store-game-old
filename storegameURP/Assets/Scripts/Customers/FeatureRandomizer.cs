@@ -36,15 +36,18 @@ public class FeatureRandomizer : MonoBehaviour
 
     void Awake()
     {
-        if (Random.Range(0, 101) > appearanceChance)
-        { Destroy(gameObject); }
-
         TryGetComponent(out rend);
         Randomize();
     }
 
     public void Randomize()
     {
+        if (Random.Range(0, 101) > appearanceChance)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
         foreach (var colorRand in colorRandomizers)
         {
             Color color = colorRand.colorSet[Random.Range(0, colorRand.colorSet.Length)];
