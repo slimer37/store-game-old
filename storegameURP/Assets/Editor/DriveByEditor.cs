@@ -1,17 +1,25 @@
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(DriveBy))]
+[CustomEditor(typeof(DriveBy)), CanEditMultipleObjects]
 public class DriveByEditor : Editor
 {
     private static SerializedProperty nodes;
     private static bool editing;
     private static bool localHandles;
 
+    private Vector3 incrementAmount;
+
     void Awake() => nodes = serializedObject.FindProperty("nodes");
 
     public override void OnInspectorGUI()
     {
+        if (targets.Length > 1)
+        {
+            EditorGUILayout.HelpBox("Can only edit nodes of one vehicle at a time.", MessageType.Warning);
+            return;
+        }
+
         EditorGUILayout.BeginHorizontal();
 
         if (editing != GUILayout.Toggle(editing, "Edit Nodes", "Button"))
@@ -27,9 +35,20 @@ public class DriveByEditor : Editor
                 localHandles = !localHandles;
                 EditorUtility.SetDirty(target);
             }
-        }
 
-        EditorGUILayout.EndHorizontal();
+            EditorGUILayout.EndHorizontal();
+
+            incrementAmount = EditorGUILayout.Vector3Field("Amount", incrementAmount);
+
+            if (incrementAmount.magnitude != 0 && GUILayout.Button("Increment All"))
+            {
+                for (int i = 0; i < nodes.arraySize; i++)
+                { nodes.GetArrayElementAtIndex(i).vector3Value += incrementAmount; }
+                serializedObject.ApplyModifiedProperties();
+            }
+        }
+        else
+        { EditorGUILayout.EndHorizontal(); }
 
         base.OnInspectorGUI();
         nodes = serializedObject.FindProperty("nodes");
@@ -53,7 +72,7 @@ public class DriveByEditor : Editor
             Handles.Label(points[i], "Element " + i);
         }
 
-        serializedObject.ApplyModifiedProperties();
+        nodes.serializedObject.ApplyModifiedProperties();
     }
 
     [DrawGizmo(GizmoType.Active | GizmoType.Active)]
