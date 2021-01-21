@@ -20,13 +20,16 @@ public class DriveByEditor : Editor
             return;
         }
 
+        GUILayout.Space(10);
         EditorGUILayout.BeginHorizontal();
 
-        if (editing != GUILayout.Toggle(editing, "Edit Nodes", "Button"))
+        GUILayout.FlexibleSpace();
+        if (editing != GUILayout.Toggle(editing, "Edit Nodes", "Button", GUILayout.Width(Screen.width / 2)))
         {
             EditorUtility.SetDirty(target);
             editing = !editing;
         }
+        GUILayout.FlexibleSpace();
 
         if (editing)
         {
@@ -37,18 +40,35 @@ public class DriveByEditor : Editor
             }
 
             EditorGUILayout.EndHorizontal();
+            EditorGUILayout.BeginHorizontal();
 
-            incrementAmount = EditorGUILayout.Vector3Field("Amount", incrementAmount);
-
-            if (incrementAmount.magnitude != 0 && GUILayout.Button("Increment All"))
+            if (GUILayout.Button("Shift All") && incrementAmount.magnitude != 0)
             {
                 for (int i = 0; i < nodes.arraySize; i++)
                 { nodes.GetArrayElementAtIndex(i).vector3Value += incrementAmount; }
+
+                serializedObject.ApplyModifiedProperties();
+            }
+
+            incrementAmount = EditorGUILayout.Vector3Field("", incrementAmount);
+            EditorGUILayout.EndHorizontal();
+
+            if (GUILayout.Button("Reverse Nodes"))
+            {
+                var points = new Vector3[nodes.arraySize];
+                for (int i = 0; i < nodes.arraySize; i++)
+                { points[i] = nodes.GetArrayElementAtIndex(i).vector3Value; }
+
+                for (int i = 0; i < nodes.arraySize; i++)
+                { nodes.GetArrayElementAtIndex(nodes.arraySize - 1 - i).vector3Value = points[i]; }
+
                 serializedObject.ApplyModifiedProperties();
             }
         }
         else
         { EditorGUILayout.EndHorizontal(); }
+
+        GUILayout.Space(10);
 
         base.OnInspectorGUI();
         nodes = serializedObject.FindProperty("nodes");
@@ -67,7 +87,11 @@ public class DriveByEditor : Editor
 
         for (int i = 0; i < nodes.arraySize; i++)
         {
-            Quaternion rot = localHandles && i < nodes.arraySize - 1 ? Quaternion.LookRotation(points[i + 1] - points[i]) : Quaternion.identity;
+            Quaternion rot;
+            if (localHandles)
+            { rot = Quaternion.LookRotation(i < nodes.arraySize - 1 ? (points[i + 1] - points[i]) : (points[i] - points[i - 1])); }
+            else
+            { rot = Quaternion.identity; }
             nodes.GetArrayElementAtIndex(i).vector3Value = Handles.PositionHandle(points[i], rot);
             Handles.Label(points[i], "Element " + i);
         }
