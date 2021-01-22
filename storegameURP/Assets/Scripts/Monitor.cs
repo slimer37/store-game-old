@@ -8,6 +8,7 @@ public class Monitor : Interactable
     [SerializeField] private Renderer rend;
     [SerializeField] private TextMeshPro channelNumText;
     [SerializeField] private TextMeshPro angleText;
+    [SerializeField] private bool enableNightVision;
 
     private bool useNightVision = false;
     private int channel = 0;
@@ -25,6 +26,8 @@ public class Monitor : Interactable
 
     public void ToggleNightVision()
     {
+        if (!enableNightVision) return;
+
         useNightVision = !useNightVision;
         currentCam.UseNightVision(useNightVision);
         UpdateText();
@@ -38,7 +41,8 @@ public class Monitor : Interactable
         UpdateText();
     }
 
-    void UpdateText() => channelNumText.text = $"CH {channel} <b><size=50%>NV:<color={(useNightVision ? "green>ON" : "yellow>OFF")}";
+    void UpdateText() => channelNumText.text = $"CH {channel} <b>" + (enableNightVision ?
+        $"<size=50%>NV:<color={(useNightVision ? "green>ON" : "yellow>OFF")}" : "");
 
     void UpdateScreen()
     {
