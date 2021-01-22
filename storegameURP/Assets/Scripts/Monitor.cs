@@ -10,7 +10,6 @@ public class Monitor : Interactable
     [SerializeField] private TextMeshPro angleText;
     [SerializeField] private bool enableNightVision;
 
-    private bool useNightVision = false;
     private int channel = 0;
 
     private Surveil currentCam => Surveil.AllCameras[channel];
@@ -20,23 +19,22 @@ public class Monitor : Interactable
         channelNumText.gameObject.SetActive(interactable);
         angleText.gameObject.SetActive(interactable);
         UpdateScreen();
-        UpdateText();
     }
 
     void ChangeChannel(int amount)
     {
         channel = (Surveil.AllCameras.Count + channel + amount) % Surveil.AllCameras.Count;
-        currentCam.UseNightVision(useNightVision);
         UpdateScreen();
-        UpdateText();
     }
 
     public override void Interact() => ChangeChannel(1);
     public override void SecondaryInteract() => ChangeChannel(-1);
-    void Update() => angleText.text = $"{currentCam.transform.localEulerAngles.y:000}°";
 
-    void UpdateText() => channelNumText.text = $"CH {channel} <b>" + (enableNightVision ?
-        $"<size=50%>NV:<color={(useNightVision ? "green>ON" : "yellow>OFF")}" : "");
+    void Update()
+    {
+        angleText.text = $"{currentCam.transform.localEulerAngles.y:000}°";
+        channelNumText.text = $"CH {channel} <b><size=50%>NV:<color={(currentCam.NightVision ? "green>ON" : "yellow>OFF")}";
+    }
 
     void UpdateScreen()
     {
@@ -51,11 +49,8 @@ public class Monitor : Interactable
 
     public void ToggleNightVision()
     {
-        if (!enableNightVision) return;
-
-        useNightVision = !useNightVision;
-        currentCam.UseNightVision(useNightVision);
-        UpdateText();
+        if (enableNightVision)
+        { currentCam.ToggleNightVision(); }
     }
 
     public void ToggleOn()

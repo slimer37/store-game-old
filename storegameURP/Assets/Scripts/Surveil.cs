@@ -18,6 +18,7 @@ public class Surveil : MonoBehaviour
 
     private VolumeProfile defaultProfile;
 
+    public bool NightVision { get; private set; }
     public RenderTexture Texture { get; private set; }
     public static List<Surveil> AllCameras { get; private set; } = new List<Surveil>();
 
@@ -31,7 +32,11 @@ public class Surveil : MonoBehaviour
         cam.targetTexture = Texture;
     }
 
-    public void UseNightVision(bool value) => volume.sharedProfile = value ? NightVisionProfile : defaultProfile;
+    public void ToggleNightVision()
+    {
+        NightVision = !NightVision;
+        volume.sharedProfile = NightVision ? NightVisionProfile : defaultProfile;
+    }
 
     IEnumerator Start()
     {
