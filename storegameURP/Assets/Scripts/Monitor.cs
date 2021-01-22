@@ -17,19 +17,9 @@ public class Monitor : Interactable
 
     void Start()
     {
+        channelNumText.gameObject.SetActive(interactable);
+        angleText.gameObject.SetActive(interactable);
         UpdateScreen();
-        UpdateText();
-    }
-
-    public override void Interact() => ChangeChannel(1);
-    public override void SecondaryInteract() => ChangeChannel(-1);
-
-    public void ToggleNightVision()
-    {
-        if (!enableNightVision) return;
-
-        useNightVision = !useNightVision;
-        currentCam.UseNightVision(useNightVision);
         UpdateText();
     }
 
@@ -41,14 +31,38 @@ public class Monitor : Interactable
         UpdateText();
     }
 
+    public override void Interact() => ChangeChannel(1);
+    public override void SecondaryInteract() => ChangeChannel(-1);
+    void Update() => angleText.text = $"{currentCam.transform.localEulerAngles.y:000}°";
+
     void UpdateText() => channelNumText.text = $"CH {channel} <b>" + (enableNightVision ?
         $"<size=50%>NV:<color={(useNightVision ? "green>ON" : "yellow>OFF")}" : "");
 
     void UpdateScreen()
     {
-        rend.material.SetTexture("_BaseMap", currentCam.Texture);
-        rend.material.SetTexture("_EmissionMap", currentCam.Texture);
+        Texture texture = interactable ? currentCam.Texture : null;
+        rend.material.SetTexture("_BaseMap", texture);
+        rend.material.SetTexture("_EmissionMap", texture);
+
+        Color color = interactable ? Color.white : Color.black;
+        rend.material.SetColor("_BaseColor", color);
+        rend.material.SetColor("_EmissionColor", color);
     }
 
-    void Update() => angleText.text = $"{currentCam.transform.localEulerAngles.y:000}°";
+    public void ToggleNightVision()
+    {
+        if (!enableNightVision) return;
+
+        useNightVision = !useNightVision;
+        currentCam.UseNightVision(useNightVision);
+        UpdateText();
+    }
+
+    public void ToggleOn()
+    {
+        interactable = !interactable;
+        channelNumText.gameObject.SetActive(interactable);
+        angleText.gameObject.SetActive(interactable);
+        UpdateScreen();
+    }
 }
