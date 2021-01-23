@@ -89,6 +89,22 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Use"",
+                    ""type"": ""Button"",
+                    ""id"": ""18e55f9a-3db9-4e1d-804f-fb2851d0d592"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Secondary Use"",
+                    ""type"": ""Button"",
+                    ""id"": ""669039c2-11be-41ba-b2af-5fcec22960b1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -232,6 +248,28 @@ public class @Controls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard + Mouse"",
                     ""action"": ""Exit Vehicle"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""82bb65e7-0b3f-457b-9359-2e838462b88a"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard + Mouse"",
+                    ""action"": ""Use"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5869a46b-9738-49ca-966f-7674b935d477"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard + Mouse"",
+                    ""action"": ""Secondary Use"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -414,6 +452,8 @@ public class @Controls : IInputActionCollection, IDisposable
         m_Player_ShiftItem = m_Player.FindAction("Shift Item", throwIfNotFound: true);
         m_Player_Throw = m_Player.FindAction("Throw", throwIfNotFound: true);
         m_Player_ExitVehicle = m_Player.FindAction("Exit Vehicle", throwIfNotFound: true);
+        m_Player_Use = m_Player.FindAction("Use", throwIfNotFound: true);
+        m_Player_SecondaryUse = m_Player.FindAction("Secondary Use", throwIfNotFound: true);
         // Menu
         m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
         m_Menu_Select = m_Menu.FindAction("Select", throwIfNotFound: true);
@@ -482,6 +522,8 @@ public class @Controls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_ShiftItem;
     private readonly InputAction m_Player_Throw;
     private readonly InputAction m_Player_ExitVehicle;
+    private readonly InputAction m_Player_Use;
+    private readonly InputAction m_Player_SecondaryUse;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
@@ -495,6 +537,8 @@ public class @Controls : IInputActionCollection, IDisposable
         public InputAction @ShiftItem => m_Wrapper.m_Player_ShiftItem;
         public InputAction @Throw => m_Wrapper.m_Player_Throw;
         public InputAction @ExitVehicle => m_Wrapper.m_Player_ExitVehicle;
+        public InputAction @Use => m_Wrapper.m_Player_Use;
+        public InputAction @SecondaryUse => m_Wrapper.m_Player_SecondaryUse;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -531,6 +575,12 @@ public class @Controls : IInputActionCollection, IDisposable
                 @ExitVehicle.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitVehicle;
                 @ExitVehicle.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitVehicle;
                 @ExitVehicle.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnExitVehicle;
+                @Use.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUse;
+                @Use.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUse;
+                @Use.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnUse;
+                @SecondaryUse.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryUse;
+                @SecondaryUse.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryUse;
+                @SecondaryUse.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSecondaryUse;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -562,6 +612,12 @@ public class @Controls : IInputActionCollection, IDisposable
                 @ExitVehicle.started += instance.OnExitVehicle;
                 @ExitVehicle.performed += instance.OnExitVehicle;
                 @ExitVehicle.canceled += instance.OnExitVehicle;
+                @Use.started += instance.OnUse;
+                @Use.performed += instance.OnUse;
+                @Use.canceled += instance.OnUse;
+                @SecondaryUse.started += instance.OnSecondaryUse;
+                @SecondaryUse.performed += instance.OnSecondaryUse;
+                @SecondaryUse.canceled += instance.OnSecondaryUse;
             }
         }
     }
@@ -693,6 +749,8 @@ public class @Controls : IInputActionCollection, IDisposable
         void OnShiftItem(InputAction.CallbackContext context);
         void OnThrow(InputAction.CallbackContext context);
         void OnExitVehicle(InputAction.CallbackContext context);
+        void OnUse(InputAction.CallbackContext context);
+        void OnSecondaryUse(InputAction.CallbackContext context);
     }
     public interface IMenuActions
     {
