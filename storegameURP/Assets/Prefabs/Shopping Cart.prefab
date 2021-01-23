@@ -470,8 +470,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactable: 1
-  driveSpeed: 12
-  driveSprintSpeed: 15
+  driveSpeed: 6
+  driveSprintSpeed: 12
   turnSpeed: 3
   onTurnOffset: 0.25
   playerPosition: {x: 0, y: 0.6, z: 0}
