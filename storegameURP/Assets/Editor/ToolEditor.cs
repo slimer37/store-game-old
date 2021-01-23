@@ -13,6 +13,12 @@ public class ToolEditor : Editor
     {
         base.OnInspectorGUI();
 
+        if (!((Tool)target).GetComponent<MeshFilter>())
+        {
+            EditorGUILayout.HelpBox("Cannot preview without a MeshFilter on this object.", MessageType.Info);
+            return;
+        }
+
         mesh = ((Tool)target).GetComponent<MeshFilter>().sharedMesh;
 
         var rot = Quaternion.Euler(serializedObject.FindProperty("holdRotation").vector3Value);
