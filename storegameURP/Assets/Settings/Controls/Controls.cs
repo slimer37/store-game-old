@@ -92,7 +92,7 @@ public class @Controls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": ""Use"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""18e55f9a-3db9-4e1d-804f-fb2851d0d592"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",

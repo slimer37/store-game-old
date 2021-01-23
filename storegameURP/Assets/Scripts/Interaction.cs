@@ -45,11 +45,7 @@ public class Interaction : MonoBehaviour
     }
     public static Transform PlayerTransform => current.transform;
     public static Transform CamTransform => current.cam.transform;
-    public static Vector3 TargetHoldPoint => CamTransform.position + CamTransform.forward * current.heldDistance;
-
-    public static float CorrectionForce => current.correctionForce;
-    public static float CorrectionDist => current.correctionDist;
-    public static float DropDist => current.dropDist;
+    public static Transform HoveredTransform => current.hoveredTransform;
 
     void Awake()
     {
@@ -61,20 +57,12 @@ public class Interaction : MonoBehaviour
     {
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
 
-        if (Physics.Raycast(ray, out RaycastHit hit, reach))
+        if (Physics.Raycast(ray, out RaycastHit hit, reach) && hit.transform.CompareTag("Interactable"))
         {
-            if (!hit.transform.CompareTag("Interactable"))
-            {
-                CursorIcon.Reset();
-                hoveredTransform = null;
-            }
-            else
-            { hoveredTransform = hit.transform; }
+            hoveredTransform = hit.transform;
 
             if (!Held || hit.transform != Held.transform)
             { hit.transform.SendMessage("Hover", SendMessageOptions.DontRequireReceiver); }
-            else if (hit.transform == Held.transform)
-            { CursorIcon.Reset(); }
 
             if (hoveredTransform && hit.transform != hoveredTransform)
             { hoveredTransform.SendMessage("HoverExit", SendMessageOptions.DontRequireReceiver); }
@@ -90,6 +78,32 @@ public class Interaction : MonoBehaviour
         }
     }
 
+    void FixedUpdate()
+    {
+        if (!Held || Held is Tool) return;
+
+        Vector3 targetPoint = cam.transform.position + cam.transform.forward * heldDistance;
+
+        if (Vector3.Distance(Held.transform.position, targetPoint) < correctionDist)
+        {
+            Held.Rb.velocity = Held.Rb.velocity / 2;
+            return;
+        }
+
+        Vector3 force = targetPoint - Held.transform.position;
+        force = force.normalized * Mathf.Sqrt(force.magnitude);
+
+        Held.Rb.velocity = force.normalized * Held.Rb.velocity.magnitude;
+        Held.Rb.AddForce(force * correctionForce);
+
+        Held.Rb.velocity *= Mathf.Min(1.0f, force.magnitude / 2);
+
+        Vector3 direction = Held.transform.position - cam.transform.position;
+        if (Vector3.Distance(Held.transform.position, targetPoint) > dropDist
+            || Physics.Raycast(new Ray(cam.transform.position, direction), out RaycastHit hit) && hit.transform != Held.transform)
+        { Held.Drop(); }
+    }
+
     void OnShiftItem(InputValue value)
     {
         if (held)
@@ -101,7 +115,7 @@ public class Interaction : MonoBehaviour
 
     void OnThrow()
     {
-        if (!(held is Tool))
+        if (held && !(held is Tool))
         {
             held.Rb.AddForce(throwForce * cam.transform.forward, ForceMode.Impulse);
             held.Drop();
