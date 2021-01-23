@@ -24,15 +24,23 @@ public class Interaction : MonoBehaviour
         get => current.held;
         set
         {
+            CursorIcon.Reset();
+
+            if (value is Tool || Held is Tool)
+            {
+                current.held = value;
+                return;
+            }
+
+            Physics.IgnoreCollision(current.col, value ? value.Col : Held.Col, value);
+
+            current.held = value;
+
             if (value)
             {
                 float newDist = Vector3.Distance(current.transform.position, value.Rb.position);
                 current.heldDistance = Mathf.Clamp(newDist, current.minHoldDist, current.reach);
             }
-            Physics.IgnoreCollision(current.col, value ? value.Col : Held.Col, value);
-
-            CursorIcon.Reset();
-            current.held = value;
         }
     }
     public static Transform PlayerTransform => current.transform;
@@ -93,7 +101,7 @@ public class Interaction : MonoBehaviour
 
     void OnThrow()
     {
-        if (held)
+        if (!(held is Tool))
         {
             held.Rb.AddForce(throwForce * cam.transform.forward, ForceMode.Impulse);
             held.Drop();

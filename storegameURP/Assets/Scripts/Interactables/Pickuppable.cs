@@ -46,7 +46,7 @@ public class Pickuppable : Interactable
         Rb.angularVelocity = Vector3.zero;
     }
 
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         if (!IsHeld) return;
 
