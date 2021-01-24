@@ -33,7 +33,7 @@ public class Monitor : Interactable
     void Update()
     {
         angleText.text = $"{currentCam.transform.localEulerAngles.y:000}°";
-        channelNumText.text = $"CH {channel} <b><size=50%>NV:<color={(currentCam.NightVision ? "green>ON" : "yellow>OFF")}";
+        channelNumText.text = $"CH {channel + 1}" + (enableNightVision ? $"<b><size=50%>NV:<color={(currentCam.NightVision ? "green>ON" : "yellow>OFF")}" : "");
     }
 
     void UpdateScreen()
