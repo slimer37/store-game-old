@@ -47,6 +47,7 @@ public class Tool : Pickuppable
         {
             transform.parent = anchorToCamera ? Interaction.Current.Cam.transform : Interaction.Current.transform;
             transform.localRotation = Quaternion.Euler(holdRotation);
+            transform.localPosition = holdPosition;
             Controls.Enable();
         }
         else
@@ -60,7 +61,6 @@ public class Tool : Pickuppable
             Controls.Disable();
         }
 
-        //Rb.constraints = pickup ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.None;
         base.Pickup(pickup);
         Freeze(pickup);
     }
