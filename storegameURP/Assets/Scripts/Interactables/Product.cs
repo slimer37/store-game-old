@@ -10,6 +10,7 @@ public class Product : Pickuppable
 
     public static List<Product> AllProducts { get; private set; } = new List<Product>();
 
+    private Material tempTransparent;
     private Renderer rend;
     public bool Marked;
 
@@ -43,10 +44,9 @@ public class Product : Pickuppable
     {
         base.Awake();
         rend = GetComponent<Renderer>();
-        Material temp = new Material(transparentMat);
-        temp.color = new Color(rend.material.color.a, rend.material.color.g, rend.material.color.b, 1);
-        temp.mainTexture = rend.material.mainTexture;
-        rend.material = temp;
+        tempTransparent = new Material(transparentMat);
+        tempTransparent.color = new Color(rend.material.color.a, rend.material.color.g, rend.material.color.b, 1);
+        tempTransparent.mainTexture = rend.material.mainTexture;
         AllProducts.Add(this);
     }
 
@@ -57,6 +57,7 @@ public class Product : Pickuppable
         ResetRb();
         SetInteractable(false);
 
+        rend.material = tempTransparent;
         Color originalColor = rend.material.color;
         float finalAlpha = value ? 0 : 1;
 
