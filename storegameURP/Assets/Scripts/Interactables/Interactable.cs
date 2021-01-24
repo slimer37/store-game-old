@@ -3,7 +3,7 @@ using UnityEngine;
 public abstract class Interactable : MonoBehaviour
 {
     [SerializeField] protected bool interactable = true;
-    protected virtual Hover.Icon HoverIcon { get; set; } = global::Hover.Icon.Invalid;
+    protected virtual Hover.Icon HoverIcon { get; set; } = Hover.Icon.Invalid;
     protected virtual string Tooltip { get; set; } = "";
 
     protected virtual void OnValidate()
