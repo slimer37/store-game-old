@@ -7,7 +7,6 @@ public class Container : MonoBehaviour
     [SerializeField] private float scaleFactor;
     [SerializeField] private float scaleAnchor;
     [SerializeField] private float triggerHeight;
-    [SerializeField] private Transform overrideParent;
 
     private List<Product> Contents = new List<Product>();
 
@@ -37,7 +36,7 @@ public class Container : MonoBehaviour
             Contents.Remove(item);
             item.transform.localScale = item.OriginalScale;
         }
-        item.transform.parent = add ? (overrideParent ? overrideParent : transform) : null;
+        item.transform.parent = add ? transform : null;
     }
 
     void FixedUpdate()
