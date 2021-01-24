@@ -80,7 +80,6 @@ public class Interaction : MonoBehaviour
         }
     }
 
-    #region Input Callbacks
     void OnShiftItem(InputValue value)
     {
         if (held)
@@ -109,5 +108,4 @@ public class Interaction : MonoBehaviour
         if (hoveredTransform)
         { hoveredTransform.SendMessage("OnSecondaryInteract", SendMessageOptions.DontRequireReceiver); }
     }
-    #endregion
 }
