@@ -4,7 +4,7 @@ using TMPro;
 
 public class Cart : Driveable
 {
-    protected override CursorIcon.Icon HoverIcon => Rb.isKinematic ? CursorIcon.Icon.Invalid : CursorIcon.Icon.Pull;
+    protected override Hover.Icon HoverIcon => Driving ? Hover.Icon.Invalid : Hover.Icon.Pull;
     protected override string Tooltip => container.Info;
 
     [Header("Front Wheel Animation")]
@@ -31,7 +31,9 @@ public class Cart : Driveable
 
     protected override void BeginDriving(bool value)
     {
+        container.FreezeItems(value);
         base.BeginDriving(value);
+        container.FreezeItems(false);
 
         if (value)
         { StartCoroutine(FadeText()); }

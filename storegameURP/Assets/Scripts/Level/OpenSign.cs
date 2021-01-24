@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class OpenSign : Interactable
 {
-    protected override CursorIcon.Icon HoverIcon { get => CursorIcon.Icon.Access; }
+    protected override Hover.Icon HoverIcon { get => Hover.Icon.Access; }
 
     [SerializeField] private string openState;
 

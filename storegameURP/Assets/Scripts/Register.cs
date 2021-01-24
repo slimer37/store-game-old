@@ -23,7 +23,7 @@ public class Register : Interactable
 
     private bool CustomerPending => queue.Count > 0 && !currentCustomer && queue[0].ReachedRegister;
 
-    protected override CursorIcon.Icon HoverIcon => CustomerPending ? CursorIcon.Icon.Access : CursorIcon.Icon.None;
+    protected override Hover.Icon HoverIcon => CustomerPending ? Hover.Icon.Access : Hover.Icon.None;
     public Vector3 DropPosition => itemDrop.position;
     public Vector3[] QueuePositions { get; private set; }
 

@@ -74,8 +74,8 @@ public class Product : Pickuppable
 
         void ResetRb()
         {
-            Rb.velocity = Vector3.zero;
-            Rb.angularVelocity = Vector3.zero;
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
         }
 
         void SetInteractable(bool condition)

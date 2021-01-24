@@ -4,10 +4,10 @@ using UnityEngine.AI;
 
 public class Openable : Interactable
 {
-    protected override CursorIcon.Icon HoverIcon
+    protected override Hover.Icon HoverIcon
     {
-        get => animating ? CursorIcon.Icon.Invalid :
-            Open ? CursorIcon.Icon.Push : CursorIcon.Icon.Pull;
+        get => animating ? Hover.Icon.Invalid :
+            Open ? Hover.Icon.Push : Hover.Icon.Pull;
     }
 
     [SerializeField] private string openState;

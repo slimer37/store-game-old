@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class CursorIcon : MonoBehaviour
+public class Hover : MonoBehaviour
 {
     public enum Icon
     {
@@ -21,7 +21,9 @@ public class CursorIcon : MonoBehaviour
     [SerializeField] private Image dotImage;
     [SerializeField] private TextMeshProUGUI tooltipText;
 
-    private static CursorIcon current;
+    private Transform hoveredTransform;
+
+    private static Hover current;
 
     void Awake() => current = this;
 
@@ -44,5 +46,22 @@ public class CursorIcon : MonoBehaviour
         current.cursorImage.enabled = false;
         current.dotImage.enabled = true;
         current.tooltipText.text = "";
+
+        if (current.hoveredTransform)
+        {
+            current.hoveredTransform.SendMessage("OnHoverExit", SendMessageOptions.DontRequireReceiver);
+            current.hoveredTransform = null;
+        }
+    }
+
+    public static void Over(Transform hovered)
+    {
+        if (!current.hoveredTransform || hovered != current.hoveredTransform)
+        {
+            if (current.hoveredTransform)
+            { current.hoveredTransform.SendMessage("OnHoverExit", SendMessageOptions.DontRequireReceiver); }
+            current.hoveredTransform = hovered;
+            hovered.SendMessage("OnHover", SendMessageOptions.DontRequireReceiver);
+        }
     }
 }

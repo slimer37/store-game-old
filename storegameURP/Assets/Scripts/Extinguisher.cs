@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class Extinguisher : Tool
 {
+    [SerializeField] private float reach;
     [SerializeField] private ParticleSystem particles;
     [SerializeField] private Animator anim;
     [SerializeField] private string useState;
@@ -28,5 +29,15 @@ public class Extinguisher : Tool
     {
         base.Pickup(pickup);
         Spray(false);
+    }
+
+    void Update()
+    {
+        Ray ray = Interaction.Current.Cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+
+        if (Physics.Raycast(ray, out RaycastHit hit, reach))
+        {
+
+        }
     }
 }

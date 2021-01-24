@@ -8,102 +8,79 @@ public class Interaction : MonoBehaviour
 
     [Header("Items")]
     [SerializeField] private float minHoldDist;
+    [SerializeField] private float dropDist;
     [SerializeField] private float throwForce;
+
+    [Header("Correction")]
     [SerializeField] private float correctionForce;
     [SerializeField] private float correctionDist;
-    [SerializeField] private float dropDist;
 
-    private static Interaction current;
-    private Camera cam;
     private Transform hoveredTransform;
     private float heldDistance;
     private Pickuppable held = null;
 
-    public static Pickuppable Held
-    {
-        get => current.held;
-        set
-        {
-            CursorIcon.Reset();
-
-            if (value is Tool || Held is Tool)
-            {
-                current.held = value;
-                return;
-            }
-
-            Physics.IgnoreCollision(current.col, value ? value.Col : Held.Col, value);
-
-            current.held = value;
-
-            if (value)
-            {
-                float newDist = Vector3.Distance(current.transform.position, value.Rb.position);
-                current.heldDistance = Mathf.Clamp(newDist, current.minHoldDist, current.reach);
-            }
-        }
-    }
-    public static Transform PlayerTransform => current.transform;
-    public static Transform CamTransform => current.cam.transform;
-    public static Transform HoveredTransform => current.hoveredTransform;
+    public Camera Cam { get; private set; }
+    public static Interaction Current { get; private set; }
 
     void Awake()
     {
-        cam = GetComponent<PlayerInput>().camera;
-        current = this;
+        Cam = GetComponent<PlayerInput>().camera;
+        Current = this;
     }
 
     void Update()
     {
-        Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+        Ray ray = Cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
 
         if (Physics.Raycast(ray, out RaycastHit hit, reach) && hit.transform.CompareTag("Interactable"))
         {
             hoveredTransform = hit.transform;
-
-            if (!Held || hit.transform != Held.transform)
-            { hit.transform.SendMessage("Hover", SendMessageOptions.DontRequireReceiver); }
-
-            if (hoveredTransform && hit.transform != hoveredTransform)
-            { hoveredTransform.SendMessage("HoverExit", SendMessageOptions.DontRequireReceiver); }
+            Hover.Over(hit.transform);
         }
         else
         {
-            CursorIcon.Reset();
-            if (hoveredTransform)
-            {
-                hoveredTransform.SendMessage("HoverExit", SendMessageOptions.DontRequireReceiver);
-                hoveredTransform = null;
-            }
+            hoveredTransform = null;
+            Hover.Reset();
         }
     }
 
     void FixedUpdate()
     {
-        if (!Held || Held is Tool) return;
+        // Tools don't get moved like generic pickuppables.
+        if (!held || held is Tool) return;
 
-        Vector3 targetPoint = cam.transform.position + cam.transform.forward * heldDistance;
+        Vector3 targetPoint = Cam.transform.position + Cam.transform.forward * heldDistance;
+        held.PullTowards(targetPoint, correctionDist, correctionForce);
 
-        if (Vector3.Distance(Held.transform.position, targetPoint) < correctionDist)
+        Vector3 direction = held.transform.position - Cam.transform.position;
+        if (Vector3.Distance(held.transform.position, targetPoint) > dropDist
+            || Physics.Raycast(new Ray(Cam.transform.position, direction), out RaycastHit hit, ~LayerMask.NameToLayer("Pickuppables")) && hit.transform != held.transform)
+        { held.Drop(); }
+    }
+
+    public void Grab(Pickuppable item)
+    {
+        Hover.Reset();
+
+        if (item is Tool || held is Tool)
         {
-            Held.Rb.velocity = Held.Rb.velocity / 2;
+            held = item;
             return;
         }
 
-        Vector3 force = targetPoint - Held.transform.position;
-        force = force.normalized * Mathf.Sqrt(force.magnitude);
+        (item ? item : held).IgnoreCollision(col, item);
+        held = item;
 
-        Held.Rb.velocity = force.normalized * Held.Rb.velocity.magnitude;
-        Held.Rb.AddForce(force * correctionForce);
-
-        Held.Rb.velocity *= Mathf.Min(1.0f, force.magnitude / 2);
-
-        Vector3 direction = Held.transform.position - cam.transform.position;
-        if (Vector3.Distance(Held.transform.position, targetPoint) > dropDist
-            || Physics.Raycast(new Ray(cam.transform.position, direction), out RaycastHit hit) && hit.transform != Held.transform)
-        { Held.Drop(); }
+        if (item)
+        {
+            held.IgnoreCollision(Current.col, false);
+            item.IgnoreCollision(Current.col, true);
+            float newDist = Vector3.Distance(Current.transform.position, item.transform.position);
+            Current.heldDistance = Mathf.Clamp(newDist, Current.minHoldDist, Current.reach);
+        }
     }
 
+    #region Input Callbacks
     void OnShiftItem(InputValue value)
     {
         if (held)
@@ -116,10 +93,7 @@ public class Interaction : MonoBehaviour
     void OnThrow()
     {
         if (held && !(held is Tool))
-        {
-            held.Rb.AddForce(throwForce * cam.transform.forward, ForceMode.Impulse);
-            held.Drop();
-        }
+        { held.Throw(throwForce * Cam.transform.forward); }
     }
 
     void OnInteract()
@@ -135,4 +109,5 @@ public class Interaction : MonoBehaviour
         if (hoveredTransform)
         { hoveredTransform.SendMessage("OnSecondaryInteract", SendMessageOptions.DontRequireReceiver); }
     }
+    #endregion
 }

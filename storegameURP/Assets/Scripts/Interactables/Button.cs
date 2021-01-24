@@ -3,8 +3,8 @@ using UnityEngine.Events;
 
 public class Button : Interactable
 {
-    [SerializeField] private CursorIcon.Icon hoverIcon;
-    protected override CursorIcon.Icon HoverIcon => hoverIcon;
+    [SerializeField] private Hover.Icon hoverIcon;
+    protected override Hover.Icon HoverIcon => hoverIcon;
 
     public UnityEvent OnPress;
 

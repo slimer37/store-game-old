@@ -3,7 +3,7 @@ using UnityEngine;
 public abstract class Interactable : MonoBehaviour
 {
     [SerializeField] protected bool interactable = true;
-    protected virtual CursorIcon.Icon HoverIcon { get; set; } = CursorIcon.Icon.Invalid;
+    protected virtual Hover.Icon HoverIcon { get; set; } = global::Hover.Icon.Invalid;
     protected virtual string Tooltip { get; set; } = "";
 
     protected virtual void OnValidate()
@@ -15,9 +15,9 @@ public abstract class Interactable : MonoBehaviour
         }
     }
 
-    public void Hover() => CursorIcon.ShowIcon(interactable ? HoverIcon : CursorIcon.Icon.Invalid, Tooltip);
+    protected virtual void OnHover() => Hover.ShowIcon(interactable ? HoverIcon : Hover.Icon.Invalid, Tooltip);
 
-    public void OnInteract()
+    protected void OnInteract()
     {
         if (interactable)
         { Interact(); }
@@ -26,9 +26,9 @@ public abstract class Interactable : MonoBehaviour
     public abstract void Interact();
 
     // Optional:
-    public virtual void HoverExit() { }
+    protected virtual void OnHoverExit() { }
 
-    public void OnSecondaryInteract()
+    protected void OnSecondaryInteract()
     {
         if (interactable)
         { SecondaryInteract(); }

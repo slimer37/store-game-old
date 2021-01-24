@@ -34,7 +34,7 @@ public class Tool : Pickuppable
     {
         if (!IsHeld) return;
 
-        float angle = Interaction.CamTransform.eulerAngles.x;
+        float angle = Interaction.Current.Cam.transform.eulerAngles.x;
         if (angle > 180)
         { angle -= 360; }
         float delta = -angle * cameraAngleMultiplier;
@@ -45,7 +45,7 @@ public class Tool : Pickuppable
     {
         if (pickup)
         {
-            transform.parent = anchorToCamera ? Interaction.CamTransform : Interaction.PlayerTransform;
+            transform.parent = anchorToCamera ? Interaction.Current.Cam.transform : Interaction.Current.transform;
             transform.localRotation = Quaternion.Euler(holdRotation);
             Controls.Enable();
         }
@@ -53,17 +53,17 @@ public class Tool : Pickuppable
         {
             if (!CheckDropPos) return;
 
-            transform.position = Interaction.PlayerTransform.position + Interaction.PlayerTransform.forward;
+            transform.position = Interaction.Current.transform.position + Interaction.Current.transform.forward;
             transform.parent = null;
-            transform.LookAt(Interaction.PlayerTransform);
+            transform.LookAt(Interaction.Current.transform);
             transform.eulerAngles += Vector3.up * 180;
             Controls.Disable();
         }
 
         //Rb.constraints = pickup ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.None;
         base.Pickup(pickup);
-        MakeKinematic(pickup);
+        Freeze(pickup);
     }
 
-    protected bool CheckDropPos => Physics.OverlapSphereNonAlloc(Interaction.PlayerTransform.position + Interaction.PlayerTransform.forward, 0.25f, detected, ~LayerMask.GetMask("Pickuppables")) == 0;
+    protected bool CheckDropPos => Physics.OverlapSphereNonAlloc(Interaction.Current.transform.position + Interaction.Current.transform.forward, 0.25f, detected, ~LayerMask.GetMask("Pickuppables")) == 0;
 }

@@ -7,6 +7,7 @@ public class Container : MonoBehaviour
     [SerializeField] private float scaleFactor;
     [SerializeField] private float scaleAnchor;
     [SerializeField] private float triggerHeight;
+    [SerializeField] private Transform overrideParent;
 
     private List<Product> Contents = new List<Product>();
 
@@ -36,7 +37,7 @@ public class Container : MonoBehaviour
             Contents.Remove(item);
             item.transform.localScale = item.OriginalScale;
         }
-        item.transform.parent = add ? transform : null;
+        item.transform.parent = add ? (overrideParent ? overrideParent : transform) : null;
     }
 
     void FixedUpdate()
@@ -53,10 +54,7 @@ public class Container : MonoBehaviour
     public void FreezeItems(bool freeze)
     {
         foreach (var item in Contents)
-        {
-            item.Rb.constraints = freeze ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.None;
-            item.Rb.detectCollisions = !freeze;
-        }
+        { item.Freeze(false, freeze ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.None); }
 
         if (!freeze)
         { Contents.Clear(); }

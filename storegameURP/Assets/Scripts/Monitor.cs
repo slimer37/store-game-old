@@ -3,7 +3,7 @@ using TMPro;
 
 public class Monitor : Interactable
 {
-    protected override CursorIcon.Icon HoverIcon => CursorIcon.Icon.Access;
+    protected override Hover.Icon HoverIcon => Hover.Icon.Access;
 
     [SerializeField] private Renderer rend;
     [SerializeField] private TextMeshPro channelNumText;
