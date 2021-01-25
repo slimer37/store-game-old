@@ -21,13 +21,12 @@ public class DriveBy : MonoBehaviour
 
     void Awake()
     {
-        var transforms = GetComponentsInChildren<Transform>();
-        children = new GameObject[transforms.Length - 1];
-        int used = 0;
-        for (int i = 0; i < transforms.Length; i++)
+        children = new GameObject[transform.childCount];
+        var i = 0;
+        foreach (var child in transform)
         {
-            if (transforms[i] != transform)
-            { children[used++] = transforms[i].gameObject; }
+            children[i] = ((Transform)child).gameObject;
+            i++;
         }
 
         if (isCustomer)

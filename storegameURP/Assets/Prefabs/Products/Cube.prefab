@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 9196468331118597865}
   m_Layer: 3
   m_Name: Cube
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,3 +128,4 @@ MonoBehaviour:
   interactable: 1
   <Info>k__BackingField: {fileID: 11400000, guid: d018d45b3fe5cdc4b9dc219d40be03bc, type: 2}
   transparentMat: {fileID: 2100000, guid: 0a858c4ba0aa9ff47a1304ed3010f040, type: 2}
+  Marked: 0

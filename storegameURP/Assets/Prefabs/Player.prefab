@@ -473,11 +473,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   col: {fileID: 2894438026993527474}
   reach: 3
+  interactablesMask:
+    serializedVersion: 2
+    m_Bits: 8
   minHoldDist: 1
+  dropDist: 2
   throwForce: 8
   correctionForce: 300
   correctionDist: 0.02
-  dropDist: 2
 --- !u!114 &2894438026993527475
 MonoBehaviour:
   m_ObjectHideFlags: 0

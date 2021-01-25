@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 2500544294660677285}
   m_Layer: 3
   m_Name: Basket
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -285,6 +285,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactable: 1
+  anchorToCamera: 0
   holdPosition: {x: 0.4, y: -0.1, z: 0.7}
   holdRotation: {x: 0, y: 20, z: 0}
   cameraAngleMultiplier: 0.005

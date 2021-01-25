@@ -8,14 +8,14 @@ public abstract class Interactable : MonoBehaviour
 
     protected virtual void OnValidate()
     {
-        if (!CompareTag("Interactable"))
+        if (gameObject.layer != 3)
         {
-            tag = "Interactable";
-            Debug.LogWarning($"Tagged '{name}' as 'Interactable.'");
+            gameObject.layer = 3;
+            Debug.LogWarning($"Set layer of {name} to '{LayerMask.LayerToName(3)}' layer.");
         }
     }
 
-    protected virtual void OnHover() => Hover.ShowIcon(interactable ? HoverIcon : Hover.Icon.Invalid, Tooltip);
+    protected void OnHover() => Hover.Current.ShowIcon(interactable ? HoverIcon : Hover.Icon.Invalid, Tooltip);
 
     protected void OnInteract()
     {

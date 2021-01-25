@@ -11,27 +11,11 @@ public class Pickuppable : Interactable
     public bool IsHeld => isHeld;
     public Vector3 OriginalScale { get; private set; }
 
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-        if (gameObject.layer != 3)
-        {
-            gameObject.layer = 3;
-            Debug.LogWarning($"Set layer of pickuppable {name} to '{LayerMask.LayerToName(3)}' layer.");
-        }
-    }
-
     protected virtual void Awake()
     {
         OriginalScale = transform.localScale;
         TryGetComponent(out rb);
         TryGetComponent(out col);
-    }
-
-    protected override void OnHover()
-    {
-        if (!IsHeld)
-        { base.OnHover(); }
     }
 
     public override void Interact()

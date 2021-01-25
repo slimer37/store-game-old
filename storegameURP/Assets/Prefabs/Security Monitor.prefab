@@ -527,9 +527,9 @@ GameObject:
   - component: {fileID: 3453480833192048136}
   - component: {fileID: 3453480833192048151}
   - component: {fileID: 3453480833192048150}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Screen
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -640,9 +640,9 @@ GameObject:
   - component: {fileID: 5273814251289842702}
   - component: {fileID: 3615918490731333453}
   - component: {fileID: 9011667993822878679}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Power Button
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -765,9 +765,9 @@ GameObject:
   - component: {fileID: 6546360371360884539}
   - component: {fileID: 1091370996844647271}
   - component: {fileID: 4116034556712431288}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Night Vision Button
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 181204031638658307}
   - component: {fileID: 704836121300862904}
   - component: {fileID: 704836121300862907}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Register
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58d61459287ffeb498b191b6c2c490d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactable: 1
   screenMainText: {fileID: 4968799215978756028}
   pendingText: Customer pending!
   screenSideText: {fileID: 4968799216063478801}
@@ -922,7 +923,7 @@ GameObject:
   - component: {fileID: 7386320856377506882}
   - component: {fileID: 7386320856377506885}
   - component: {fileID: 7386320856377506884}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Money Drawer
   m_TagString: Interactable
   m_Icon: {fileID: 0}
@@ -1018,7 +1019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 612acd2383f43384d8a2ccd0d5370d43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trigger: {fileID: 0}
+  interactable: 1
   openState: OpenDrawer
   closeState: CloseDrawer
 --- !u!95 &7386320856377506884

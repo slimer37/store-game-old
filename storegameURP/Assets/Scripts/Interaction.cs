@@ -5,6 +5,7 @@ public class Interaction : MonoBehaviour
 {
     [SerializeField] private Collider col;
     [SerializeField] private float reach;
+    [SerializeField] private LayerMask interactablesMask;
 
     [Header("Items")]
     [SerializeField] private float minHoldDist;
@@ -31,17 +32,7 @@ public class Interaction : MonoBehaviour
     void Update()
     {
         Ray ray = Cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-
-        if (Physics.Raycast(ray, out RaycastHit hit, reach) && hit.transform.CompareTag("Interactable"))
-        {
-            hoveredTransform = hit.transform;
-            Hover.Over(hit.transform);
-        }
-        else
-        {
-            hoveredTransform = null;
-            Hover.Reset();
-        }
+        hoveredTransform = Hover.Current.Cast(ray, reach, interactablesMask);
     }
 
     void FixedUpdate()
@@ -60,21 +51,22 @@ public class Interaction : MonoBehaviour
 
     public void Grab(Pickuppable item)
     {
-        Hover.Reset();
+        Hover.Current.Reset();
 
-        if (item is Tool || held is Tool)
-        {
-            held = item;
-            return;
-        }
-
-        (item ? item : held).IgnoreCollision(col, item);
+        var temp = held;
         held = item;
 
-        if (item)
+        // Don't do special stuff with tools.
+        if (item is Tool || held is Tool) return;
+
+        // If we were holding an item before, re-enable collisions.
+        if (temp)
+        { temp.IgnoreCollision(col, false); }
+
+        // If we picked up an item, set the distance and ignore collisions.
+        if (held)
         {
-            held.IgnoreCollision(Current.col, false);
-            item.IgnoreCollision(Current.col, true);
+            held.IgnoreCollision(col, true);
             float newDist = Vector3.Distance(Current.transform.position, item.transform.position);
             Current.heldDistance = Mathf.Clamp(newDist, Current.minHoldDist, Current.reach);
         }

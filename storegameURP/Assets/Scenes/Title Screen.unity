@@ -5481,7 +5481,7 @@ GameObject:
   - component: {fileID: 754723537}
   m_Layer: 0
   m_Name: Debug Block
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14808,7 +14808,7 @@ GameObject:
   - component: {fileID: 2051736264}
   m_Layer: 0
   m_Name: Open Test DVD
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15917,7 +15917,7 @@ GameObject:
   - component: {fileID: 919132147708868568}
   m_Layer: 0
   m_Name: Wrench
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16014,7 +16014,7 @@ GameObject:
   - component: {fileID: 919132149098475096}
   m_Layer: 0
   m_Name: Test DVD
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16229,7 +16229,7 @@ GameObject:
   - component: {fileID: 2000272500910427436}
   m_Layer: 0
   m_Name: Quit Sign
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16327,7 +16327,7 @@ GameObject:
   - component: {fileID: 2127834555937022172}
   m_Layer: 0
   m_Name: Credits Receipt
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

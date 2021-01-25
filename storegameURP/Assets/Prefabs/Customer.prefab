@@ -121,6 +121,7 @@ MonoBehaviour:
     - {r: 0.5377358, g: 0.39304626, b: 0.22067462, a: 0}
     - {r: 0.8490566, g: 0.6042035, b: 0.31639373, a: 0}
     extraRenderers: []
+  textRandomizers: []
   appearanceChance: 100
 --- !u!1 &472879937274055953
 GameObject:
@@ -339,6 +340,7 @@ MonoBehaviour:
     extraRenderers:
     - renderer: {fileID: 7313332678463417003}
       matIndex: 0
+  textRandomizers: []
   appearanceChance: 100
 --- !u!1 &1229559757536148846
 GameObject:
@@ -500,6 +502,7 @@ MonoBehaviour:
     - {r: 1, g: 0.7666348, b: 0, a: 0}
     - {r: 1, g: 0.504717, b: 0.72508377, a: 0}
     extraRenderers: []
+  textRandomizers: []
   appearanceChance: 25
 --- !u!1 &1408801080503274592
 GameObject:
@@ -750,6 +753,7 @@ MonoBehaviour:
     - {r: 0.764151, g: 0.035568025, b: 0, a: 1}
     - {r: 1, g: 1, b: 1, a: 1}
     extraRenderers: []
+  textRandomizers: []
   appearanceChance: 100
 --- !u!1 &4068025450157298547
 GameObject:
@@ -796,7 +800,7 @@ GameObject:
   - component: {fileID: 4224331126714648979}
   m_Layer: 0
   m_Name: Customer
-  m_TagString: Customer
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1443,6 +1447,7 @@ MonoBehaviour:
     - {r: 1, g: 0.3797695, b: 0.15686274, a: 0}
     - {r: 1, g: 0.9610433, b: 0.4481132, a: 0}
     extraRenderers: []
+  textRandomizers: []
   appearanceChance: 80
 --- !u!1 &9023619432508851782
 GameObject:

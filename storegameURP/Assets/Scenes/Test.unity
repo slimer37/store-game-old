@@ -1546,9 +1546,9 @@ GameObject:
   - component: {fileID: 242173767}
   - component: {fileID: 242173770}
   - component: {fileID: 242173766}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Paper
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10094,11 +10094,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9ee638354e8daf142b44b3bfb755115e, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9ee638354e8daf142b44b3bfb755115e, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ee638354e8daf142b44b3bfb755115e, type: 3}
@@ -10213,7 +10213,7 @@ GameObject:
   - component: {fileID: 788979823}
   m_Layer: 0
   m_Name: Door Trigger
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12757,6 +12757,10 @@ PrefabInstance:
       propertyPath: triggerHeight
       value: 0.109334774
       objectReference: {fileID: 0}
+    - target: {fileID: 5610077500218629838, guid: 4158d3ffbf0665047853ec0441046451, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 7478654797351505127, guid: 4158d3ffbf0665047853ec0441046451, type: 3}
       propertyPath: m_Name
       value: Basket
@@ -15055,7 +15059,7 @@ GameObject:
   - component: {fileID: 1444579624}
   m_Layer: 0
   m_Name: Door Trigger (1)
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16307,9 +16311,9 @@ GameObject:
   - component: {fileID: 1696892553}
   - component: {fileID: 1696892552}
   - component: {fileID: 1696892551}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Paper
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17462,11 +17466,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9ee638354e8daf142b44b3bfb755115e, type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9ee638354e8daf142b44b3bfb755115e, type: 3}
       propertyPath: m_TagString
-      value: Interactable
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ee638354e8daf142b44b3bfb755115e, type: 3}
@@ -17963,9 +17967,9 @@ GameObject:
   - component: {fileID: 2054568303}
   - component: {fileID: 2054568302}
   - component: {fileID: 2054568301}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Open Sign
-  m_TagString: Interactable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -20678,6 +20682,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Register
       objectReference: {fileID: 0}
+    - target: {fileID: 704836121300862905, guid: 36e0d7083a41d9e4089024e83cbff8e2, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 7386320856377506883, guid: 36e0d7083a41d9e4089024e83cbff8e2, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36e0d7083a41d9e4089024e83cbff8e2, type: 3}
 --- !u!4 &5077664083238197650 stripped
@@ -20738,9 +20750,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 395674116}
     m_Modifications:
+    - target: {fileID: 3453480833192048149, guid: 84bbf42edf306904ba355947b5846e62, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 3453480833192048150, guid: 84bbf42edf306904ba355947b5846e62, type: 3}
       propertyPath: enableNightVision
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3912989429228777434, guid: 84bbf42edf306904ba355947b5846e62, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 4334796465357391395, guid: 84bbf42edf306904ba355947b5846e62, type: 3}
       propertyPath: m_IsActive
