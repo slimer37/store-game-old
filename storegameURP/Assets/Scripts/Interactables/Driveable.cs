@@ -5,15 +5,16 @@ public class Driveable : Interactable
 {
     [SerializeField] private float driveSpeed;
     [SerializeField] private float driveSprintSpeed;
+    [SerializeField] private float maxSpeed;
     [SerializeField] private float turnSpeed;
     [SerializeField] private float onTurnOffset;
+    [SerializeField] private TMPro.TextMeshProUGUI exitInstructions;
     [field: SerializeField] protected Rigidbody Rb { get; private set; }
 
     [Header("Positioning")]
     [SerializeField] private Vector3 playerPosition;
-    [SerializeField] private Vector3 cameraPosition;
 
-    protected Vector3 InputDirection { get; private set; }
+    protected Vector2 InputDirection { get; private set; }
     protected Vector3 MoveDirection { get; private set; }
     protected bool Driving { get; private set; } = false;
 
@@ -27,30 +28,49 @@ public class Driveable : Interactable
         controls = new Controls();
         controls.Player.Movement.performed += OnMovement;
         controls.Player.Sprint.performed += OnSprint;
-        controls.Player.ExitVehicle.performed += _ => BeginDriving(false);
+        controls.Player.ExitVehicle.performed += _ => StartDriving(false);
     }
 
-    protected virtual void BeginDriving(bool value)
+    protected virtual void StartDriving(bool value)
     {
-        Driving = value;
+        // Don't drive if the player area is obstructed.
+        var playerPos = transform.position + transform.rotation * playerPosition;
+        if (value && Physics.OverlapSphereNonAlloc(playerPos, 0.25f, new Collider[1], LayerMask.NameToLayer("Player")) > 0) return;
+
+        Rb.constraints = value ? RigidbodyConstraints.FreezeRotation : RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
         Movement.Enable(!value);
+        Driving = value;
+        offsetT = 0;
+        InputDirection = Vector2.zero;
 
-        transform.parent.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-        Interaction.Current.transform.parent = value ? transform : null;
-
-        Rb.constraints = value ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.None;
+        var player = Interaction.Current.transform;
+        player.parent = value ? transform : null;
+        transform.rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+        player.rotation = transform.rotation;
 
         if (value)
-        {
-            Interaction.Current.transform.localRotation = Quaternion.identity;
-            Interaction.Current.transform.localPosition = playerPosition;
-            controls.Enable();
-        }
+        { controls.Enable(); }
         else
-        { controls.Disable(); }
+        {
+            controls.Disable();
+            player.position = playerPos;
+        }
+
+        if (value)
+        { StartCoroutine(FadeText()); }
+        else
+        { exitInstructions.gameObject.SetActive(false); }
     }
 
-    public override void Interact() => BeginDriving(!Driving);
+    System.Collections.IEnumerator FadeText()
+    {
+        exitInstructions.gameObject.SetActive(true);
+        exitInstructions.CrossFadeAlpha(1, 0, false);
+        yield return new WaitForSeconds(2);
+        exitInstructions.CrossFadeAlpha(0, 1, false);
+    }
+
+    public override void Interact() => StartDriving(!Driving);
     void OnSprint(InputAction.CallbackContext ctx) => sprinting = ctx.ReadValue<float>() > 0;
     protected virtual void OnMovement(InputAction.CallbackContext ctx)
     {
@@ -62,17 +82,19 @@ public class Driveable : Interactable
     {
         if (!MenuManager.Current.MenuOpen && Driving)
         {
-            MoveDirection = InputDirection.y * transform.parent.forward;
+            MoveDirection = InputDirection.y * transform.forward;
             float speed = sprinting ? driveSprintSpeed : driveSpeed;
-            transform.parent.Translate(MoveDirection * speed * Time.deltaTime);
+
+            if (Rb.velocity.sqrMagnitude < maxSpeed * maxSpeed)
+            { Rb.AddForce(MoveDirection * speed, ForceMode.Acceleration); }
 
             if (InputDirection.y != 0)
             {
-                var turnDelta = InputDirection.x * turnSpeed;
-                transform.parent.Rotate(Vector3.up, turnDelta);
+                var turnDelta = Vector3.up * InputDirection.x * turnSpeed;
+                Rb.MoveRotation(Quaternion.Euler(Rb.rotation.eulerAngles + turnDelta));
             }
 
-            // Animate weaving side to side
+            // Animate side to side--will also lerp the player position when first driving.
             var offsetPos = playerPosition + Vector3.right * InputDirection.x * onTurnOffset;
             Interaction.Current.transform.localPosition = Vector3.Lerp(Interaction.Current.transform.localPosition, offsetPos, offsetT += Time.deltaTime);
         }
