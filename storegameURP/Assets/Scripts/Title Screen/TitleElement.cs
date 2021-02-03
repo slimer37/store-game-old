@@ -23,12 +23,6 @@ public class TitleElement : MonoBehaviour
 
     private float hoverHeight;
 
-    void OnValidate()
-    {
-        if (!CompareTag("Interactable"))
-        { Debug.LogWarning($"'{name}' needs to be tagged 'Interactable.'"); }
-    }
-
     void Awake()
     {
         if (GetComponent<Animator>())
