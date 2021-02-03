@@ -11,6 +11,7 @@ public class Container : MonoBehaviour
     private List<Product> Contents = new List<Product>();
 
     public bool Active { get; set; } = true;
+    public int count => Contents.Count;
     public string Info => $"{Contents.Count}/{capacity} items";
 
     void OnTriggerEnter(Collider other)
@@ -50,12 +51,12 @@ public class Container : MonoBehaviour
         }
     }
 
-    public void FreezeItems(bool freeze)
+    public void FreezeItems(bool freeze, bool clear = true)
     {
         foreach (var item in Contents)
         { item.Freeze(false, freeze ? RigidbodyConstraints.FreezeAll : RigidbodyConstraints.None); }
 
-        if (!freeze)
+        if (clear && !freeze)
         { Contents.Clear(); }
     }
 }

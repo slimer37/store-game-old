@@ -19,7 +19,11 @@ public class Movement : MonoBehaviour
 
     private static Movement current;
 
-    public static void Enable(bool value) => current.enabled = value;
+    public static void Enable(bool value)
+    {
+        current.controller.enabled = value;
+        current.enabled = value;
+    }
 
     void Awake()
     {

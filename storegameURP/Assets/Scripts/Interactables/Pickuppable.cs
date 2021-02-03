@@ -14,7 +14,8 @@ public class Pickuppable : Interactable
     protected virtual void Awake()
     {
         OriginalScale = transform.localScale;
-        TryGetComponent(out rb);
+        TryGetComponent(out Rigidbody rb);
+        this.rb = rb;
         TryGetComponent(out col);
     }
 

@@ -9,10 +9,13 @@ public class Extinguisher : Tool
     [SerializeField] private string useState;
     [SerializeField] private string useStopState;
 
-    protected override void OnUse(InputAction.CallbackContext ctx) => Spray(FireStarter.Extinguishing = ctx.ReadValue<float>() == 1);
+    private bool extinguishing = false;
+
+    protected override void OnUse(InputAction.CallbackContext ctx) => Spray(ctx.ReadValue<float>() == 1);
 
     void Spray(bool value)
     {
+        extinguishing = value;
         if (value)
         {
             particles.Play();
@@ -33,11 +36,14 @@ public class Extinguisher : Tool
 
     void Update()
     {
+        if (!extinguishing) return;
+
         Ray ray = Interaction.Current.Cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
 
-        if (Physics.Raycast(ray, out RaycastHit hit, reach))
+        if (Physics.Raycast(ray, out RaycastHit hit, reach, ~LayerMask.NameToLayer("Pickuppables")))
         {
-
+            if (FireStarter.Fires.Contains(hit.transform))
+            { FireStarter.DecayingFire = hit.transform; }
         }
     }
 }

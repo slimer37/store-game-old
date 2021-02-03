@@ -3,25 +3,35 @@ using UnityEngine.InputSystem;
 
 public class Driveable : Interactable
 {
-    [SerializeField] private float driveSpeed;
-    [SerializeField] private float driveSprintSpeed;
+    [Header("Speed")]
+    [SerializeField] private float acceleration;
     [SerializeField] private float maxSpeed;
+    [SerializeField] private float sprintAcceleration;
+    [SerializeField] private float sprintMaxSpeed;
+    [SerializeField] private float deceleration;
+
+    [Header("Turning")]
     [SerializeField] private float turnSpeed;
+    [SerializeField] private float turnDropoff;
+    [SerializeField] private float maxTurnSpeed;
     [SerializeField] private float onTurnOffset;
-    [SerializeField] private TMPro.TextMeshProUGUI exitInstructions;
-    [field: SerializeField] protected Rigidbody Rb { get; private set; }
 
-    [Header("Positioning")]
+
+    [Header("Other")]
     [SerializeField] private Vector3 playerPosition;
+    [field: SerializeField] protected Rigidbody Rb { get; private set; }
+    [SerializeField] private TMPro.TextMeshProUGUI exitInstructions;
 
-    protected Vector2 InputDirection { get; private set; }
-    protected Vector3 MoveDirection { get; private set; }
+    protected Vector2 InputDirection { get; set; }
+    protected Vector3 MoveDirection { get; set; }
     protected bool Driving { get; private set; } = false;
 
     private Controls controls;
     private bool sprinting = false;
 
     private float offsetT;
+    private float turnResetT;
+    private float currentTurnSpeed;
 
     protected virtual void Awake()
     {
@@ -75,30 +85,50 @@ public class Driveable : Interactable
     protected virtual void OnMovement(InputAction.CallbackContext ctx)
     {
         InputDirection = ctx.ReadValue<Vector2>();
+
+        // Always reset side-to-side animation var.
         offsetT = 0;
+
+        // Begin resetting turn when turn stops.
+        if (InputDirection.x == 0)
+        { turnResetT = 0; }
     }
 
-    protected virtual void Update()
+    void Update()
     {
-        if (!MenuManager.Current.MenuOpen && Driving)
+        if (MenuManager.Current.MenuOpen || !Driving)
         {
-            MoveDirection = InputDirection.y * transform.forward;
-            float speed = sprinting ? driveSprintSpeed : driveSpeed;
-
-            if (Rb.velocity.sqrMagnitude < maxSpeed * maxSpeed)
-            { Rb.AddForce(MoveDirection * speed, ForceMode.Acceleration); }
-
-            if (InputDirection.y != 0)
-            {
-                var turnDelta = Vector3.up * InputDirection.x * turnSpeed;
-                Rb.MoveRotation(Quaternion.Euler(Rb.rotation.eulerAngles + turnDelta));
-            }
-
-            // Animate side to side--will also lerp the player position when first driving.
-            var offsetPos = playerPosition + Vector3.right * InputDirection.x * onTurnOffset;
-            Interaction.Current.transform.localPosition = Vector3.Lerp(Interaction.Current.transform.localPosition, offsetPos, offsetT += Time.deltaTime);
+            MoveDirection = Vector3.zero;
+            return;
         }
-        else
-        { MoveDirection = Vector3.zero; }
+
+        if (currentTurnSpeed < maxTurnSpeed)
+        { currentTurnSpeed += Time.deltaTime * turnSpeed * InputDirection.x; }
+
+        if (InputDirection.x == 0)
+        { currentTurnSpeed = Mathf.Lerp(currentTurnSpeed, 0, turnResetT += Time.deltaTime * turnDropoff); }
+
+        var turnDelta = Vector3.up * currentTurnSpeed;
+        Rb.MoveRotation(Quaternion.Euler(Rb.rotation.eulerAngles + turnDelta));
+
+        // Animate side to side--will also lerp the player position when first driving.
+        var offsetPos = playerPosition + Vector3.right * InputDirection.x * onTurnOffset;
+        Interaction.Current.transform.localPosition = Vector3.Lerp(Interaction.Current.transform.localPosition, offsetPos, offsetT += Time.deltaTime);
+
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        if (MenuManager.Current.MenuOpen || !Driving) return;
+
+        MoveDirection = InputDirection.y * transform.forward;
+        float accel = sprinting ? sprintAcceleration : acceleration;
+        float max = sprinting ? sprintMaxSpeed : maxSpeed;
+
+        if (Rb.velocity.sqrMagnitude < max * max)
+        { Rb.velocity += MoveDirection * accel * Time.fixedDeltaTime; }
+        
+        if (InputDirection.y == 0)
+        { Rb.velocity -= MoveDirection * deceleration * Time.fixedDeltaTime; }
     }
 }
