@@ -6,9 +6,10 @@ using TMPro;
 
 public class SceneLoader : MonoBehaviour
 {
-    // Thanks, Brackeys!
     public static SceneLoader Current { get; private set; }
 
+    [SerializeField] private int baseSceneIndex;
+    [SerializeField] private int titleScreenIndex;
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private Slider loadingBar;
     [SerializeField] private TextMeshProUGUI progressText;
@@ -23,22 +24,28 @@ public class SceneLoader : MonoBehaviour
         StartCoroutine(LoadAsync(sceneIndex));
     }
 
-    IEnumerator LoadAsync(int sceneIndex)
+    IEnumerator LoadAsync(int sceneIndex, float fromPercent = 0, float toPercent = 1, LoadSceneMode mode = LoadSceneMode.Single)
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex);
+        DontDestroyOnLoad(gameObject);
 
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex, mode);
         loadingScreen.SetActive(true);
 
         while (!operation.isDone)
         {
-            float progress = Mathf.Clamp01(operation.progress / 0.9f);
+            float progress = fromPercent + Mathf.Clamp01(operation.progress / 0.9f) * (toPercent - fromPercent);
             loadingBar.value = progress;
-            progressText.text = Mathf.RoundToInt(progress * 100f) + "%";
+            progressText.text = Mathf.RoundToInt(progress * 100 * toPercent) + "%";
 
             var captionIndex = Mathf.RoundToInt(progress * progressCaptions.Length);
             progressCaption.text = progressCaptions[Mathf.Clamp(captionIndex, 0, progressCaptions.Length - 1)];
 
             yield return null;
         }
+
+        if (sceneIndex != titleScreenIndex && sceneIndex != baseSceneIndex)
+        { yield return LoadAsync(baseSceneIndex, 0.5f, 1, LoadSceneMode.Additive); }
+
+        Destroy(gameObject);
     }
 }
