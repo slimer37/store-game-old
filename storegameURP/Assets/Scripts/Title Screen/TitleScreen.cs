@@ -47,7 +47,7 @@ public class TitleScreen : MonoBehaviour
     {
         if (hoveredObj && hoveredObj.Focused) { return; }
 
-        if (Physics.Raycast(CamRay, out RaycastHit hit) && hit.transform.CompareTag("Interactable"))
+        if (Physics.Raycast(CamRay, out RaycastHit hit) && hit.transform.gameObject.layer == 3)
         {
             if (!hoveredObj || hoveredObj.transform != hit.transform)
             {
