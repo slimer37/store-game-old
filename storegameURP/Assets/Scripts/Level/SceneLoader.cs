@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,8 +9,11 @@ public class SceneLoader : MonoBehaviour
 {
     public static SceneLoader Current { get; private set; }
 
+    [Header("Scenes")]
+    [SerializeField] private List<int> loadAlone;
     [SerializeField] private int baseSceneIndex;
-    [SerializeField] private int titleScreenIndex;
+
+    [Header("Loading Screen")]
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private Slider loadingBar;
     [SerializeField] private TextMeshProUGUI progressText;
@@ -21,15 +25,31 @@ public class SceneLoader : MonoBehaviour
     public void LoadScene(int sceneIndex)
     {
         Time.timeScale = 1.0f;
-        StartCoroutine(LoadAsync(sceneIndex));
+        StartCoroutine(DynamicLoadAsync(sceneIndex));
     }
 
-    IEnumerator LoadAsync(int sceneIndex, float fromPercent = 0, float toPercent = 1, LoadSceneMode mode = LoadSceneMode.Single)
+    IEnumerator DynamicLoadAsync(int sceneIndex)
     {
         DontDestroyOnLoad(gameObject);
 
-        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex, mode);
         loadingScreen.SetActive(true);
+        loadingBar.value = 0;
+
+        if (loadAlone.Contains(sceneIndex))
+        { yield return LoadAsync(sceneIndex, 1); }
+        else
+        {
+            yield return LoadAsync(sceneIndex, 0.5f);
+            yield return LoadAsync(baseSceneIndex, 1, LoadSceneMode.Additive);
+        }
+
+        Destroy(gameObject);
+    }
+
+    IEnumerator LoadAsync(int sceneIndex, float toPercent, LoadSceneMode mode = LoadSceneMode.Single)
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(sceneIndex, mode);
+        float fromPercent = loadingBar.value;
 
         while (!operation.isDone)
         {
@@ -42,10 +62,5 @@ public class SceneLoader : MonoBehaviour
 
             yield return null;
         }
-
-        if (sceneIndex != titleScreenIndex && sceneIndex != baseSceneIndex)
-        { yield return LoadAsync(baseSceneIndex, 0.5f, 1, LoadSceneMode.Additive); }
-
-        Destroy(gameObject);
     }
 }
