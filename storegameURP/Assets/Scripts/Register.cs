@@ -5,23 +5,23 @@ using TMPro;
 public class Register : Interactable
 {
     [Header("Text")]
-    [SerializeField] private TextMeshPro screenMainText;
-    [SerializeField] private string pendingText;
-    [SerializeField] private TextMeshPro screenSideText;
-    [SerializeField] private ParticleSystem particles;
+    [SerializeField] TextMeshPro screenMainText;
+    [SerializeField] string pendingText;
+    [SerializeField] TextMeshPro screenSideText;
+    [SerializeField] ParticleSystem particles;
 
     [Header("Other")]
-    [SerializeField] private Transform itemDrop;
+    [SerializeField] Transform itemDrop;
 
-    private static List<Register> allRegisters = new List<Register>();
+    static List<Register> allRegisters = new List<Register>();
 
-    private List<Customer> queue = new List<Customer>();
+    List<Customer> queue = new List<Customer>();
 
-    private Customer currentCustomer = null;
-    private List<Product> receipt = new List<Product>();
-    private Scanner scanner;
+    Customer currentCustomer = null;
+    List<Product> receipt = new List<Product>();
+    Scanner scanner;
 
-    private bool CustomerPending => queue.Count > 0 && !currentCustomer && queue[0].ReachedRegister;
+    bool CustomerPending => queue.Count > 0 && !currentCustomer && queue[0].ReachedRegister;
 
     protected override Hover.Icon HoverIcon => CustomerPending ? Hover.Icon.Access : Hover.Icon.None;
     public Vector3 DropPosition => itemDrop.position;

@@ -4,27 +4,27 @@ using UnityEngine.SceneManagement;
 
 public class DebugConsole : MonoBehaviour
 {
-    [SerializeField] private string cheatCode;
-    [SerializeField] private GameObject notifObject;
-    [SerializeField] private bool open;
+    [SerializeField] string cheatCode;
+    [SerializeField] GameObject notifObject;
+    [SerializeField] bool open;
 
     [Header("Text")]
-    [SerializeField] private Font outputFont;
-    [SerializeField] private Font inputFont;
-    [SerializeField] private int outputFontSize;
-    [SerializeField] private int inputFontSize;
+    [SerializeField] Font outputFont;
+    [SerializeField] Font inputFont;
+    [SerializeField] int outputFontSize;
+    [SerializeField] int inputFontSize;
 
-    private static DebugConsole current;
+    static DebugConsole current;
 
-    private bool debug = false;
-    private int codeProgress = 0;
-    private Controls controls;
+    bool debug = false;
+    int codeProgress = 0;
+    Controls controls;
 
-    private string input = "";
-    private string output = "Wizards only, fools.";
-    private Vector2 scrollPosition;
+    string input = "";
+    string output = "Wizards only, fools.";
+    Vector2 scrollPosition;
 
-    private string memory;
+    string memory;
 
     void Awake()
     {

@@ -10,15 +10,15 @@ public class SceneLoader : MonoBehaviour
     public static SceneLoader Current { get; private set; }
 
     [Header("Scenes")]
-    [SerializeField] private List<int> loadAlone;
-    [SerializeField] private int baseSceneIndex;
+    [SerializeField] List<int> loadAlone;
+    [SerializeField] int baseSceneIndex;
 
     [Header("Loading Screen")]
-    [SerializeField] private GameObject loadingScreen;
-    [SerializeField] private Slider loadingBar;
-    [SerializeField] private TextMeshProUGUI progressText;
-    [SerializeField] private TextMeshProUGUI progressCaption;
-    [SerializeField] private string[] progressCaptions;
+    [SerializeField] GameObject loadingScreen;
+    [SerializeField] Slider loadingBar;
+    [SerializeField] TextMeshProUGUI progressText;
+    [SerializeField] TextMeshProUGUI progressCaption;
+    [SerializeField] string[] progressCaptions;
 
     void Awake() => Current = this;
 

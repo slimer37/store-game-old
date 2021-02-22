@@ -4,14 +4,14 @@ using TMPro;
 
 public class MoneyIndicator : MonoBehaviour
 {
-    [SerializeField] private float downForDuration;
-    [SerializeField] private TextMeshProUGUI amountText;
-    [SerializeField] private TextMeshProUGUI differenceText;
+    [SerializeField] float downForDuration;
+    [SerializeField] TextMeshProUGUI amountText;
+    [SerializeField] TextMeshProUGUI differenceText;
 
-    private RectTransform rectTransform;
-    private bool lowered = false;
+    RectTransform rectTransform;
+    bool lowered = false;
 
-    private float moneyRecorded = 0;
+    float moneyRecorded = 0;
 
     void Start()
     {

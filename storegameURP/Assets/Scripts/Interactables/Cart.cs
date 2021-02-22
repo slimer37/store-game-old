@@ -7,11 +7,11 @@ public class Cart : Driveable
     protected override string Tooltip => container.Info;
 
     [Header("Front Wheel Animation")]
-    [SerializeField] private Transform[] frontWheels;
-    [SerializeField] private float wheelTurnAmount;
-    [SerializeField] private float itemVelocityLimitWhileDriving;
+    [SerializeField] Transform[] frontWheels;
+    [SerializeField] float wheelTurnAmount;
+    [SerializeField] float itemVelocityLimitWhileDriving;
 
-    [SerializeField] private Container container;
+    [SerializeField] Container container;
 
     private float wheelTurnT = 0;
 

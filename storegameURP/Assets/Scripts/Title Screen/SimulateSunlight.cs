@@ -4,7 +4,7 @@ using UnityEngine;
 public class SimulateSunlight : MonoBehaviour
 {
     [Serializable]
-    private struct LightingSituation
+    struct LightingSituation
     {
         public string name;
         public Vector2 hourRange;
@@ -13,11 +13,11 @@ public class SimulateSunlight : MonoBehaviour
         public float indoorIntensity;
     }
 
-    [SerializeField] private LightingSituation[] lightingSituations;
-    [SerializeField] private Light indoorLight;
+    [SerializeField] LightingSituation[] lightingSituations;
+    [SerializeField] Light indoorLight;
     [ContextMenuItem("Override Now", "Awake")]
-    [SerializeField] private int overrideHour;
-    [SerializeField] private bool enable;
+    [SerializeField] int overrideHour;
+    [SerializeField] bool enable;
 
     void Awake()
     {

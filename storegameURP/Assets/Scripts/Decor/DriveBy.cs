@@ -3,21 +3,21 @@ using UnityEngine;
 
 public class DriveBy : MonoBehaviour
 {
-    [SerializeField] private Vector3[] nodes;
-    [SerializeField] private float startDelay;
+    [SerializeField] Vector3[] nodes;
+    [SerializeField] float startDelay;
     [Header("Duration")]
-    [SerializeField] private float minDuration;
-    [SerializeField] private float maxDuration;
+    [SerializeField] float minDuration;
+    [SerializeField] float maxDuration;
     [Header("Interval")]
-    [SerializeField] private float minInterval;
-    [SerializeField] private float maxInterval;
+    [SerializeField] float minInterval;
+    [SerializeField] float maxInterval;
 
     [Header("Appearance")]
-    [SerializeField] private bool isCustomer;
+    [SerializeField] bool isCustomer;
 
-    private FeatureRandomizer[] randomizers;
-    private Animator anim;
-    private GameObject[] children;
+    FeatureRandomizer[] randomizers;
+    Animator anim;
+    GameObject[] children;
 
     void Awake()
     {

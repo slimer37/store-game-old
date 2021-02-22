@@ -3,11 +3,11 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class EntranceTrigger : MonoBehaviour
 {
-    [SerializeField] private bool nonRestrictive;
-    [SerializeField] private bool autoClose;
-    [SerializeField] private Openable entrance;
+    [SerializeField] bool nonRestrictive;
+    [SerializeField] bool autoClose;
+    [SerializeField] Openable entrance;
 
-    private bool queueClose = false;
+    bool queueClose = false;
 
     void OnTriggerStay(Collider other)
     {

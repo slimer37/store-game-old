@@ -4,12 +4,12 @@ using UnityEngine.AI;
 
 public class Customer : MonoBehaviour
 {
-    [SerializeField] private Vector3 holdPos;
-    [SerializeField] private float stopMargin;
-    [SerializeField] private Animator anim;
+    [SerializeField] Vector3 holdPos;
+    [SerializeField] float stopMargin;
+    [SerializeField] Animator anim;
 
-    private NavMeshAgent agent;
-    private Register reg;
+    NavMeshAgent agent;
+    Register reg;
 
     public Vector3 EndPos { get; set; }
     public Product Wanted { get; set; }

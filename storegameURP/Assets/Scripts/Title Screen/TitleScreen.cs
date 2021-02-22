@@ -3,22 +3,22 @@ using UnityEngine.InputSystem;
 
 public class TitleScreen : MonoBehaviour
 {
-    [SerializeField] private float front;
-    [SerializeField] private float animSpeed;
-    [SerializeField] private float hoverHeight;
+    [SerializeField] float front;
+    [SerializeField] float animSpeed;
+    [SerializeField] float hoverHeight;
 
-    private Camera cam;
-    private Vector3 firstFront;
-    private TitleElement hoveredObj;
+    Camera cam;
+    Vector3 firstFront;
+    TitleElement hoveredObj;
 
-    private static TitleScreen current;
+    static TitleScreen current;
 
     public static float AnimSpeed => current.animSpeed;
     public static float HoverHeight => current.hoverHeight;
     public static Vector3 Front => current.firstFront;
     public static Quaternion ElementRot => Quaternion.LookRotation(-current.cam.transform.forward);
 
-    private Ray CamRay => cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+    Ray CamRay => cam.ScreenPointToRay(Mouse.current.position.ReadValue());
 
     void Awake()
     {

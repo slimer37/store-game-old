@@ -5,18 +5,18 @@ using UnityEngine.Rendering;
 
 public class Surveil : MonoBehaviour
 {
-    [SerializeField] private float turnInterval;
-    [SerializeField] private float turnDegrees;
-    [SerializeField] private float turnTime;
+    [SerializeField] float turnInterval;
+    [SerializeField] float turnDegrees;
+    [SerializeField] float turnTime;
 
     [Header("Rendering")]
-    [SerializeField] private Camera cam;
-    [SerializeField] private Volume volume;
+    [SerializeField] Camera cam;
+    [SerializeField] Volume volume;
 
     [field: Header("Night Vision")]
     [field: SerializeField] public VolumeProfile NightVisionProfile { get; private set; }
 
-    private VolumeProfile defaultProfile;
+    VolumeProfile defaultProfile;
 
     public bool NightVision { get; private set; }
     public RenderTexture Texture { get; private set; }

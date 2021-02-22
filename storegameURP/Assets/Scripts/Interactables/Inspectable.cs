@@ -2,10 +2,10 @@ using UnityEngine;
 
 public class Inspectable : Interactable
 {
-    [SerializeField] private string header;
-    [SerializeField, TextArea(8, 100)] private string body;
-    [SerializeField] private Color headerColor = Color.black;
-    [SerializeField] private Color bodyColor = Color.black;
+    [SerializeField] string header;
+    [SerializeField, TextArea(8, 100)] string body;
+    [SerializeField] Color headerColor = Color.black;
+    [SerializeField] Color bodyColor = Color.black;
 
     protected override Hover.Icon HoverIcon { get => Hover.Icon.View; }
 

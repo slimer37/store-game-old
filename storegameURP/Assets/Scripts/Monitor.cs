@@ -5,14 +5,14 @@ public class Monitor : Interactable
 {
     protected override Hover.Icon HoverIcon => Hover.Icon.Access;
 
-    [SerializeField] private Renderer rend;
-    [SerializeField] private TextMeshPro channelNumText;
-    [SerializeField] private TextMeshPro angleText;
-    [SerializeField] private bool enableNightVision;
+    [SerializeField] Renderer rend;
+    [SerializeField] TextMeshPro channelNumText;
+    [SerializeField] TextMeshPro angleText;
+    [SerializeField] bool enableNightVision;
 
-    private int channel = 0;
+    int channel = 0;
 
-    private Surveil currentCam => Surveil.AllCameras[channel];
+    Surveil currentCam => Surveil.AllCameras[channel];
 
     void Start()
     {

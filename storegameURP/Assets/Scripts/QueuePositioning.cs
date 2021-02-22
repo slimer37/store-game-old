@@ -2,12 +2,12 @@ using UnityEngine;
 
 public static class QueuePositioning
 {
-    private const float LineStartOffset = 1.4f;
-    private const float IndividualOffset = 2;
-    private const int MaxCheckAngle = 180;
-    private const int CheckInterval = 1;
+    const float LineStartOffset = 1.4f;
+    const float IndividualOffset = 2;
+    const int MaxCheckAngle = 180;
+    const int CheckInterval = 1;
 
-    private const float CheckRadius = 0.5f;
+    const float CheckRadius = 0.5f;
 
     public static Vector3[] GenerateQueue(Register reg, int length)
     {
@@ -44,19 +44,19 @@ public static class QueuePositioning
         return positions;
     }
 
-    private static bool OverlapSphere(Vector3 pos)
+    static bool OverlapSphere(Vector3 pos)
     {
         Collider[] collided = new Collider[1];
         return Physics.OverlapSphereNonAlloc(pos, CheckRadius, collided, ~LayerMask.GetMask("Player")) > 0;
     }
 
-    private static bool BlockedFrom(Vector3 from, Vector3 to)
+    static bool BlockedFrom(Vector3 from, Vector3 to)
     {
         Vector3 delta = (to - from).normalized;
         return Physics.Raycast(from, delta, IndividualOffset, ~LayerMask.GetMask("Player"));
     }
 
-    private static Vector3 FindPositionAround(Vector3 lastPosition, Vector3 position)
+    static Vector3 FindPositionAround(Vector3 lastPosition, Vector3 position)
     {
         Vector3 forward = position - lastPosition;
 

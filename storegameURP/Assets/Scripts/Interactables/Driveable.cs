@@ -4,34 +4,34 @@ using UnityEngine.InputSystem;
 public class Driveable : Interactable
 {
     [Header("Speed")]
-    [SerializeField] private float acceleration;
-    [SerializeField] private float maxSpeed;
-    [SerializeField] private float sprintAcceleration;
-    [SerializeField] private float sprintMaxSpeed;
-    [SerializeField] private float deceleration;
+    [SerializeField] float acceleration;
+    [SerializeField] float maxSpeed;
+    [SerializeField] float sprintAcceleration;
+    [SerializeField] float sprintMaxSpeed;
+    [SerializeField] float deceleration;
 
     [Header("Turning")]
-    [SerializeField] private float turnSpeed;
-    [SerializeField] private float turnDropoff;
-    [SerializeField] private float maxTurnSpeed;
-    [SerializeField] private float onTurnOffset;
+    [SerializeField] float turnSpeed;
+    [SerializeField] float turnDropoff;
+    [SerializeField] float maxTurnSpeed;
+    [SerializeField] float onTurnOffset;
 
 
     [Header("Other")]
-    [SerializeField] private Vector3 playerPosition;
+    [SerializeField] Vector3 playerPosition;
     [field: SerializeField] protected Rigidbody Rb { get; private set; }
-    [SerializeField] private TMPro.TextMeshProUGUI exitInstructions;
+    [SerializeField] TMPro.TextMeshProUGUI exitInstructions;
 
     protected Vector2 InputDirection { get; set; }
     protected Vector3 MoveDirection { get; set; }
     protected bool Driving { get; private set; } = false;
 
-    private Controls controls;
-    private bool sprinting = false;
+    Controls controls;
+    bool sprinting = false;
 
-    private float offsetT;
-    private float turnResetT;
-    private float currentTurnSpeed;
+    float offsetT;
+    float turnResetT;
+    float currentTurnSpeed;
 
     protected virtual void Awake()
     {

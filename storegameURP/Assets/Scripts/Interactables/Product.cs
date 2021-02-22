@@ -6,11 +6,11 @@ public class Product : Pickuppable
 {
     [field: SerializeField] public ProductInfo Info { get; set; }
 
-    [SerializeField] private Material transparentMat;
+    [SerializeField] Material transparentMat;
 
     public static List<Product> AllProducts { get; private set; } = new List<Product>();
 
-    private Renderer rend;
+    Renderer rend;
     public bool Marked;
 
     public static List<Product> ProductsAvailable

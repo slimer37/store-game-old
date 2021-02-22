@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class Credits : Menu
 {
-    private Vector2 originalPivot;
-    private Animator creditsAnim;
-    private CanvasGroup group;
+    Vector2 originalPivot;
+    Animator creditsAnim;
+    CanvasGroup group;
 
     protected override void Awake()
     {

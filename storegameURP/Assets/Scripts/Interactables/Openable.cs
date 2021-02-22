@@ -10,12 +10,12 @@ public class Openable : Interactable
             Open ? Hover.Icon.Push : Hover.Icon.Pull;
     }
 
-    [SerializeField] private string openState;
-    [SerializeField] private string closeState;
+    [SerializeField] string openState;
+    [SerializeField] string closeState;
 
-    private NavMeshObstacle obstacle;
-    private Animator anim;
-    private bool animating = false;
+    NavMeshObstacle obstacle;
+    Animator anim;
+    bool animating = false;
 
     public bool Open { get; private set; } = false;
 

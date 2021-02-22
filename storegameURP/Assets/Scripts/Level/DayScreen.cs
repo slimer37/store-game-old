@@ -4,13 +4,13 @@ using TMPro;
 
 public class DayScreen : MonoBehaviour
 {
-    [SerializeField] private float fadeDuration;
-    [SerializeField] private float onScreenDuration;
-    [SerializeField] private CanvasGroup group;
-    [SerializeField] private TextMeshProUGUI dayNum;
-    [SerializeField] private TextMeshProUGUI levelName;
+    [SerializeField] float fadeDuration;
+    [SerializeField] float onScreenDuration;
+    [SerializeField] CanvasGroup group;
+    [SerializeField] TextMeshProUGUI dayNum;
+    [SerializeField] TextMeshProUGUI levelName;
 
-    private static DayScreen current;
+    static DayScreen current;
     public static float Duration => current.fadeDuration * 2 + current.onScreenDuration;
     void Awake() => current = this;
 

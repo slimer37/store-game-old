@@ -4,10 +4,10 @@ using TMPro;
 
 public class CustomInspect : Menu
 {
-    [SerializeField] private float inspectFadeDuration;
-    [SerializeField] private CanvasGroup textGroup;
-    [SerializeField] private TextMeshProUGUI headerText;
-    [SerializeField] private TextMeshProUGUI bodyText;
+    [SerializeField] float inspectFadeDuration;
+    [SerializeField] CanvasGroup textGroup;
+    [SerializeField] TextMeshProUGUI headerText;
+    [SerializeField] TextMeshProUGUI bodyText;
 
     protected override bool Open => textGroup.alpha == 1;
 

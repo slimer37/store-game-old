@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class Menu : MonoBehaviour
 {
-    private Controls controls;
+    Controls controls;
     protected virtual bool Open { get; private set; } = false;
     protected Controls.MenuActions MenuActions { get; private set; }
 

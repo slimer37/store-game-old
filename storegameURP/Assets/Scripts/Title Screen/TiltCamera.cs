@@ -3,9 +3,9 @@ using UnityEngine.InputSystem;
 
 public class TiltCamera : MonoBehaviour
 {
-    [SerializeField] private Vector2 maxTilt;
+    [SerializeField] Vector2 maxTilt;
 
-    private Quaternion originalRot;
+    Quaternion originalRot;
 
     void Awake() => originalRot = transform.rotation;
 

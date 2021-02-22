@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class React : MonoBehaviour
 {
-    [SerializeField] private float projectileVelocityTolerance;
+    [SerializeField] float projectileVelocityTolerance;
 
     void OnCollisionEnter(Collision collision)
     {

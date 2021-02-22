@@ -21,7 +21,7 @@ public class Level : MonoBehaviour
             { OnProfit?.Invoke(); }
         }
     }
-    private float money;
+    float money;
 
     void Awake() => Current = this;
 

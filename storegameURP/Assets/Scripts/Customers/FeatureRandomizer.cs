@@ -5,7 +5,7 @@ using TMPro;
 public class FeatureRandomizer : MonoBehaviour
 {
     [System.Serializable]
-    private struct ColorRandomizer
+    struct ColorRandomizer
     {
         public int matIndex;
         public Color[] colorSet;
@@ -13,14 +13,14 @@ public class FeatureRandomizer : MonoBehaviour
     }
 
     [System.Serializable]
-    private struct ExtraRenderer
+    struct ExtraRenderer
     {
         public Renderer renderer;
         public int matIndex;
     }
 
     [System.Serializable]
-    private struct TextRandomizer
+    struct TextRandomizer
     {
         public TextMeshPro[] textObjects;
         [TextArea(0, 4)] public string[] textSet;
@@ -28,11 +28,11 @@ public class FeatureRandomizer : MonoBehaviour
         public string suffix;
     }
 
-    [SerializeField] private ColorRandomizer[] colorRandomizers = new ColorRandomizer[] { };
-    [SerializeField] private TextRandomizer[] textRandomizers = new TextRandomizer[] { };
-    [SerializeField, Range(0, 100)] private int appearanceChance = 100;
+    [SerializeField] ColorRandomizer[] colorRandomizers = new ColorRandomizer[] { };
+    [SerializeField] TextRandomizer[] textRandomizers = new TextRandomizer[] { };
+    [SerializeField, Range(0, 100)] int appearanceChance = 100;
 
-    private Renderer rend;
+    Renderer rend;
 
     void Awake()
     {

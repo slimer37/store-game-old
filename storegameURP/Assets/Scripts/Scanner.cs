@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Scanner : MonoBehaviour
 {
-    [SerializeField] private Light scannerLight;
+    [SerializeField] Light scannerLight;
 
     public System.Action<Product> onScan;
 

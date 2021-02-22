@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class Tool : Pickuppable
 {
-    [SerializeField] private bool anchorToCamera;
-    [SerializeField] private Vector3 holdPosition;
-    [SerializeField] private Vector3 holdRotation;
-    [SerializeField] private float cameraAngleMultiplier = 0.005f;
+    [SerializeField] bool anchorToCamera;
+    [SerializeField] Vector3 holdPosition;
+    [SerializeField] Vector3 holdRotation;
+    [SerializeField] float cameraAngleMultiplier = 0.005f;
 
     protected Controls Controls { get; private set; }
     protected Vector3 HoldRotation => holdRotation;
 
-    private Collider[] detected = new Collider[1];
+    Collider[] detected = new Collider[1];
 
     protected override void Awake()
     {

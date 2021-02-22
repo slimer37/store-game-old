@@ -9,19 +9,19 @@ public class TitleElement : MonoBehaviour
 
     public UnityEvent OnChosen;
 
-    [SerializeField] private string openState;
-    [SerializeField] private string closeState;
-    [SerializeField] private bool callbackOnSelect;
-    [SerializeField] private float overrideHoverDist;
+    [SerializeField] string openState;
+    [SerializeField] string closeState;
+    [SerializeField] bool callbackOnSelect;
+    [SerializeField] float overrideHoverDist;
 
-    private Vector3 firstPos;
-    private Quaternion firstRot;
+    Vector3 firstPos;
+    Quaternion firstRot;
 
-    private Animator anim;
-    private bool animating = false;
-    private Coroutine hoverRoutine = null;
+    Animator anim;
+    bool animating = false;
+    Coroutine hoverRoutine = null;
 
-    private float hoverHeight;
+    float hoverHeight;
 
     void Awake()
     {

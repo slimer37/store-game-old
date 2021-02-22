@@ -3,12 +3,12 @@ using TMPro;
 
 public class Mood : MonoBehaviour
 {
-    [SerializeField] private Renderer faceRend;
-    [SerializeField] private Texture2D[] expressions;
-    [SerializeField] private TextMeshPro remarkBubble;
-    [SerializeField] private string[] painRemarks;
+    [SerializeField] Renderer faceRend;
+    [SerializeField] Texture2D[] expressions;
+    [SerializeField] TextMeshPro remarkBubble;
+    [SerializeField] string[] painRemarks;
 
-    private int MoodStage
+    int MoodStage
     {
         get => stage;
         set
@@ -18,7 +18,7 @@ public class Mood : MonoBehaviour
         }
     }
 
-    private int stage;
+    int stage;
 
     void DecreaseMood()
     {

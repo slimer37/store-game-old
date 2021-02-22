@@ -5,7 +5,7 @@ public class Basket : Tool
 {
     protected override string Tooltip => container.Info;
 
-    private Container container;
+    Container container;
 
     protected override void Awake()
     {

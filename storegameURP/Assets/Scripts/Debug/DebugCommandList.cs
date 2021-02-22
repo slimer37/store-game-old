@@ -5,9 +5,9 @@ using UnityEngine.SceneManagement;
 
 public static class DebugCommands
 {
-    private delegate string CommandFunction(string input);
+    delegate string CommandFunction(string input);
 
-    private struct Command
+    struct Command
     {
         public string keyword;
         public string param;
@@ -24,9 +24,9 @@ public static class DebugCommands
         }
     }
 
-    private static string keyword;
+    static string keyword;
 
-    private static readonly Command[] commands =
+    static readonly Command[] commands =
     {
         new Command("allthings", "Lists all objects in the scene.", _ => GetObjectList()),
         new Command("childrenof", "Lists an object's children.", ChildrenOf, "object name"),
@@ -37,13 +37,13 @@ public static class DebugCommands
         new Command("topthings", "Lists all top-level objects in the scene.", _ => GetParents()),
     };
 
-    private static void ArgCheck(string arg)
+    static void ArgCheck(string arg)
     {
         if (arg == "")
         { throw new Exception($"'{keyword}' requires at least one argument. (Consult the help command.)"); }
     }
 
-    private static string Colored(string color, string text) => $"<color={color}>{text}</color>";
+    static string Colored(string color, string text) => $"<color={color}>{text}</color>";
 
     public static string Process(string input)
     {

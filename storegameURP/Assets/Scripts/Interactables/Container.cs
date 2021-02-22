@@ -3,12 +3,12 @@ using UnityEngine;
 
 public class Container : MonoBehaviour
 {
-    [SerializeField] private int capacity;
-    [SerializeField] private float scaleFactor;
-    [SerializeField] private float scaleAnchor;
-    [SerializeField] private float triggerHeight;
+    [SerializeField] int capacity;
+    [SerializeField] float scaleFactor;
+    [SerializeField] float scaleAnchor;
+    [SerializeField] float triggerHeight;
 
-    private List<Product> Contents = new List<Product>();
+    List<Product> Contents = new List<Product>();
 
     public bool Active { get; set; } = true;
     public int count => Contents.Count;
