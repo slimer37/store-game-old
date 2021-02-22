@@ -25,9 +25,6 @@ public abstract class Interactable : MonoBehaviour
 
     public abstract void Interact();
 
-    // Optional:
-    protected virtual void OnHoverExit() { }
-
     protected void OnSecondaryInteract()
     {
         if (interactable)

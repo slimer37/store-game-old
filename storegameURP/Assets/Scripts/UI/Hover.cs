@@ -16,61 +16,65 @@ public class Hover : MonoBehaviour
     }
 
     [Tooltip("Access, Pickup, Pull, Push, Invalid")]
-    [SerializeField] private Sprite[] iconSprites;
-    [SerializeField] private Image cursorImage;
-    [SerializeField] private Image dotImage;
-    [SerializeField] private TextMeshProUGUI tooltipText;
+    [SerializeField] Sprite[] iconSprites;
+    [SerializeField] Image cursorImage;
+    [SerializeField] Image dotImage;
+    [SerializeField] TextMeshProUGUI tooltipText;
 
-    private Transform hoveredTransform;
+    Transform hoveredTransform;
 
     public static Hover Current { get; private set; }
 
     void Awake() => Current = this;
 
+    void OnDisable() => ResetIcon();
+
     public void ShowIcon(Icon iconChoice, string tooltip)
     {
         if (iconChoice == Icon.None)
-        { Reset(); }
-        else
         {
-            cursorImage.enabled = true;
-            cursorImage.sprite = Current.iconSprites[(int)iconChoice];
-            dotImage.enabled = false;
+            ResetIcon(false);
+            return;
         }
 
+        cursorImage.enabled = true;
+        cursorImage.sprite = Current.iconSprites[(int)iconChoice];
+        dotImage.enabled = false;
         tooltipText.text = tooltip;
     }
 
-    public Transform Cast(Ray ray, float distance, LayerMask mask = new LayerMask())
+    public void SendMessageToHovered(string message)
     {
-        if (Physics.Raycast(ray, out RaycastHit hit, distance))
+        if (hoveredTransform)
+        { hoveredTransform.SendMessage(message); }
+    }
+
+    public void Cast(Ray ray, float distance, LayerMask mask)
+    {
+        if (!enabled) return;
+
+        if (Physics.Raycast(ray, out RaycastHit hit, distance, mask))
         { Over(hit.transform); }
-        else
-        { Reset(); }
-        return hoveredTransform;
+        else if (hoveredTransform)
+        { ResetIcon(); }
     }
 
-    void Over(Transform hovered)
+    void Over(Transform hoveredObj)
     {
-        if (!hoveredTransform || hovered != hoveredTransform)
-        {
-            if (hoveredTransform)
-            { hoveredTransform.SendMessage("OnHoverExit", SendMessageOptions.DontRequireReceiver); }
-            hovered.SendMessage("OnHover", SendMessageOptions.DontRequireReceiver);
-            hoveredTransform = hovered;
-        }
+        // Do nothing if the hovered object hasn't changed.
+        if (hoveredTransform && hoveredObj == hoveredTransform) return;
+
+        hoveredTransform = hoveredObj;
+        SendMessageToHovered("OnHover");
     }
 
-    public void Reset()
+    void ResetIcon(bool setHoveredNull = true)
     {
         cursorImage.enabled = false;
         dotImage.enabled = true;
         tooltipText.text = "";
 
-        if (hoveredTransform)
-        {
-            hoveredTransform.SendMessage("OnHoverExit", SendMessageOptions.DontRequireReceiver);
-            hoveredTransform = null;
-        }
+        if (setHoveredNull && hoveredTransform)
+        { hoveredTransform = null; }
     }
 }

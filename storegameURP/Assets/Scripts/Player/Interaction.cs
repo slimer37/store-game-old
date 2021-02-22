@@ -3,22 +3,21 @@ using UnityEngine.InputSystem;
 
 public class Interaction : MonoBehaviour
 {
-    [SerializeField] private Collider col;
-    [SerializeField] private float reach;
-    [SerializeField] private LayerMask interactablesMask;
+    [SerializeField] Collider col;
+    [SerializeField] float reach;
+    [SerializeField] LayerMask interactablesMask;
 
     [Header("Items")]
-    [SerializeField] private float minHoldDist;
-    [SerializeField] private float dropDist;
-    [SerializeField] private float throwForce;
+    [SerializeField] float minHoldDist;
+    [SerializeField] float dropDist;
+    [SerializeField] float throwForce;
 
     [Header("Correction")]
-    [SerializeField] private float correctionForce;
-    [SerializeField] private float correctionDist;
+    [SerializeField] float correctionForce;
+    [SerializeField] float correctionDist;
 
-    private Transform hoveredTransform;
-    private float heldDistance;
-    private Pickuppable held = null;
+    float heldDistance;
+    Pickuppable held = null;
 
     public Camera Cam { get; private set; }
     public static Interaction Current { get; private set; }
@@ -32,7 +31,7 @@ public class Interaction : MonoBehaviour
     void Update()
     {
         Ray ray = Cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-        hoveredTransform = Hover.Current.Cast(ray, reach, interactablesMask);
+        Hover.Current.Cast(ray, reach, interactablesMask);
     }
 
     void FixedUpdate()
@@ -49,15 +48,15 @@ public class Interaction : MonoBehaviour
         { held.Drop(); }
     }
 
-    public void Grab(Pickuppable item)
+    public void Grab(Pickuppable toPickup)
     {
-        Hover.Current.Reset();
+        Hover.Current.enabled = toPickup != null;
 
         var temp = held;
-        held = item;
+        held = toPickup;
 
         // Don't do special stuff with tools.
-        if (item is Tool || held is Tool) return;
+        if (toPickup is Tool || held is Tool) return;
 
         // If we were holding an item before, re-enable collisions.
         if (temp)
@@ -67,7 +66,7 @@ public class Interaction : MonoBehaviour
         if (held)
         {
             held.IgnoreCollision(col, true);
-            float newDist = Vector3.Distance(Current.transform.position, item.transform.position);
+            float newDist = Vector3.Distance(Current.transform.position, toPickup.transform.position);
             Current.heldDistance = Mathf.Clamp(newDist, Current.minHoldDist, Current.reach);
         }
     }
@@ -91,13 +90,9 @@ public class Interaction : MonoBehaviour
     {
         if (held)
         { held.Drop(); }
-        else if (hoveredTransform)
-        { hoveredTransform.SendMessage("OnInteract", SendMessageOptions.DontRequireReceiver); }
+        else
+        { Hover.Current.SendMessageToHovered("OnInteract"); }
     }
 
-    void OnSecondaryInteract()
-    {
-        if (hoveredTransform)
-        { hoveredTransform.SendMessage("OnSecondaryInteract", SendMessageOptions.DontRequireReceiver); }
-    }
+    void OnSecondaryInteract() => Hover.Current.SendMessageToHovered("OnInteract");
 }

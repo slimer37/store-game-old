@@ -3,21 +3,21 @@ using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour
 {
-    [SerializeField] private float walkSpeed;
-    [SerializeField] private float jumpForce;
-    [SerializeField] private float gravity;
-    [SerializeField] private Animator anim;
+    [SerializeField] float walkSpeed;
+    [SerializeField] float jumpForce;
+    [SerializeField] float gravity;
+    [SerializeField] Animator anim;
 
     [Header("Sprinting")]
-    [SerializeField] private float sprintSpeed;
-    [SerializeField] private float sprintAnimSpeed;
+    [SerializeField] float sprintSpeed;
+    [SerializeField] float sprintAnimSpeed;
 
-    private CharacterController controller;
-    private Vector3 inputDirection;
-    private Vector3 moveDirection;
-    private bool sprinting = false;
+    CharacterController controller;
+    Vector3 inputDirection;
+    Vector3 moveDirection;
+    bool sprinting = false;
 
-    private static Movement current;
+    static Movement current;
 
     public static void Enable(bool value)
     {
@@ -28,7 +28,7 @@ public class Movement : MonoBehaviour
     void Awake()
     {
         current = this;
-        controller = GetComponent<CharacterController>();
+        TryGetComponent(out controller);
     }
 
     void OnMovement(InputValue value)
@@ -55,7 +55,7 @@ public class Movement : MonoBehaviour
             moveDirection.z *= sprinting ? sprintSpeed : walkSpeed;
         }
         else
-        { moveDirection = Vector3.zero + Vector3.up * inputDirection.y; }
+        { moveDirection = Vector3.up * inputDirection.y; }
 
         anim.SetFloat("Speed", controller.velocity.sqrMagnitude);
         anim.speed = sprinting ? sprintAnimSpeed : 1;

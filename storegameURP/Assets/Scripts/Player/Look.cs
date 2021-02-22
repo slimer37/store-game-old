@@ -1,25 +1,27 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Look : MonoBehaviour
 {
-    [SerializeField] private float verticalClamp;
-    [SerializeField] private float sensitivity;
+    [SerializeField] float verticalClamp;
+    [SerializeField] float sensitivity;
 
     [Header("Sprinting")]
-    [SerializeField] private float sprintFOV;
-    [SerializeField] private float FOVChangeRate;
+    [SerializeField] float sprintFOV;
+    [SerializeField] float FOVChangeRate;
 
-    private Camera cam;
-    private Vector2 inputRot;
-    private Vector2 camRot;
-    private float originalFOV;
+    Camera cam;
+    Vector2 inputRot;
+    Vector2 camRot;
+    float originalFOV;
+
+    float targetFOV;
+    float t;
 
     void Awake()
     {
         cam = GetComponent<PlayerInput>().camera;
-        originalFOV = cam.fieldOfView;
+        targetFOV = originalFOV = cam.fieldOfView;
     }
 
     void Start()
@@ -29,29 +31,25 @@ public class Look : MonoBehaviour
         camRot = cam.transform.localEulerAngles;
     }
 
-    void OnLook(InputValue value) => inputRot = value.Get<Vector2>() * sensitivity * Time.deltaTime;
+    void OnLook(InputValue value) => inputRot = value.Get<Vector2>();
 
     void Update()
     {
         if (MenuManager.Current.MenuOpen) return;
 
-        transform.localEulerAngles += inputRot.x * Vector3.up;
+        var delta = inputRot * sensitivity * Time.deltaTime;
+        transform.localEulerAngles += delta.x * Vector3.up;
 
-        camRot.x -= inputRot.y;
-        camRot.x = Mathf.Clamp(camRot.x, -verticalClamp, verticalClamp);
+        camRot.x = Mathf.Clamp(camRot.x - delta.y, -verticalClamp, verticalClamp);
         cam.transform.localRotation = Quaternion.Euler(camRot);
+
+        t += Time.deltaTime * FOVChangeRate;
+        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, targetFOV, t);
     }
 
     void OnSprint(InputValue value)
     {
-        StopAllCoroutines();
-        StartCoroutine(AnimateFOV(value.isPressed));
-    }
-
-    IEnumerator AnimateFOV(bool sprinting)
-    {
-        float finalFOV = sprinting ? sprintFOV : originalFOV;
-        yield return Tweens.LerpValue(1 / FOVChangeRate, t =>
-            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, finalFOV, FOVChangeRate * Time.deltaTime));
+        targetFOV = value.isPressed ? sprintFOV : originalFOV;
+        t = 0;
     }
 }
