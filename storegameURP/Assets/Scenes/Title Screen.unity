@@ -2966,6 +2966,9 @@ MonoBehaviour:
   front: 1
   animSpeed: 3
   hoverHeight: 0.1
+  elementMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!4 &339318771
 Transform:
   m_ObjectHideFlags: 0
@@ -5665,7 +5668,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Made by Alfred and Adrian
+  m_text: 'Made by Alfred
 
 
 
@@ -5682,7 +5685,7 @@ MonoBehaviour:
     Direction</size>
 
 
-    Adrian
+    Alfred & Adrian
 
 
     -

@@ -6,6 +6,7 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] float front;
     [SerializeField] float animSpeed;
     [SerializeField] float hoverHeight;
+    [SerializeField] LayerMask elementMask;
 
     Camera cam;
     Vector3 firstFront;
@@ -31,7 +32,7 @@ public class TitleScreen : MonoBehaviour
     {
         if (hoveredObj && hoveredObj.Focused)
         {
-            if (Physics.Raycast(CamRay, out RaycastHit hit) && hit.transform == hoveredObj.transform)
+            if (Physics.Raycast(CamRay, out RaycastHit hit, elementMask) && hit.transform == hoveredObj.transform)
             { hoveredObj.OnChosen.Invoke(); }
             else
             {
@@ -47,7 +48,7 @@ public class TitleScreen : MonoBehaviour
     {
         if (hoveredObj && hoveredObj.Focused) { return; }
 
-        if (Physics.Raycast(CamRay, out RaycastHit hit) && hit.transform.gameObject.layer == 3)
+        if (Physics.Raycast(CamRay, out RaycastHit hit, elementMask))
         {
             if (!hoveredObj || hoveredObj.transform != hit.transform)
             {
