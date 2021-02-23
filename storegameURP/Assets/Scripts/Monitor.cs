@@ -12,7 +12,7 @@ public class Monitor : Interactable
 
     int channel = 0;
 
-    Surveil currentCam => Surveil.AllCameras[channel];
+    Surveil CurrentCam => Surveil.AllCameras[channel];
 
     void Start()
     {
@@ -32,13 +32,13 @@ public class Monitor : Interactable
 
     void Update()
     {
-        angleText.text = $"{currentCam.transform.localEulerAngles.y:000}°";
-        channelNumText.text = $"CH {channel + 1}" + (enableNightVision ? $"<b><size=50%>NV:<color={(currentCam.NightVision ? "green>ON" : "yellow>OFF")}" : "");
+        angleText.text = $"{CurrentCam.transform.localEulerAngles.y:000}°";
+        channelNumText.text = $"CH {channel + 1}" + (enableNightVision ? $"<b><size=50%>NV:<color={(CurrentCam.NightVision ? "green>ON" : "yellow>OFF")}" : "");
     }
 
     void UpdateScreen()
     {
-        Texture texture = interactable ? currentCam.Texture : null;
+        Texture texture = interactable ? CurrentCam.Texture : null;
         rend.material.SetTexture("_BaseMap", texture);
         rend.material.SetTexture("_EmissionMap", texture);
 
@@ -50,7 +50,7 @@ public class Monitor : Interactable
     public void ToggleNightVision()
     {
         if (enableNightVision)
-        { currentCam.ToggleNightVision(); }
+        { CurrentCam.ToggleNightVision(); }
     }
 
     public void ToggleOn()

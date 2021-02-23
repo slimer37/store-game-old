@@ -11,7 +11,7 @@ public class Container : MonoBehaviour
     List<Product> Contents = new List<Product>();
 
     public bool Active { get; set; } = true;
-    public int count => Contents.Count;
+    public int Count => Contents.Count;
     public string Info => $"{Contents.Count}/{capacity} items";
 
     void OnTriggerEnter(Collider other)
