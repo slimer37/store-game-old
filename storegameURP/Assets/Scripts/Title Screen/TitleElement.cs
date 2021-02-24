@@ -17,6 +17,9 @@ public class TitleElement : MonoBehaviour
     Vector3 firstPos;
     Quaternion firstRot;
 
+    Renderer[] renderers;
+    Shader[][] originalShaders;
+    Shader hoverShader;
     Animator anim;
     bool animating = false;
     Coroutine hoverRoutine = null;
@@ -25,10 +28,22 @@ public class TitleElement : MonoBehaviour
 
     void Awake()
     {
-        if (GetComponent<Animator>())
-        { anim = GetComponent<Animator>(); }        
+        TryGetComponent(out anim);
         firstPos = transform.position;
         firstRot = transform.rotation;
+
+        var allRenderers = GetComponentsInChildren<Renderer>();
+        renderers = new Renderer[allRenderers.Length];
+        originalShaders = new Shader[allRenderers.Length][];
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            renderers[i] = allRenderers[i];
+            if (renderers[i].GetComponent<TMPro.TextMeshPro>()) continue;
+            originalShaders[i] = new Shader[renderers[i].materials.Length];
+            for (int j = 0; j < renderers[i].materials.Length; j++)
+            { originalShaders[i][j] = renderers[i].materials[j].shader; }
+        }
+        hoverShader = Shader.Find("Shader Graphs/Shine");
     }
 
     void Start() => hoverHeight = overrideHoverDist == 0 ? TitleScreen.HoverHeight : overrideHoverDist;
@@ -38,6 +53,13 @@ public class TitleElement : MonoBehaviour
         if (hoverRoutine != null)
         { StopCoroutine(hoverRoutine); }
         hoverRoutine = StartCoroutine(Raise(value));
+
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            if (renderers[i].GetComponent<TMPro.TextMeshPro>()) continue;
+            for (int j = 0; j < renderers[i].materials.Length; j++)
+            { renderers[i].materials[j].shader = value ? hoverShader : originalShaders[i][j]; }
+        }
     }
 
     public void Select(bool value)
