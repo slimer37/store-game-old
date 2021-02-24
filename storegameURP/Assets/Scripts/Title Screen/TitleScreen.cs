@@ -30,23 +30,17 @@ public class TitleScreen : MonoBehaviour
 
     void OnSelect()
     {
-        if (hoveredObj && hoveredObj.Focused)
-        {
-            if (Physics.Raycast(CamRay, out RaycastHit hit, Mathf.Infinity, elementMask) && hit.transform == hoveredObj.transform)
-            { hoveredObj.OnChosen.Invoke(); }
-            else
-            {
-                hoveredObj.Select(false);
-                hoveredObj = null;
-            }
-        }
-        else if (hoveredObj)
-        { hoveredObj.Select(true); }
+        if (!hoveredObj) return;
+
+        var rayHit = Physics.Raycast(CamRay, out RaycastHit hit, Mathf.Infinity, elementMask) && hit.transform == hoveredObj.transform;
+        hoveredObj.Select(rayHit);
+        if (!rayHit)
+        { hoveredObj = null; }
     }
 
     void FixedUpdate()
     {
-        if (hoveredObj && hoveredObj.Focused) { return; }
+        if (hoveredObj && hoveredObj.IsFocused) { return; }
 
         if (Physics.Raycast(CamRay, out RaycastHit hit, Mathf.Infinity, elementMask))
         {
