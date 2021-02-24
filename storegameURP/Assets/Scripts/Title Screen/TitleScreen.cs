@@ -32,7 +32,7 @@ public class TitleScreen : MonoBehaviour
     {
         if (hoveredObj && hoveredObj.Focused)
         {
-            if (Physics.Raycast(CamRay, out RaycastHit hit, elementMask) && hit.transform == hoveredObj.transform)
+            if (Physics.Raycast(CamRay, out RaycastHit hit, Mathf.Infinity, elementMask) && hit.transform == hoveredObj.transform)
             { hoveredObj.OnChosen.Invoke(); }
             else
             {
@@ -44,11 +44,11 @@ public class TitleScreen : MonoBehaviour
         { hoveredObj.Select(true); }
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (hoveredObj && hoveredObj.Focused) { return; }
 
-        if (Physics.Raycast(CamRay, out RaycastHit hit, elementMask))
+        if (Physics.Raycast(CamRay, out RaycastHit hit, Mathf.Infinity, elementMask))
         {
             if (!hoveredObj || hoveredObj.transform != hit.transform)
             {
