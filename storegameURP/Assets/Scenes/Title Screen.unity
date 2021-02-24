@@ -3297,6 +3297,7 @@ MonoBehaviour:
   inputFont: {fileID: 12800000, guid: 9932b91d47d75c4409f0cab5ef8bca1a, type: 3}
   outputFontSize: 25
   inputFontSize: 35
+  errorColor: {r: 1, g: 0.23529412, b: 0.23529412, a: 0}
 --- !u!1001 &422284497
 PrefabInstance:
   m_ObjectHideFlags: 0

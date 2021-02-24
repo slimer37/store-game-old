@@ -13,6 +13,7 @@ public class DebugConsole : MonoBehaviour
     [SerializeField] Font inputFont;
     [SerializeField] int outputFontSize;
     [SerializeField] int inputFontSize;
+    [SerializeField, ColorUsage(false)] Color errorColor;
 
     static DebugConsole current;
 
@@ -21,7 +22,7 @@ public class DebugConsole : MonoBehaviour
     Controls controls;
 
     string input = "";
-    string output = "Wizards only, fools.";
+    string output = "<b>Wizards only, fools.</b>";
     Vector2 scrollPosition;
 
     string memory;
@@ -61,7 +62,7 @@ public class DebugConsole : MonoBehaviour
                 try
                 { Append(DebugCommands.Process(input)); }
                 catch (System.Exception e)
-                { Append($"<color=red>Error: {e.Message}</color>"); }
+                { Append($"<color=#{ColorUtility.ToHtmlStringRGB(errorColor)}>Error: {e.Message}</color>"); }
             }
 
             memory = input;
@@ -73,15 +74,14 @@ public class DebugConsole : MonoBehaviour
 
     void OnGUI()
     {
+        GUI.skin.textArea.fontSize = outputFontSize;
+        GUI.skin.textField.fontSize = inputFontSize;
+        GUI.skin.textArea.font = outputFont;
+        GUI.skin.textField.font = inputFont;
+        GUI.skin.textArea.richText = true;
+
         if (open)
         {
-            GUI.skin.textArea.fontSize = outputFontSize;
-            GUI.skin.textField.fontSize = inputFontSize;
-            GUI.skin.textArea.font = outputFont;
-            GUI.skin.textField.font = inputFont;
-
-            GUI.skin.textArea.richText = true;
-
             input = GUILayout.TextField(input,
                 GUILayout.Width(Screen.width), GUILayout.MinHeight(20), GUILayout.ExpandHeight(true));
 
