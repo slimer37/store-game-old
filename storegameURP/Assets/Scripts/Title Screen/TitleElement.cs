@@ -41,7 +41,11 @@ public class TitleElement : MonoBehaviour
 
     public void Select(bool rayHit)
     {
-        if (rayHit && IsFocused) return;
+        if (rayHit && IsFocused)
+        {
+            OnChosen.Invoke();
+            return;
+        }
 
         StopAllCoroutines();
         if (rayHit && !IsFocused)
