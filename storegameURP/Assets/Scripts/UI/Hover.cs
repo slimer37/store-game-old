@@ -45,7 +45,7 @@ public class Hover : MonoBehaviour
 
     public void SendMessageToHovered(string message)
     {
-        if (hoveredTransform)
+        if (hoveredTransform && hoveredTransform.gameObject.activeSelf)
         { hoveredTransform.SendMessage(message); }
     }
 
@@ -64,7 +64,7 @@ public class Hover : MonoBehaviour
         SendMessageToHovered("OnHover");
 
         // Do nothing if the hovered object hasn't changed.
-        if (hoveredTransform && hoveredObj == hoveredTransform) return;
+        if (hoveredTransform && hoveredTransform.gameObject.activeSelf && hoveredObj == hoveredTransform) return;
 
         hoveredTransform = hoveredObj;
     }
