@@ -30,22 +30,22 @@ public class Register : Interactable
     public static Register GetClosestRegister(Vector3 origin)
     {
         float closestDist = 0;
-        int closestReg = 0;
-        for (int i = 0; i < allRegisters.Count; i++)
+        Register closestReg = null;
+        foreach (var reg in allRegisters)
         {
-            var registerDist = Vector3.Distance(origin, allRegisters[i].transform.position);
-            if (registerDist < closestDist)
+            var registerDist = Vector3.Distance(origin, reg.transform.position);
+            if (!closestReg || registerDist < closestDist)
             {
                 closestDist = registerDist;
-                closestReg = i;
+                closestReg = reg;
             }
         }
-        return allRegisters[closestReg];
+        return closestReg;
     }
 
     void Awake()
     {
-        if (scanner = GetComponentInChildren<Scanner>())
+        if (TryGetComponent(out scanner))
         { scanner.onScan += EnterItem; }
     }
 
