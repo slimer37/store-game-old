@@ -61,11 +61,12 @@ public class Hover : MonoBehaviour
 
     void Over(Transform hoveredObj)
     {
+        SendMessageToHovered("OnHover");
+
         // Do nothing if the hovered object hasn't changed.
         if (hoveredTransform && hoveredObj == hoveredTransform) return;
 
         hoveredTransform = hoveredObj;
-        SendMessageToHovered("OnHover");
     }
 
     void ResetIcon(bool setHoveredNull = true)
