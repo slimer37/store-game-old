@@ -30,6 +30,7 @@ public class Interaction : MonoBehaviour
 
     void Update()
     {
+        if (held) return;
         Ray ray = Cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
         Hover.Current.Cast(ray, reach, interactablesMask);
     }
@@ -50,8 +51,6 @@ public class Interaction : MonoBehaviour
 
     public void Grab(Pickuppable toPickup)
     {
-        Hover.Current.enabled = toPickup != null;
-
         var temp = held;
         held = toPickup;
 
