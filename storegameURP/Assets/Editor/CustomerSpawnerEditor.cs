@@ -11,11 +11,13 @@ public class CustomerSpawnerEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        // On the instant the toggle changes, update visuals.
-        if (pressed != (pressed = GUILayout.Toggle(pressed, "Edit Points", "Button")))
-        { EditorUtility.SetDirty(target); }
+        EditorGUI.BeginChangeCheck();
 
+        pressed = GUILayout.Toggle(pressed, "Edit Points", "Button");
         base.OnInspectorGUI();
+
+        if (EditorGUI.EndChangeCheck())
+        { SceneView.RepaintAll(); }
     }
 
     [DrawGizmo(GizmoType.Selected | GizmoType.Active)]

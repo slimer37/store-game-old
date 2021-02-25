@@ -4,13 +4,14 @@ using UnityEditor;
 [CustomEditor(typeof(Tool), true)]
 public class ToolEditor : Editor
 {
-    private static Vector3 selectedHoldPosition = Vector3.one;
-    private static Quaternion selectedHoldRotation = Quaternion.identity;
+    private static Vector3 holdPos = Vector3.one;
+    private static Quaternion holdRot = Quaternion.identity;
     private static Mesh mesh;
     private static bool preview;
 
     public override void OnInspectorGUI()
     {
+        EditorGUI.BeginChangeCheck();
         base.OnInspectorGUI();
 
         if (!((Tool)target).GetComponent<MeshFilter>())
@@ -21,14 +22,12 @@ public class ToolEditor : Editor
 
         mesh = ((Tool)target).GetComponent<MeshFilter>().sharedMesh;
 
-        var rot = Quaternion.Euler(serializedObject.FindProperty("holdRotation").vector3Value);
-        var pos = serializedObject.FindProperty("holdPosition").vector3Value;
-        var prev = GUILayout.Toggle(preview, "Preview", "Button");
+        holdRot = Quaternion.Euler(serializedObject.FindProperty("holdRotation").vector3Value);
+        holdPos = serializedObject.FindProperty("holdPosition").vector3Value;
+        preview = GUILayout.Toggle(preview, "Preview", "Button");
 
         // Update gizmos when pos/rot values or preview bool updates.
-        if (selectedHoldRotation != (selectedHoldRotation = rot)
-            || selectedHoldPosition != (selectedHoldPosition = pos)
-            || preview != (preview = prev))
+        if (EditorGUI.EndChangeCheck())
         { EditorUtility.SetDirty(target); }
     }
 
@@ -39,7 +38,7 @@ public class ToolEditor : Editor
         {
             Gizmos.color = Color.white;
             Transform parent = Camera.main.transform.parent;
-            Gizmos.DrawMesh(mesh, parent.TransformPoint(selectedHoldPosition), parent.rotation * selectedHoldRotation);
+            Gizmos.DrawMesh(mesh, parent.TransformPoint(holdPos), parent.rotation * holdRot);
         }
     }
 }

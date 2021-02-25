@@ -31,7 +31,7 @@ public class RegisterEditor : Editor
                 if (GUILayout.Button("Cycle Positions") || positions.Length == 0)
                 {
                     positions = QueuePositioning.GenerateQueue(reg, lineLength);
-                    EditorUtility.SetDirty(reg);
+                    SceneView.RepaintAll();
                 }
             }
 

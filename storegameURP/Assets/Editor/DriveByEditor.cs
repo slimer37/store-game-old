@@ -14,6 +14,8 @@ public class DriveByEditor : Editor
 
     public override void OnInspectorGUI()
     {
+        EditorGUI.BeginChangeCheck();
+
         if (targets.Length > 1)
         {
             EditorGUILayout.HelpBox("Can only edit nodes of one vehicle at a time.", MessageType.Warning);
@@ -25,20 +27,12 @@ public class DriveByEditor : Editor
         EditorGUILayout.BeginHorizontal();
 
         if (!editing) GUILayout.FlexibleSpace();
-        if (editing != GUILayout.Toggle(editing, "Edit Nodes", "Button"))
-        {
-            EditorUtility.SetDirty(target);
-            editing = !editing;
-        }
+        editing = GUILayout.Toggle(editing, "Edit Nodes", "Button");
         if (!editing) GUILayout.FlexibleSpace();
 
         if (editing)
         {
-            if (localHandles != GUILayout.Toggle(localHandles, "Align Handles to Path"))
-            {
-                localHandles = !localHandles;
-                EditorUtility.SetDirty(target);
-            }
+            localHandles = GUILayout.Toggle(localHandles, "Align Handles to Path");
 
             EditorGUILayout.EndHorizontal();
             EditorGUILayout.BeginHorizontal();
@@ -86,6 +80,9 @@ public class DriveByEditor : Editor
         GUILayout.Space(10);
 
         base.OnInspectorGUI();
+
+        if (EditorGUI.EndChangeCheck())
+        { SceneView.RepaintAll(); }
     }
 
     void OnSceneGUI()
@@ -101,11 +98,11 @@ public class DriveByEditor : Editor
 
         for (int i = 0; i < nodes.arraySize; i++)
         {
-            Quaternion rot;
+            Quaternion rot = Quaternion.identity;
+
             if (localHandles)
             { rot = Quaternion.LookRotation(i < nodes.arraySize - 1 ? (points[i + 1] - points[i]) : (points[i] - points[i - 1])); }
-            else
-            { rot = Quaternion.identity; }
+
             nodes.GetArrayElementAtIndex(i).vector3Value = Handles.PositionHandle(points[i], rot);
             Handles.Label(points[i], "Element " + i);
         }
