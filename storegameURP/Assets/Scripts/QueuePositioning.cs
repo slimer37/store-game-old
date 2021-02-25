@@ -30,7 +30,7 @@ public static class QueuePositioning
             positions[i] = positions[i - 1] + forward;
 
             // Check for obstacles.
-            if (OverlapSphere(positions[i]) || BlockedFrom(positions[i - 1], positions[i]))
+            if (OverlapSphere(positions[i]) || IsPathObstructed(positions[i - 1], positions[i]))
             {
                 Vector3 pos = positions[i];
                 positions[i] = FindPositionAround(positions[i - 1], positions[i]);
@@ -50,7 +50,7 @@ public static class QueuePositioning
         return Physics.OverlapSphereNonAlloc(pos, CheckRadius, collided, ~LayerMask.GetMask("Player")) > 0;
     }
 
-    static bool BlockedFrom(Vector3 from, Vector3 to)
+    static bool IsPathObstructed(Vector3 from, Vector3 to)
     {
         Vector3 delta = (to - from).normalized;
         return Physics.Raycast(from, delta, IndividualOffset, ~LayerMask.GetMask("Player"));
@@ -74,7 +74,7 @@ public static class QueuePositioning
             for (int angle = 0; angle <= MaxCheckAngle / 2; angle += CheckInterval)
             {
                 attempt = lastPosition + Quaternion.Euler(0, multiplier * angle, 0) * forward;
-                if (!OverlapSphere(attempt) && !BlockedFrom(lastPosition, attempt)) return true;
+                if (!OverlapSphere(attempt) && !IsPathObstructed(lastPosition, attempt)) return true;
             }
             return false;
         }
