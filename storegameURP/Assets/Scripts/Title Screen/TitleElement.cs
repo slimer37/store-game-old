@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(BoxCollider))]
 public class TitleElement : MonoBehaviour
 {
     public bool IsFocused { get; private set; } = false;
@@ -15,8 +15,10 @@ public class TitleElement : MonoBehaviour
     [SerializeField] float overrideHoverDist;
 
     Vector3 firstPos;
+    Vector3 colPos;
     Quaternion firstRot;
 
+    BoxCollider col;
     Animator anim;
     bool animating = false;
     Coroutine raiseRoutine = null;
@@ -26,6 +28,8 @@ public class TitleElement : MonoBehaviour
     void Awake()
     {
         TryGetComponent(out anim);
+        TryGetComponent(out col);
+        colPos = transform.TransformPoint(col.center);
         firstPos = transform.position;
         firstRot = transform.rotation;
     }
@@ -63,8 +67,14 @@ public class TitleElement : MonoBehaviour
     {
         if (force || !IsFocused && !animating)
         {
+            var startPos = transform.position;
             Vector3 end = firstPos + Vector3.up * hoverHeight * (raise ? 1 : 0);
-            yield return Tweens.LerpLocation(transform, end, 1 / TitleScreen.AnimSpeed);
+            yield return Tweens.LerpValue(1 / TitleScreen.AnimSpeed, t => {
+                transform.position = Vector3.Lerp(startPos, end, t);
+
+                // Maintain collider position.
+                col.center = transform.InverseTransformPoint(colPos);
+            });
         }
     }
 
