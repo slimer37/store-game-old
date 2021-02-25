@@ -57,6 +57,7 @@ MonoBehaviour:
   pendingText: Customer pending!
   screenSideText: {fileID: 4968799216063478801}
   particles: {fileID: 6434127089009973185}
+  scanner: {fileID: 4968799216005298552}
   itemDrop: {fileID: 4968799217405167225}
 --- !u!65 &704836121300862907
 BoxCollider:

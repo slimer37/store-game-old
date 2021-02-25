@@ -11,6 +11,7 @@ public class Register : Interactable
     [SerializeField] ParticleSystem particles;
 
     [Header("Other")]
+    public Scanner scanner;
     [SerializeField] Transform itemDrop;
 
     static List<Register> allRegisters = new List<Register>();
@@ -19,7 +20,6 @@ public class Register : Interactable
 
     Customer currentCustomer = null;
     List<Product> receipt = new List<Product>();
-    Scanner scanner;
 
     bool CustomerPending => queue.Count > 0 && !currentCustomer && queue[0].ReachedRegister;
 
@@ -45,7 +45,7 @@ public class Register : Interactable
 
     void Awake()
     {
-        if (TryGetComponent(out scanner))
+        if (scanner)
         { scanner.onScan += EnterItem; }
     }
 

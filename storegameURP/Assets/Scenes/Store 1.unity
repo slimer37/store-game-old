@@ -20150,10 +20150,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Register
       objectReference: {fileID: 0}
-    - target: {fileID: 704836121300862905, guid: 36e0d7083a41d9e4089024e83cbff8e2, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
-      objectReference: {fileID: 0}
     - target: {fileID: 7386320856377506883, guid: 36e0d7083a41d9e4089024e83cbff8e2, type: 3}
       propertyPath: m_TagString
       value: Untagged
