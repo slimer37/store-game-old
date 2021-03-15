@@ -18719,16 +18719,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072cf9c41fe255741980e0d45c070dfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactable: 1
-  anchorToCamera: 1
-  holdPosition: {x: 0, y: -0.7, z: 0.3}
-  holdRotation: {x: 0, y: 0, z: 0}
-  cameraAngleMultiplier: 0
-  reach: 8
-  particles: {fileID: 523361110}
-  anim: {fileID: 860498703}
-  useState: SqueezeHandle
-  useStopState: ReleaseHandle
 --- !u!1 &864287957
 GameObject:
   m_ObjectHideFlags: 0

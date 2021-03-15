@@ -9,42 +9,71 @@ public class Monitor : Interactable
     [SerializeField] TextMeshPro channelNumText;
     [SerializeField] TextMeshPro angleText;
     [SerializeField] bool enableNightVision;
+    [SerializeField, Min(1)] int staticTextureCount;
+
+    static Texture2D[] staticTextures;
+    bool isShowingStatic = false;
 
     int channel = 0;
 
     Surveil CurrentCam => Surveil.AllCameras[channel];
 
-    void Start()
+    void Awake()
     {
-        channelNumText.gameObject.SetActive(interactable);
-        angleText.gameObject.SetActive(interactable);
-        UpdateScreen();
-    }
+        if (staticTextures != null) return;
 
-    void ChangeChannel(int amount)
-    {
-        channel = (Surveil.AllCameras.Count + channel + amount) % Surveil.AllCameras.Count;
-        UpdateScreen();
+        staticTextures = new Texture2D[staticTextureCount];
+        for (int i = 0; i < staticTextureCount; i++)
+        {
+            staticTextures[i] = new Texture2D(200, 150);
+            for (int x = 0; x < staticTextures[i].width; x++)
+            {
+                for (int y = 0; y < staticTextures[i].height; y++)
+                {
+                    var value = Random.value > 0.5f ? 0.75f : 0;
+                    staticTextures[i].SetPixel(x, y, new Color(value, value, value));
+                }
+            }
+            staticTextures[i].Apply();
+        }
     }
 
     public override void Interact() => ChangeChannel(1);
     public override void SecondaryInteract() => ChangeChannel(-1);
 
-    void Update()
+    void Start()
     {
-        angleText.text = $"{CurrentCam.transform.localEulerAngles.y:000}°";
-        channelNumText.text = $"CH {channel + 1}" + (enableNightVision ? $"<b><size=50%>NV:<color={(CurrentCam.NightVision ? "green>ON" : "yellow>OFF")}" : "");
+        TurnOnScreen(interactable);
+        ChangeChannel(0);
+    }
+
+    void ChangeChannel(int amount)
+    {
+        CancelInvoke();
+        channel = (Surveil.AllCameras.Count + channel + amount) % Surveil.AllCameras.Count;
+
+        isShowingStatic = true;
+        Invoke(nameof(UpdateScreen), 0.25f);
     }
 
     void UpdateScreen()
     {
-        Texture texture = interactable ? CurrentCam.Texture : null;
-        rend.material.SetTexture("_BaseMap", texture);
-        rend.material.SetTexture("_EmissionMap", texture);
+        isShowingStatic = false;
+        SetScreenTexture(interactable ? CurrentCam.Texture : null);
+    }
 
-        Color color = interactable ? Color.white : Color.black;
+    void TurnOnScreen(bool on)
+    {
+        var color = on ? Color.white : Color.black;
         rend.material.SetColor("_BaseColor", color);
         rend.material.SetColor("_EmissionColor", color);
+        if (on) ChangeChannel(0);
+    }
+
+    void SetScreenTexture(Texture texture)
+    {
+        rend.material.SetTexture("_BaseMap", texture);
+        rend.material.SetTexture("_EmissionMap", texture);
     }
 
     public void ToggleNightVision()
@@ -56,8 +85,23 @@ public class Monitor : Interactable
     public void ToggleOn()
     {
         interactable = !interactable;
-        channelNumText.gameObject.SetActive(interactable);
-        angleText.gameObject.SetActive(interactable);
-        UpdateScreen();
+        TurnOnScreen(interactable);
+    }
+
+    void Update()
+    {
+        if (isShowingStatic)
+        { SetScreenTexture(staticTextures[Random.Range(0, staticTextureCount)]); }
+
+        if (interactable)
+        {
+            angleText.text = $"{CurrentCam.transform.localEulerAngles.y:000}°";
+            channelNumText.text = $"CH {channel + 1}" + (enableNightVision ? $"<b><size=50%> NV:<color={(CurrentCam.NightVision ? "green>ON" : "yellow>OFF")}" : "");
+        }
+        else
+        {
+            angleText.text = "";
+            channelNumText.text = "";
+        }
     }
 }
