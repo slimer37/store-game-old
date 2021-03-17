@@ -3,40 +3,36 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class EntranceTrigger : MonoBehaviour
 {
-    [SerializeField] bool nonRestrictive;
-    [SerializeField] bool autoClose;
     [SerializeField] Openable entrance;
+    [SerializeField] bool nonRestrictive;
+    [SerializeField] bool playerCanInteract = true;
+    [SerializeField] bool autoClose;
+    [SerializeField, Min(0.1f)] float closeTime = 0.25f;
 
-    bool queueClose = false;
+    float timeSinceDetection = 0;
 
     void OnTriggerStay(Collider other)
     {
         if (nonRestrictive && (other.attachedRigidbody || other.CompareTag("Player")) || other.CompareTag("Customer"))
         {
             entrance.SetInteractable(false);
+            timeSinceDetection = 0;
 
             if (!entrance.Open)
-            {
-                entrance.Interact();
-                queueClose = false;
-            }
-        }
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (nonRestrictive && (other.attachedRigidbody || other.CompareTag("Player")) || other.CompareTag("Customer"))
-        {
-            entrance.SetInteractable(!nonRestrictive);
-
-            if (autoClose)
-            { queueClose = true; }
+            { entrance.Interact(); }
         }
     }
 
     void Update()
     {
-        if (entrance.Open && queueClose)
-        { entrance.Interact(); }
+        if (autoClose && entrance.Open && timeSinceDetection > closeTime)
+        {
+            if (playerCanInteract)
+            { entrance.SetInteractable(true); }
+
+            entrance.Interact();
+        }
+        else
+        { timeSinceDetection += Time.deltaTime; }
     }
 }
