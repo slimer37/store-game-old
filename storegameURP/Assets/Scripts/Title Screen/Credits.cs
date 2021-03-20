@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class Credits : Menu
 {
-    private Vector2 originalPivot;
-    private Animator creditsAnim;
-    private CanvasGroup group;
+    Vector2 originalPivot;
+    Animator creditsAnim;
+    CanvasGroup group;
 
     protected override void Awake()
     {
@@ -14,10 +14,12 @@ public class Credits : Menu
         group = GetComponent<CanvasGroup>();
 
         base.Awake();
-        MenuActions.Select.performed += _ => Open(false);
+        MenuActions.Select.performed += Exit;
     }
 
-    public override void Open(bool value)
+    public override void OnAttemptOpen(bool value) => OnOpen(value);
+
+    protected override void OnOpen(bool value)
     {
         if (value)
         {

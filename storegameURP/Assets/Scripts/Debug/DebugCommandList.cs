@@ -5,45 +5,45 @@ using UnityEngine.SceneManagement;
 
 public static class DebugCommands
 {
-    private delegate string CommandFunction(string input);
-
-    private struct Command
+    struct Command
     {
         public string keyword;
         public string param;
         public string desc;
-        public CommandFunction function;
         public readonly string HelpString => Colored("yellow", keyword) + (param != "" ? Colored("orange", $" [{param}]") : "") + " - " + desc;
 
-        public Command(string keyword, string desc, CommandFunction function, string param = "")
+        readonly Func<string, string> function;
+        readonly bool paramRequired;
+
+        public Command(string keyword, string desc, string param, bool paramRequired, Func<string, string> function)
         {
             this.keyword = keyword;
-            this.param = param;
             this.desc = desc;
+            this.param = param;
+            this.paramRequired = !string.IsNullOrEmpty(param) && paramRequired;
             this.function = function;
+        }
+
+        public Command(string keyword, string desc, Func<string, string> function)
+        {
+            this.keyword = keyword;
+            this.desc = desc;
+            param = "";
+            paramRequired = false;
+            this.function = function;
+        }
+
+        public string Execute(string arg)
+        {
+            if (paramRequired && string.IsNullOrWhiteSpace(arg))
+            { throw new Exception($"'{keyword}' requires at least one argument. (Consult the help command.)"); }
+            return function(arg);
         }
     }
 
-    private static string keyword;
+    static string keyword;
 
-    private static readonly Command[] commands =
-    {
-        new Command("allthings", "Lists all objects in the scene.", _ => GetObjectList()),
-        new Command("childrenof", "Lists an object's children.", ChildrenOf, "object name"),
-        new Command("clear", "Clears the console output.", _ => ""),
-        new Command("destroy", "Destroys an object.", DestroyObject, "object name"),
-        new Command("help", "Lists all commands.", _ => GetHelpString()),
-        new Command("reload", "Reloads the scene.", _ => ReloadScene()),
-        new Command("topthings", "Lists all top-level objects in the scene.", _ => GetParents()),
-    };
-
-    private static void ArgCheck(string arg)
-    {
-        if (arg == "")
-        { throw new Exception($"'{keyword}' requires at least one argument. (Consult the help command.)"); }
-    }
-
-    private static string Colored(string color, string text) => $"<color={color}>{text}</color>";
+    static string Colored(string color, string text) => $"<color={color}>{text}</color>";
 
     public static string Process(string input)
     {
@@ -52,83 +52,85 @@ public static class DebugCommands
         keyword = words[0];
         words.RemoveAt(0);
         string[] args = words.ToArray();
-        string singleArg = string.Join(" ", args);
+        string combinedArgs = string.Join(" ", args);
 
         foreach (var command in commands)
         {
             if (keyword == command.keyword)
-            { return command.function(singleArg); }
+            { return command.Execute(combinedArgs); }
         }
+
         throw new Exception($"The command '{keyword}' does not exist.");
     }
 
-    public static string GetHelpString()
+    static readonly Command[] commands =
     {
-        string fullHelpString = "";
-        foreach (var command in commands)
-        { fullHelpString += command.HelpString + "\n"; }
+        new Command("allthings", "Lists all objects in the scene.", _ =>
+            {
+                string list = "";
+                foreach (var go in GameObject.FindObjectsOfType<GameObject>())
+                { list += ", " + go.name; }
+                return Colored("yellow", "Found: ") + list.Substring(2);
+            }),
 
-        // Ditch the final newline.
-        return fullHelpString.Substring(0, fullHelpString.Length - 1);
-    }
+        new Command("childrenof", "Lists an object's children.", "object name", true, objName =>
+            {
+                if (!GameObject.Find(objName))
+                { throw new Exception($"'{objName}' not found."); }
 
-    public static string GetObjectList()
-    {
-        string list = "";
-        foreach (var go in GameObject.FindObjectsOfType<GameObject>())
-        { list += ", " + go.name; }
-        return Colored("yellow", "Found: ") + list.Substring(2);
-    }
+                Transform[] hierarchy = GameObject.Find(objName).transform.GetComponentsInChildren<Transform>();
 
-    public static string GetParents()
-    {
-        string list = "";
-        foreach (var go in GameObject.FindObjectsOfType<GameObject>())
-        {
-            if (go.transform.parent == null)
-            { list += ", " + go.name; }
-        }
-        return Colored("yellow", "Parents: ") + list.Substring(2);
-    }
+                if (hierarchy.Length == 1)
+                { return Colored("yellow", $"'{objName}' has no children."); }
 
-    public static string ChildrenOf(string objName)
-    {
-        ArgCheck(objName);
+                string list = "";
 
-        if (!GameObject.Find(objName))
-        { throw new Exception($"'{objName}' not found."); }
+                for (int i = 1; i < hierarchy.Length; i++)
+                { list += ", " + hierarchy[i].name; }
+                return Colored("yellow", $"Children of '{objName}': ") + list.Substring(2);
+            }),
 
-        Transform[] hierarchy = GameObject.Find(objName).transform.GetComponentsInChildren<Transform>();
+        new Command("clear", "Clears the console output.", _ => ""),
 
-        if (hierarchy.Length == 1)
-        { return Colored("yellow", $"'{objName}' has no children."); }
+        new Command("destroy", "Destroys an object.", "object name", true, objName =>
+            {
+                if (!GameObject.Find(objName))
+                { throw new Exception($"'{objName}' not found."); }
+                else if (objName == "Console")
+                { return Colored("yellow", "You can't destroy the console!"); }
+                else
+                {
+                    UnityEngine.Object.Destroy(GameObject.Find(objName));
+                    return $"Destroyed '{objName}'.";
+                }
+            }),
 
-        string list = "";
+        new Command( "help", "Lists all commands.", _ =>
+            {
+                string fullHelpString = "";
+                foreach (var command in commands)
+                { fullHelpString += command.HelpString + "\n"; }
 
-        for (int i = 1; i < hierarchy.Length; i++)
-        { list += ", " + hierarchy[i].name; }
-        return Colored("yellow", $"Children of '{objName}': ") + list.Substring(2);
-    }
+                // Ditch the final newline.
+                return fullHelpString.Substring(0, fullHelpString.Length - 1);
+            }),
 
-    public static string DestroyObject(string objName)
-    {
-        ArgCheck(objName);
+        new Command( "reload", "Reloads the scene.", _ =>
+            {
+                Scene activeScene = SceneManager.GetActiveScene();
+                SceneManager.LoadScene(activeScene.buildIndex);
+                return $"Successfully reloaded scene '{activeScene.name}'.";
+            }),
 
-        if (!GameObject.Find(objName))
-        { throw new Exception($"'{objName}' not found."); }
-        else if (objName == "Console")
-        { return Colored("yellow", "You can't destroy the console!"); }
-        else
-        {
-            UnityEngine.Object.Destroy(GameObject.Find(objName));
-            return $"Destroyed '{objName}'.";
-        }
-    }
-
-    public static string ReloadScene()
-    {
-        Scene activeScene = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(activeScene.buildIndex);
-        return $"Successfully reloaded scene '{activeScene.name}'.";
-    }
+        new Command("topthings", "Lists all top-level objects in the scene.", _ =>
+            {
+                string list = "";
+                foreach (var go in GameObject.FindObjectsOfType<GameObject>())
+                {
+                    if (go.transform.parent == null)
+                    { list += ", " + go.name; }
+                }
+                return Colored("yellow", "Parents: ") + list.Substring(2);
+            }),
+    };
 }

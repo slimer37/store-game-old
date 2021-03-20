@@ -6,13 +6,11 @@ public class Product : Pickuppable
 {
     [field: SerializeField] public ProductInfo Info { get; set; }
 
-    [SerializeField] private Material transparentMat;
+    [SerializeField] Material transparentMat;
 
     public static List<Product> AllProducts { get; private set; } = new List<Product>();
 
-    public static System.Action OnInventoryEmpty;
-
-    private Renderer rend;
+    Renderer rend;
     public bool Marked;
 
     public static List<Product> ProductsAvailable
@@ -45,19 +43,12 @@ public class Product : Pickuppable
     {
         base.Awake();
         rend = GetComponent<Renderer>();
-        Material temp = new Material(transparentMat);
-        temp.color = new Color(rend.material.color.a, rend.material.color.g, rend.material.color.b, 1);
-        temp.mainTexture = rend.material.mainTexture;
-        rend.material = temp;
+        transparentMat.color = rend.material.color;
+        transparentMat.mainTexture = rend.material.mainTexture;
         AllProducts.Add(this);
     }
 
-    void OnDestroy()
-    {
-        AllProducts.Remove(this);
-        if (AllProducts.Count == 0)
-        { OnInventoryEmpty?.Invoke(); }
-    }
+    void OnDestroy() => AllProducts.Remove(this);
 
     public IEnumerator FadeAndMove(Vector3 from, Vector3 to, bool value)
     {
@@ -68,7 +59,10 @@ public class Product : Pickuppable
         float finalAlpha = value ? 0 : 1;
 
         if (value)
-        { to.y = transform.position.y; }
+        {
+            to.y = transform.position.y;
+            rend.material = transparentMat;
+        }
 
         yield return Tweens.LerpValue(1, t =>
         {
@@ -81,8 +75,8 @@ public class Product : Pickuppable
 
         void ResetRb()
         {
-            Rb.velocity = Vector3.zero;
-            Rb.angularVelocity = Vector3.zero;
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;
         }
 
         void SetInteractable(bool condition)

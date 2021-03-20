@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class QuitSign : MonoBehaviour
 {
-    [SerializeField] private string activatedState;
-    [SerializeField] private Image fadePanel;
-    [SerializeField] private float fadeDuration;
+    [SerializeField] string activatedState;
+    [SerializeField] Image fadePanel;
+    [SerializeField] float fadeDuration;
 
-    private Animator anim;
+    Animator anim;
 
     void Awake() => anim = GetComponent<Animator>();
 

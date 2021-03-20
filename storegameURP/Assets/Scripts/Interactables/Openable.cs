@@ -4,20 +4,20 @@ using UnityEngine.AI;
 
 public class Openable : Interactable
 {
-    protected override CursorIcon.Icon HoverIcon
+    protected override Hover.Icon HoverIcon
     {
-        get => animating ? CursorIcon.Icon.Invalid :
-            open ? CursorIcon.Icon.Push : CursorIcon.Icon.Pull;
+        get => animating ? Hover.Icon.Invalid :
+            Open ? Hover.Icon.Push : Hover.Icon.Pull;
     }
 
-    [SerializeField] private EntranceTrigger trigger;
-    [SerializeField] private string openState;
-    [SerializeField] private string closeState;
+    [SerializeField] string openState;
+    [SerializeField] string closeState;
 
-    private NavMeshObstacle obstacle;
-    private Animator anim;
-    private bool open = false;
-    private bool animating = false;
+    NavMeshObstacle obstacle;
+    Animator anim;
+    bool animating = false;
+
+    public bool Open { get; private set; } = false;
 
     void Awake()
     {
@@ -25,20 +25,6 @@ public class Openable : Interactable
 
         if (GetComponent<NavMeshObstacle>())
         { obstacle = GetComponent<NavMeshObstacle>(); }
-
-        if (trigger)
-        {
-            trigger.OnCustomerTrigger += trigger =>
-            {
-                // Open door and prevent player from closing while customer is in trigger.
-                if (!animating)
-                {
-                    interactable = !trigger;
-                    if (trigger && !open)
-                    { StartCoroutine(Animate()); }
-                }
-            };
-        }
     }
 
     public override void Interact()
@@ -47,23 +33,25 @@ public class Openable : Interactable
         StartCoroutine(Animate());
     }
 
+    public void SetInteractable(bool value) => interactable = value;
+
     IEnumerator Animate()
     {
-        if (obstacle && open)
+        if (obstacle && Open)
         { obstacle.enabled = false; }
 
         animating = true;
 
-        anim.Play(open ? closeState : openState);
+        anim.Play(Open ? closeState : openState);
         yield return null;
 
         AnimatorStateInfo info = anim.GetCurrentAnimatorStateInfo(0);
         yield return new WaitForSeconds(info.length);
 
-        open = !open;
+        Open = !Open;
         animating = false;
 
-        if (obstacle && open)
+        if (obstacle && Open)
         { obstacle.enabled = true; }
     }
 }

@@ -1,50 +1,51 @@
 using UnityEngine;
-using UnityEngine.UI;
+using System.Collections;
 using TMPro;
 
-public class CustomInspect : MonoBehaviour
+public class CustomInspect : Menu
 {
-    [SerializeField] private float inspectFadeDuration;
-    [SerializeField] private CanvasGroup textGroup;
-    [SerializeField] private TextMeshProUGUI headerText;
-    [SerializeField] private TextMeshProUGUI bodyText;
-    [SerializeField] private Image image;
+    [SerializeField] float inspectFadeDuration;
+    [SerializeField] CanvasGroup textGroup;
+    [SerializeField] TextMeshProUGUI headerText;
+    [SerializeField] TextMeshProUGUI bodyText;
 
-    [ContextMenu("Reset Alphas")]
-    void ResetAlphas()
+    protected override bool Open => textGroup.alpha == 1;
+
+    protected override void Awake()
     {
-        textGroup.alpha = 0;
-        Color imageColor = image.color;
-        imageColor.a = 0;
-        image.color = imageColor;
+        base.Awake();
+        MenuActions.Exit.performed -= Exit;
+        MenuActions.Exit.performed += _ => Hide();
     }
 
     public void ShowCustomText(string header, string body, Color headerColor, Color bodyColor)
     {
+        if (Open || MenuManager.Current.MenuOpen) return;
+
         headerText.text = header;
         headerText.color = headerColor;
         bodyText.text = body;
         bodyText.color = bodyColor;
-        StartCoroutine(Tweens.CrossFadeGroup(textGroup, 1, inspectFadeDuration));
+        StartCoroutine(FadeText(true));
+
+        // Immediately bar other menus from opening when fade starts.
+        MenuManager.Current.OpenMenu(true);
     }
 
-    public void ShowSprite(Sprite sprite, Vector2? preferredDimensions)
+    IEnumerator FadeText(bool value)
     {
-        if (preferredDimensions != null)
-        { image.rectTransform.sizeDelta = (Vector2)preferredDimensions; }
-        image.sprite = sprite;
-        StartCoroutine(Tweens.CrossFadeImage(image, 1, inspectFadeDuration));
+        yield return Tweens.CrossFadeGroup(textGroup, value ? 1 : 0, inspectFadeDuration);
+
+        // Allow other menus when completely faded out.
+        if (!value)
+        { MenuManager.Current.OpenMenu(false); }
     }
 
-    public bool Hide()
+    public void Hide()
     {
-        if (textGroup.alpha == 1 || image.color.a == 1)
-        {
-            StopAllCoroutines();
-            StartCoroutine(Tweens.CrossFadeGroup(textGroup, 0, inspectFadeDuration));
-            StartCoroutine(Tweens.CrossFadeImage(image, 0, inspectFadeDuration));
-            return true;
-        }
-        return false;
+        if (!Open || !MenuManager.Current.MenuOpen) return;
+
+        StopAllCoroutines();
+        StartCoroutine(FadeText(false));
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class MeshSwitcher : MonoBehaviour
 {
-    [SerializeField] private Mesh[] meshOptions = new Mesh[] { };
+    [SerializeField] Mesh[] meshOptions = new Mesh[] { };
 
     void Awake()
     {

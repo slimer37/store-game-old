@@ -1,10 +1,11 @@
 using UnityEngine;
+using TMPro;
 
 [RequireComponent(typeof(Renderer))]
 public class FeatureRandomizer : MonoBehaviour
 {
     [System.Serializable]
-    private struct ColorRandomizer
+    struct ColorRandomizer
     {
         public int matIndex;
         public Color[] colorSet;
@@ -12,21 +13,41 @@ public class FeatureRandomizer : MonoBehaviour
     }
 
     [System.Serializable]
-    private struct ExtraRenderer
+    struct ExtraRenderer
     {
         public Renderer renderer;
         public int matIndex;
     }
 
-    [SerializeField] private ColorRandomizer[] colorRandomizers = new ColorRandomizer[] { };
-    [SerializeField, Range(0, 100)] private int appearanceChance = 100;
+    [System.Serializable]
+    struct TextRandomizer
+    {
+        public TextMeshPro[] textObjects;
+        [TextArea(0, 4)] public string[] textSet;
+        public string prefix;
+        public string suffix;
+    }
+
+    [SerializeField] ColorRandomizer[] colorRandomizers = new ColorRandomizer[] { };
+    [SerializeField] TextRandomizer[] textRandomizers = new TextRandomizer[] { };
+    [SerializeField, Range(0, 100)] int appearanceChance = 100;
+
+    Renderer rend;
 
     void Awake()
     {
-        if (Random.Range(0, 101) > appearanceChance)
-        { Destroy(gameObject); }
+        TryGetComponent(out rend);
+        Randomize();
+    }
 
-        var rend = GetComponent<Renderer>();
+    public void Randomize()
+    {
+        if (Random.Range(0, 101) > appearanceChance)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
         foreach (var colorRand in colorRandomizers)
         {
             Color color = colorRand.colorSet[Random.Range(0, colorRand.colorSet.Length)];
@@ -34,6 +55,13 @@ public class FeatureRandomizer : MonoBehaviour
 
             foreach (var extraRend in colorRand.extraRenderers)
             { extraRend.renderer.materials[extraRend.matIndex].color = color; }
+        }
+
+        foreach (var textRand in textRandomizers)
+        {
+            var chosenText = textRand.textSet[Random.Range(0, textRand.textSet.Length)];
+            foreach (var text in textRand.textObjects)
+            { text.text = textRand.prefix + chosenText + textRand.suffix; }
         }
     }
 }

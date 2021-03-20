@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/Title Screen.unity
     guid: 19ca651190e89db4b81caacaa3bc7e92
   - enabled: 1
-    path: Assets/Scenes/Test.unity
+    path: Assets/Scenes/Base.unity
+    guid: dd1fb3fde152c114294a938f8baf20ee
+  - enabled: 1
+    path: Assets/Scenes/Store 1.unity
     guid: 1464e39a77a86744a8d8b70014676169
+  - enabled: 1
+    path: Assets/Scenes/Grocery.unity
+    guid: 2237ff45ea755e44288206ccd2bc04b8
   m_configObjects: {}

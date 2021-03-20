@@ -2,28 +2,21 @@ using UnityEngine;
 
 public class Pickuppable : Interactable
 {
-    protected override CursorIcon.Icon HoverIcon { get => isHeld ? CursorIcon.Icon.None : CursorIcon.Icon.Pickup; }
+    protected override Hover.Icon HoverIcon { get => isHeld ? Hover.Icon.None : Hover.Icon.Pickup; }
 
-    public Rigidbody Rb { get; private set; }
-    public Collider Col { get; private set; }
+    protected Rigidbody rb;
+    protected Collider col;
 
     protected bool isHeld = false;
     public bool IsHeld => isHeld;
-
-    protected override void OnValidate()
-    {
-        base.OnValidate();
-        if (gameObject.layer != 3)
-        {
-            gameObject.layer = 3;
-            Debug.LogWarning($"Set layer of pickuppable {name} to '{LayerMask.LayerToName(3)}' layer.");
-        }
-    }
+    public Vector3 OriginalScale { get; private set; }
 
     protected virtual void Awake()
     {
-        Rb = GetComponent<Rigidbody>();
-        Col = GetComponent<Collider>();
+        OriginalScale = transform.localScale;
+        TryGetComponent(out Rigidbody rb);
+        this.rb = rb;
+        TryGetComponent(out col);
     }
 
     public override void Interact()
@@ -32,25 +25,49 @@ public class Pickuppable : Interactable
         { Pickup(true); }
     }
 
-    void Pickup(bool value, bool customer = false)
+    protected virtual void Pickup(bool pickup)
     {
-        if (!Interaction.Held && !value) return;
-        Interaction.Held = value ? this : null;
+        Interaction.Current.Grab(pickup ? this : null);
+        rb.useGravity = !pickup;
+        isHeld = pickup;
 
-        Rb.useGravity = !value;
-        isHeld = value;
-
-        Rb.velocity = Vector3.zero;
-        Rb.angularVelocity = Vector3.zero;
+        rb.velocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
 
+    public void IgnoreCollision(Collider other, bool ignore) => Physics.IgnoreCollision(col, other, ignore);
     public void Drop() => Pickup(false);
 
-    public void MakeKinematic(bool value)
+    public void Throw(Vector3 force)
     {
-        if (!value) { Rb.isKinematic = value; }
-        Rb.collisionDetectionMode = value ? CollisionDetectionMode.ContinuousSpeculative : CollisionDetectionMode.Continuous;
-        if (value) { Rb.isKinematic = value; }
-        Rb.detectCollisions = !value;
+        rb.AddForce(force, ForceMode.Impulse);
+        Drop();
+    }
+
+    public void Freeze(bool kinematic, RigidbodyConstraints constraints = RigidbodyConstraints.None)
+    {
+        if (!kinematic) { rb.isKinematic = kinematic; }
+        rb.collisionDetectionMode = kinematic ? CollisionDetectionMode.ContinuousSpeculative : CollisionDetectionMode.Continuous;
+        if (kinematic) { rb.isKinematic = kinematic; }
+        rb.detectCollisions = !kinematic;
+
+        rb.constraints = constraints;
+    }
+
+    public void PullTowards(Vector3 targetPoint, float correctionDist, float correctionForce)
+    {
+        if (Vector3.Distance(transform.position, targetPoint) < correctionDist)
+        {
+            rb.velocity /= 2;
+            return;
+        }
+
+        Vector3 force = targetPoint - transform.position;
+        force = force.normalized * Mathf.Sqrt(force.magnitude);
+
+        rb.velocity = force.normalized * rb.velocity.magnitude;
+        rb.AddForce(force * correctionForce);
+
+        rb.velocity *= Mathf.Min(1.0f, force.magnitude / 2);
     }
 }

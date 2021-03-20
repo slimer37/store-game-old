@@ -4,13 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Interactable
   - Customer
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - Pickuppables
+  - Interactable
   - Water
   - UI
   - Barrier

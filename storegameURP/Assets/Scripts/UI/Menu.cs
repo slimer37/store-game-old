@@ -2,8 +2,8 @@ using UnityEngine;
 
 public abstract class Menu : MonoBehaviour
 {
-    private Controls controls;
-    protected bool open = false;
+    Controls controls;
+    protected virtual bool Open { get; private set; } = false;
     protected Controls.MenuActions MenuActions { get; private set; }
 
     protected virtual void Awake()
@@ -14,9 +14,20 @@ public abstract class Menu : MonoBehaviour
         MenuActions.Exit.performed += Exit;
     }
 
-    protected void Exit(UnityEngine.InputSystem.InputAction.CallbackContext _) => Open(false);
+    protected void Exit(UnityEngine.InputSystem.InputAction.CallbackContext _) => OnAttemptOpen(false);
 
     void OnDestroy() => controls.Disable();
 
-    public virtual void Open(bool value) => gameObject.SetActive(open = value);
+    public virtual void OnAttemptOpen(bool value)
+    {
+        if (Open != value && (!MenuManager.Current || MenuManager.Current.MenuOpen != value))
+        {
+            if (MenuManager.Current)
+            { MenuManager.Current.OpenMenu(value); }
+            Open = value;
+            OnOpen(value);
+        }
+    }
+
+    protected virtual void OnOpen(bool value) => gameObject.SetActive(value);
 }

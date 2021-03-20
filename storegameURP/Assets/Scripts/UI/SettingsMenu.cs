@@ -4,21 +4,21 @@ using UnityEngine.UI;
 public class SettingsMenu : Menu
 {
     [System.Serializable]
-    private struct SliderSetting
+    struct SliderSetting
     {
         public string setting;
         public Slider slider;
     }
 
     [System.Serializable]
-    private struct ToggleSetting
+    struct ToggleSetting
     {
         public string setting;
         public Toggle toggle;
     }
 
-    [SerializeField] private SliderSetting[] sliderSettings;
-    [SerializeField] private ToggleSetting[] toggleSettings;
+    [SerializeField] SliderSetting[] sliderSettings;
+    [SerializeField] ToggleSetting[] toggleSettings;
 
     protected override void Awake()
     {

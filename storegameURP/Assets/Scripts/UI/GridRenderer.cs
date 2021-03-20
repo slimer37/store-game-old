@@ -6,7 +6,7 @@ public class GridRenderer : Graphic
     [field: SerializeField] public float Thickness { get; private set; } = 10;
     [field: SerializeField] public Vector2Int GridSize { get; private set; } = new Vector2Int(1, 1);
 
-    private VertexHelper vh;
+    VertexHelper vh;
 
     public float Width { get; private set; }
     public float Height { get; private set; }

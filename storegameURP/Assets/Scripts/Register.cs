@@ -5,47 +5,47 @@ using TMPro;
 public class Register : Interactable
 {
     [Header("Text")]
-    [SerializeField] private TextMeshPro screenMainText;
-    [SerializeField] private string pendingText;
-    [SerializeField] private TextMeshPro screenSideText;
-    [SerializeField] private ParticleSystem particles;
+    [SerializeField] TextMeshPro screenMainText;
+    [SerializeField] string pendingText;
+    [SerializeField] TextMeshPro screenSideText;
+    [SerializeField] ParticleSystem particles;
 
     [Header("Other")]
-    [SerializeField] private Transform itemDrop;
+    public Scanner scanner;
+    [SerializeField] Transform itemDrop;
 
-    private static List<Register> allRegisters = new List<Register>();
+    static List<Register> allRegisters = new List<Register>();
 
-    private List<Customer> queue = new List<Customer>();
+    List<Customer> queue = new List<Customer>();
 
-    private Customer currentCustomer = null;
-    private List<Product> receipt = new List<Product>();
-    private Scanner scanner;
+    Customer currentCustomer = null;
+    List<Product> receipt = new List<Product>();
 
-    private bool CustomerPending => queue.Count > 0 && !currentCustomer && queue[0].ReachedRegister;
+    bool CustomerPending => queue.Count > 0 && !currentCustomer && queue[0].ReachedRegister;
 
-    protected override CursorIcon.Icon HoverIcon => CustomerPending ? CursorIcon.Icon.Access : CursorIcon.Icon.None;
+    protected override Hover.Icon HoverIcon => CustomerPending ? Hover.Icon.Access : Hover.Icon.None;
     public Vector3 DropPosition => itemDrop.position;
     public Vector3[] QueuePositions { get; private set; }
 
     public static Register GetClosestRegister(Vector3 origin)
     {
         float closestDist = 0;
-        int closestReg = 0;
-        for (int i = 0; i < allRegisters.Count; i++)
+        Register closestReg = null;
+        foreach (var reg in allRegisters)
         {
-            var registerDist = Vector3.Distance(origin, allRegisters[i].transform.position);
-            if (registerDist < closestDist)
+            var registerDist = Vector3.Distance(origin, reg.transform.position);
+            if (!closestReg || registerDist < closestDist)
             {
                 closestDist = registerDist;
-                closestReg = i;
+                closestReg = reg;
             }
         }
-        return allRegisters[closestReg];
+        return closestReg;
     }
 
     void Awake()
     {
-        if (scanner = GetComponentInChildren<Scanner>())
+        if (scanner)
         { scanner.onScan += EnterItem; }
     }
 

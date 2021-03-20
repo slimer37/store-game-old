@@ -2,21 +2,22 @@ using UnityEngine;
 
 public abstract class Interactable : MonoBehaviour
 {
-    protected bool interactable = true;
-    protected virtual CursorIcon.Icon HoverIcon { get; set; }
+    [SerializeField] protected bool interactable = true;
+    protected virtual Hover.Icon HoverIcon { get; set; } = Hover.Icon.Invalid;
+    protected virtual string Tooltip { get; set; } = "";
 
     protected virtual void OnValidate()
     {
-        if (!CompareTag("Interactable"))
+        if (gameObject.layer != 3)
         {
-            tag = "Interactable";
-            Debug.LogWarning($"Tagged '{name}' as 'Interactable.'");
+            gameObject.layer = 3;
+            Debug.LogWarning($"Set layer of {name} to '{LayerMask.LayerToName(3)}' layer.");
         }
     }
 
-    public void Hover() => CursorIcon.ShowIcon(interactable ? HoverIcon : CursorIcon.Icon.Invalid);
+    protected void OnHover() => Hover.Current.ShowIcon(interactable ? HoverIcon : Hover.Icon.Invalid, Tooltip);
 
-    public void OnInteract()
+    protected void OnInteract()
     {
         if (interactable)
         { Interact(); }
@@ -24,10 +25,7 @@ public abstract class Interactable : MonoBehaviour
 
     public abstract void Interact();
 
-    // Optional:
-    public virtual void HoverExit() { }
-
-    public void OnSecondaryInteract()
+    protected void OnSecondaryInteract()
     {
         if (interactable)
         { SecondaryInteract(); }

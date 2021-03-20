@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class OpenSign : Interactable
 {
-    protected override CursorIcon.Icon HoverIcon { get => CursorIcon.Icon.Access; }
+    protected override Hover.Icon HoverIcon { get => Hover.Icon.Access; }
 
-    [SerializeField] private string openState;
+    [SerializeField] string openState;
 
-    private Animator anim;
-    private bool open = false;
+    Animator anim;
+    bool open = false;
 
     void Awake() => anim = GetComponent<Animator>();
 

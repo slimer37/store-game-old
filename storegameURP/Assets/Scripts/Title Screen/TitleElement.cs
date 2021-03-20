@@ -2,37 +2,34 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
-[RequireComponent(typeof(Collider))]
+[RequireComponent(typeof(BoxCollider))]
 public class TitleElement : MonoBehaviour
 {
-    public bool Focused { get; private set; } = false;
+    public bool IsFocused { get; private set; } = false;
 
     public UnityEvent OnChosen;
 
-    [SerializeField] private string openState;
-    [SerializeField] private string closeState;
-    [SerializeField] private bool callbackOnSelect;
-    [SerializeField] private float overrideHoverDist;
+    [SerializeField] string openState;
+    [SerializeField] string closeState;
+    [SerializeField] bool callbackOnSelect;
+    [SerializeField] float overrideHoverDist;
 
-    private Vector3 firstPos;
-    private Quaternion firstRot;
+    Vector3 firstPos;
+    Vector3 colPos;
+    Quaternion firstRot;
 
-    private Animator anim;
-    private bool animating = false;
-    private Coroutine hoverRoutine = null;
+    BoxCollider col;
+    Animator anim;
+    bool animating = false;
+    Coroutine raiseRoutine = null;
 
-    private float hoverHeight;
-
-    void OnValidate()
-    {
-        if (!CompareTag("Interactable"))
-        { Debug.LogWarning($"'{name}' needs to be tagged 'Interactable.'"); }
-    }
+    float hoverHeight;
 
     void Awake()
     {
-        if (GetComponent<Animator>())
-        { anim = GetComponent<Animator>(); }        
+        TryGetComponent(out anim);
+        TryGetComponent(out col);
+        colPos = transform.TransformPoint(col.center);
         firstPos = transform.position;
         firstRot = transform.rotation;
     }
@@ -41,64 +38,63 @@ public class TitleElement : MonoBehaviour
 
     public void Hover(bool value)
     {
-        if (hoverRoutine != null)
-        { StopCoroutine(hoverRoutine); }
-        hoverRoutine = StartCoroutine(Raise(value));
+        if (raiseRoutine != null)
+        { StopCoroutine(raiseRoutine); }
+        raiseRoutine = StartCoroutine(Raise(value));
     }
 
-    public void Select(bool value)
+    public void Select(bool rayHit)
     {
-        if (!animating)
+        if (rayHit && IsFocused)
         {
-            if (value && !Focused)
-            {
-                if (callbackOnSelect)
-                { OnChosen.Invoke(); }
-                else
-                { StartCoroutine(FocusObject()); }
-            }
-            else if (!callbackOnSelect && !value && Focused)
-            { StartCoroutine(UnfocusObject()); }
+            OnChosen.Invoke();
+            return;
         }
+
+        StopAllCoroutines();
+        if (rayHit && !IsFocused)
+        {
+            if (callbackOnSelect)
+            { OnChosen.Invoke(); }
+            else
+            { StartCoroutine(FocusObject(true)); }
+        }
+        else if (!callbackOnSelect && !rayHit && IsFocused)
+        { StartCoroutine(FocusObject(false)); }
     }
 
     IEnumerator Raise(bool raise, bool force = false)
     {
-        if (force || !Focused && !animating)
+        if (force || !IsFocused && !animating)
         {
+            var startPos = transform.position;
             Vector3 end = firstPos + Vector3.up * hoverHeight * (raise ? 1 : 0);
-            yield return Tweens.LerpLocation(transform, end, 1 / TitleScreen.AnimSpeed);
+            yield return Tweens.LerpValue(1 / TitleScreen.AnimSpeed, t => {
+                transform.position = Vector3.Lerp(startPos, end, t);
+
+                // Maintain collider position.
+                col.center = transform.InverseTransformPoint(colPos);
+            });
         }
     }
 
-    IEnumerator FocusObject()
+    IEnumerator FocusObject(bool value)
     {
-        StopCoroutine(UnfocusObject());
         animating = true;
-        Focused = true;
+        IsFocused = value;
 
-        yield return Tweens.LerpTransform(transform, TitleScreen.Front, TitleScreen.ElementRot, 1 / TitleScreen.AnimSpeed);
+        if (!value && anim)
+        { anim.CrossFadeInFixedTime(closeState, 0.25f); }
 
-        if (anim)
-        { anim.Play(openState); }
-        animating = false;
-    }
+        var targetPos = value ? TitleScreen.Front : firstPos + (anim ? Vector3.up * hoverHeight : Vector3.zero);
+        var targetRot = value ? TitleScreen.ElementRot : firstRot;
+        yield return Tweens.LerpTransform(transform, targetPos, targetRot, 1 / TitleScreen.AnimSpeed);
 
-    IEnumerator UnfocusObject()
-    {
-        StopCoroutine(FocusObject());
-        animating = true;
-        Focused = false;
+        if (!value)
+        { yield return Raise(false, anim); }
 
-        if (anim)
-        {
-            anim.Play(closeState);
-            AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-            yield return new WaitForSeconds(stateInfo.length);
-        }
-
-        yield return Tweens.LerpTransform(transform, firstPos + (anim ? Vector3.up * hoverHeight : Vector3.zero), firstRot, 1 / TitleScreen.AnimSpeed);
-        yield return Raise(false, anim);
+        if (value && anim)
+        { anim.CrossFadeInFixedTime(openState, 0.25f); }
 
         animating = false;
     }

@@ -4,18 +4,20 @@ using UnityEditor;
 [CustomEditor(typeof(CustomerSpawner))]
 public class CustomerSpawnerEditor : Editor
 {
-    private static SerializedObject spawnerObj;
+    private static SerializedObject spawnerObj = null;
     private static bool pressed = false;
+
+    void Awake() => spawnerObj = serializedObject;
 
     public override void OnInspectorGUI()
     {
-        spawnerObj = serializedObject;
+        EditorGUI.BeginChangeCheck();
 
-        // On the instant the toggle changes, update visuals.
-        if (pressed != (pressed = GUILayout.Toggle(pressed, "Edit Points", "Button")))
-        { EditorUtility.SetDirty(target); }
-
+        pressed = GUILayout.Toggle(pressed, "Edit Points", "Button");
         base.OnInspectorGUI();
+
+        if (EditorGUI.EndChangeCheck())
+        { SceneView.RepaintAll(); }
     }
 
     [DrawGizmo(GizmoType.Selected | GizmoType.Active)]

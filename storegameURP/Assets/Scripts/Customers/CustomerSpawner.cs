@@ -3,13 +3,13 @@ using UnityEngine;
 
 public class CustomerSpawner : MonoBehaviour
 {
-    [SerializeField] private Vector3[] spawnPositions;
-    [SerializeField] private Vector3[] endPositions;
-    [SerializeField] private GameObject customerPrefab;
-    [SerializeField] private float startDelay;
-    [SerializeField, Range(1, 60)] private int customersPerMinute;
+    [SerializeField] Vector3[] spawnPositions;
+    [SerializeField] Vector3[] endPositions;
+    [SerializeField] GameObject customerPrefab;
+    [SerializeField] float startDelay;
+    [SerializeField, Range(1, 60)] int customersPerMinute;
 
-    private static int customers;
+    static int customers;
 
     void Awake() => customers = 0;
 

@@ -4,15 +4,15 @@ using UnityEngine.UI;
 
 public class LineGrapher : Graphic
 {
-    [SerializeField] private bool colorByDifference;
-    [SerializeField] private Color positiveColor;
-    [SerializeField] private Color negativeColor;
-    [SerializeField] private GridRenderer grid;
-    [SerializeField] private float thickness;
+    [SerializeField] bool colorByDifference;
+    [SerializeField] Color positiveColor;
+    [SerializeField] Color negativeColor;
+    [SerializeField] GridRenderer grid;
+    [SerializeField] float thickness;
 
     public List<Vector2> points = new List<Vector2>();
 
-    private Vector2Int gridSize = new Vector2Int();
+    Vector2Int gridSize = new Vector2Int();
 
     void Update()
     {
@@ -45,7 +45,7 @@ public class LineGrapher : Graphic
         }
     }
 
-    private float GetAngle(Vector2 me, Vector2 target) => Mathf.Atan2(target.y - me.y, target.x - me.x) * 180 / Mathf.PI;
+    float GetAngle(Vector2 me, Vector2 target) => Mathf.Atan2(target.y - me.y, target.x - me.x) * 180 / Mathf.PI;
 
     void DrawLine(Vector2 a, Vector2 b, int index, VertexHelper vh)
     {

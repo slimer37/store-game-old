@@ -3,9 +3,9 @@ using UnityEngine.InputSystem;
 
 public class TiltCamera : MonoBehaviour
 {
-    [SerializeField] private Vector2 maxTilt;
+    [SerializeField] Vector2 maxTilt;
 
-    private Quaternion originalRot;
+    Quaternion originalRot;
 
     void Awake() => originalRot = transform.rotation;
 
@@ -14,8 +14,6 @@ public class TiltCamera : MonoBehaviour
         var mouseAbsPos = Mouse.current.position.ReadValue();
         var mouseRelPos = new Vector2(mouseAbsPos.x / Screen.width, mouseAbsPos.y / Screen.height);
         mouseRelPos = (mouseRelPos - Vector2.one * 0.5f) * 2;
-
-        Vector2 adjustedPos = new Vector2(Mathf.Abs(mouseRelPos.x), Mathf.Abs(mouseRelPos.y));
 
         var rotX = Mathf.Clamp(-mouseRelPos.y * maxTilt.x, -maxTilt.x, maxTilt.x);
         var rotY = Mathf.Clamp(mouseRelPos.x * maxTilt.y, -maxTilt.y, maxTilt.y);
